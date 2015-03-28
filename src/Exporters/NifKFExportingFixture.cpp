@@ -53,8 +53,11 @@ MStatus NifKFExportingFixture::WriteNodes( const MFileObject& file ) {
 	controller_sequence->SetTargetName(this->translatorOptions->animationTarget);
 	controller_sequence->SetFrequency(1.0);
 
-	vector<MFnDependencyNode> objectsWithExportIndexes;
-	vector<MFnDependencyNode> objectsWithoutExportIndexes;
+	vector<MObject> objectsWithExportIndexes;
+	vector<MObject> objectsWithoutExportIndexes;
+
+	MFnDependencyNode aux1;
+	MFnDependencyNode aux2;
 
 	for(int i = 0; i < this->translatorData->animatedObjects.size(); i++) {
 		MFnDependencyNode node(this->translatorData->animatedObjects.at(i));
@@ -62,9 +65,9 @@ MStatus NifKFExportingFixture::WriteNodes( const MFileObject& file ) {
 		string name = node.name().asChar();
 
 		if(plug.isNull()) {
-			objectsWithoutExportIndexes.push_back(node);
+			objectsWithoutExportIndexes.push_back(node.object());
 		} else {
-			objectsWithExportIndexes.push_back(node);
+			objectsWithExportIndexes.push_back(node.object());
 		}
 	}
 
@@ -72,23 +75,23 @@ MStatus NifKFExportingFixture::WriteNodes( const MFileObject& file ) {
 
 	for(int i = 0;i < (int)(objectsWithExportIndexes.size()) - 1; i++) {
 		for(int j = i + 1; j < objectsWithExportIndexes.size(); j++) {
-			MPlug plug_i = objectsWithExportIndexes.at(i).findPlug("exportIndex");
-			MPlug plug_j = objectsWithExportIndexes.at(j).findPlug("exportIndex");
+			aux1.setObject(objectsWithExportIndexes.at(i));
+			aux2.setObject(objectsWithExportIndexes.at(j));
+			MPlug plug_i = aux1.findPlug("exportIndex");
+			MPlug plug_j = aux2.findPlug("exportIndex");
 
 			if(plug_i.asInt() > plug_j.asInt()) {
-				MObject aux = objectsWithExportIndexes.at(i).object();
-				objectsWithExportIndexes.at(i).setObject(objectsWithExportIndexes.at(j).object());
-				objectsWithExportIndexes.at(j).setObject(aux);
+				swap(objectsWithExportIndexes[i], objectsWithExportIndexes[j]);
 			}
 		}
 	}
 
 	for(int i = 0; i < objectsWithExportIndexes.size(); i++) {
-		this->translatorData->animatedObjects.push_back(objectsWithExportIndexes.at(i).object());
+		this->translatorData->animatedObjects.push_back(objectsWithExportIndexes[i]);
 	}
 
 	for(int i = 0; i < objectsWithoutExportIndexes.size(); i++) {
-		this->translatorData->animatedObjects.push_back(objectsWithoutExportIndexes.at(i).object());
+		this->translatorData->animatedObjects.push_back(objectsWithoutExportIndexes[i]);
 	}
 
 	for(int i = 0; i < this->translatorData->animatedObjects.size(); i++) {

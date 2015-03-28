@@ -47,7 +47,7 @@ void NifMaterialExporterSkyrim::ExportMaterials() {
 			MObject current_texture;
 
 			for(int i = 0; i < 9; i++) {
-				shader_textures->setTexture(i, "");
+				shader_textures->SetTexture(i, "");
 			}
 
 			MPlug shader_flags_plug = shader_node.findPlug("skyrimShaderFlags1");
@@ -67,10 +67,10 @@ void NifMaterialExporterSkyrim::ExportMaterials() {
 				alpha = 1 - transparency_plug.asFloat();
 			}
 
-			this->GetColor(shader_node, "color", color, current_texture);
+			this->GetColor(shader_node.object(), "color", color, current_texture);
 			if(!current_texture.isNull()) {
 				string file_name = this->ExportTexture(current_texture);
-				shader_textures->setTexture(0, file_name);
+				shader_textures->SetTexture(0, file_name);
 				MFnDependencyNode texture_node(current_texture);
 				texture_node.findPlug("outAlpha").connectedTo(connections, false, true);
 				if(connections.length() > 0 && connections[0].node() == shader_node.object()) {
@@ -92,7 +92,7 @@ void NifMaterialExporterSkyrim::ExportMaterials() {
 					MPlug alpha_plug = connections[0];
 					current_texture = alpha_plug.node();
 					string file_name = this->ExportTexture(current_texture);
-					shader_textures->setTexture(1, file_name);
+					shader_textures->SetTexture(1, file_name);
 				}
 			}
 
@@ -122,39 +122,38 @@ void NifMaterialExporterSkyrim::ExportMaterials() {
 			string a_texture;
 			if(!additional_texture.isNull()) {
 				a_texture = this->ExportTexture(additional_texture.asString());
-				shader_textures->setTexture(4, a_texture);
+				shader_textures->SetTexture(4, a_texture);
 			}
 
 			additional_texture = shader_node.findPlug("evironmentMaskTexture");
 			if(!additional_texture.isNull()) {
 				a_texture = this->ExportTexture(additional_texture.asString());
-				shader_textures->setTexture(5, a_texture);
+				shader_textures->SetTexture(5, a_texture);
 			}
 
 			additional_texture = shader_node.findPlug("glowMapTexture");
 			if(!additional_texture.isNull()) {
 				a_texture = this->ExportTexture(additional_texture.asString());
-				shader_textures->setTexture(2, a_texture);
+				shader_textures->SetTexture(2, a_texture);
 			}
 
 			additional_texture = shader_node.findPlug("skinTexture");
 			if(!additional_texture.isNull()) {
 				a_texture = this->ExportTexture(additional_texture.asString());
-				shader_textures->setTexture(2, a_texture);
+				shader_textures->SetTexture(2, a_texture);
 			}
 
-			shader_property->SetSkyrimShaderType(shader_type);
-			shader_property->setTextureSet(shader_textures);
-			shader_property->setGlossiness(glossiness);
-			shader_property->setEmissiveColor(emissive_color);
-			shader_property->setSpecularColor(specular_color);
-			shader_property->setTextureTranslation1(texture_translation1);
-			shader_property->setTextureRepeat(texture_repeat);
-			shader_property->setEmissiveSaturation(emissive_saturation);
-			shader_property->setShaderFlags1(shader_flags1);
-			shader_property->setShaderFlags2(shader_flags2);
-			shader_property->setUnknownInt7(3);
-			shader_property->setAlpha(alpha);
+			shader_property->SetSkyrimShaderType((BSLightingShaderPropertyShaderType)shader_type);
+			shader_property->SetTextureSet(shader_textures);
+			shader_property->SetGlossiness(glossiness);
+			shader_property->SetEmissiveColor(emissive_color);
+			shader_property->SetSpecularColor(specular_color);
+			shader_property->SetUVOffset(texture_translation1);
+			shader_property->SetEmissiveMultiple(emissive_saturation);
+			shader_property->SetShaderFlags1((SkyrimShaderPropertyFlags1)shader_flags1);
+			shader_property->SetShaderFlags2((SkyrimShaderPropertyFlags2)shader_flags2);
+			//shader_property->SetUnknownInt7(3);
+			shader_property->SetAlpha(alpha);
 
 			vector<NiPropertyRef> properties;
 			properties.push_back(DynamicCast<NiProperty>(shader_property));

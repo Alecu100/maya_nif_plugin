@@ -100,7 +100,7 @@ public:
 
 	NifTextureConnector();
 
-	NifTextureConnector(MFnDependencyNode texture_placement, int uv_set);
+	NifTextureConnector(MObject texture_placement, int uv_set);
 
 	virtual void ConnectTexture(MDagPath mesh_path);
 

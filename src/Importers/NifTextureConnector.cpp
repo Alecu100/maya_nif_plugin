@@ -5,8 +5,8 @@ NifTextureConnector::NifTextureConnector() {
 
 }
 
-NifTextureConnector::NifTextureConnector(MFnDependencyNode texture_placement, int uv_set) {
-	this->texturePlacement.setObject(texture_placement.object());
+NifTextureConnector::NifTextureConnector(MObject texture_placement, int uv_set) {
+	this->texturePlacement.setObject(texture_placement);
 	this->uvSet = uv_set;
 }
 

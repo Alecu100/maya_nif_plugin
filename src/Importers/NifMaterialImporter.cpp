@@ -304,7 +304,7 @@ void NifMaterialImporter::ImportMaterialsAndTextures( NiAVObjectRef & root )
 				//Create uvChooser if necessary
 				unsigned int uv_set = mw.GetTexUVSetIndex( TexType(i) );
 				if ( uv_set > 0 ) {
-					NifTextureConnectorRef texture_connector = new NifTextureConnector(texture_placement, uv_set);
+					NifTextureConnectorRef texture_connector = new NifTextureConnector(texture_placement.object(), uv_set);
 					texture_connectors.push_back(texture_connector);
 				}
 			}

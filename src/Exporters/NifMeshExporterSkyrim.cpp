@@ -401,7 +401,7 @@ void NifMeshExporterSkyrim::ExportMesh( MObject dagNode ) {
 		int faces_count = cs.GetFaces().size();
 		int current_face_index;
 		vector<BodyPartList> body_parts_list;
-		vector<int> dismember_faces(faces_count, 0);
+		vector<uint> dismember_faces(faces_count, 0);
 
 		for(int x = 0; x < connected_dismember_plugs.length(); x++) {
 			MFnDependencyNode dependency_node(connected_dismember_plugs[x].node());

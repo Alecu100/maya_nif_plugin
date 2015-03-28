@@ -586,7 +586,7 @@ MDagPath NifMeshImporterSkyrim::ImportMesh( NiAVObjectRef root, MObject parent )
 				status = blind_data_mesh.createBlindDataType(blind_data_id, long_name, short_name, format_name);
 			} while(status == MStatus::kFailure);
 
-			vector<int> dismember_faces = cs.GetDismemberPartitionsFaces();
+			vector<uint> dismember_faces = cs.GetDismemberPartitionsFaces();
 			MItMeshPolygon polygon_it(blind_data_mesh.object());
 
 			selected_faces.add(meshPath);

@@ -52,6 +52,8 @@ global proc nifTranslatorMenuCreate() {
 		setParent -menu $nifToolsMenu;
 
 		menuItem -label "Materials" -subMenu true materialsMenu;
+		
+			menuItem -label "Skyrim shader quick setup" -command "nifTranslatorSetSkyrimMaterialQuick()";
 
 			menuItem -label "Skyrim shader type" -subMenu true skyrimShaderTypeMenu;
 				menuItem -label "Default shader" -command "nifTranslatorSetSkyrimShaderType(\"Default\")";
@@ -708,6 +710,22 @@ global proc nifTranslatorCreateConnecNifDismemberPartition() {
 	}
 }
 
+global proc nifTranslatorSetSkyrimMaterialQuick() {
+	nifTranslatorSetSkyrimShaderType("Default");
+	
+	nifTranslatorAddSkyrimShaderFlags("SLSF1_Specular", 1);
+	nifTranslatorAddSkyrimShaderFlags("SLSF1_Skinned", 1);
+	nifTranslatorAddSkyrimShaderFlags("SLSF1_Recieve_Shadows", 1);
+	nifTranslatorAddSkyrimShaderFlags("SLSF1_Cast_Shadows", 1);
+	nifTranslatorAddSkyrimShaderFlags("SLSF1_Own_Emit", 1);
+	nifTranslatorAddSkyrimShaderFlags("SLSF1_Remappable_Textures", 1);
+	nifTranslatorAddSkyrimShaderFlags("SLSF1_ZBuffer_Test", 1);
+	
+	nifTranslatorAddSkyrimShaderFlags("SLSF2_ZBuffer_Write", 2);
+	nifTranslatorAddSkyrimShaderFlags("SLSF2_Double_Sided", 2);
+	nifTranslatorAddSkyrimShaderFlags("SLSF2_EnvMap_Light_Fade", 2);
+}
+
 global proc string[] nifTranslatorGetConnectedShaders(string $transform) {
 	string $shaders[];
 
@@ -831,8 +849,8 @@ global proc nifTranslatorSetSkyrimShaderType(string $shaderType) {
 		} 
 
 		if($has_attr == 0) {
-			eval("addAttr -dataType \"string\" -shortName skyrimShderType " + $current);
+			eval("addAttr -dataType \"string\" -shortName skyrimShaderType " + $current);
 		}
-		eval("setAttr -type \"string\" " + $current + "\.skyrimShaderType" + "\"$shaderType\"");
+		eval("setAttr -type \"string\" " + $current + "\.skyrimShaderType" + "\"" + $shaderType + "\"");
 	}
 }

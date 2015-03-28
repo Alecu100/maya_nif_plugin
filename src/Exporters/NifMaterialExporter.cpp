@@ -162,10 +162,10 @@ void NifMaterialExporter::ExportMaterials() {
 
 			//--Get info from Color slots--//
 			//out << "Getting color slot info..." << endl;
-			GetColor( lambertFn, "color", diffuse, diff_tex );
-			GetColor( lambertFn,"ambientColor", ambient, ambi_tex );
-			GetColor( lambertFn,"incandescence", emissive, emis_tex );
-			GetColor( lambertFn,"transparency", transparency, tran_tex );
+			GetColor( lambertFn.object(), "color", diffuse, diff_tex );
+			GetColor( lambertFn.object(), "ambientColor", ambient, ambi_tex);
+			GetColor( lambertFn.object(), "incandescence", emissive, emis_tex);
+			GetColor( lambertFn.object(), "transparency", transparency, tran_tex);
 
 			//Shader may also have specular color
 			if ( itDep.item().hasFn( MFn::kReflect ) ) {
@@ -173,7 +173,7 @@ void NifMaterialExporter::ExportMaterials() {
 				MFnReflectShader reflectFn( itDep.item() );
 
 				//out << "Getting specular color" << endl;
-				GetColor( reflectFn, "specularColor", specular, spec_tex );
+				GetColor( lambertFn.object(), "specularColor", specular, spec_tex);
 
 				if ( specular.r != 0.0 && specular.g != 0.0 && specular.b != 0.0 ) {
 					use_spec = true;
@@ -366,8 +366,9 @@ void NifMaterialExporter::ExportMaterials() {
 	//out << "}" << endl;
 }
 
-void NifMaterialExporter::GetColor( MFnDependencyNode& fn, MString name, MColor & color, MObject & texture ) {
+void NifMaterialExporter::GetColor( MObject& o, MString name, MColor & color, MObject & texture ) {
 	//out << "NifTranslator::GetColor( " << fn.name().asChar() << ", " << name.asChar() << ", (" << color.r << ", " << color.g << ", " << color.b << ", " << color.a << "), " << texture.apiType() << " ) {" << endl;
+	MFnDependencyNode fn(o);
 	MPlug p;
 	texture = MObject();
 	color = MColor();

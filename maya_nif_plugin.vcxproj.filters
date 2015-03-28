@@ -144,7 +144,7 @@
     <ClInclude Include="include\Exporters\NifMeshExporterSkyrim.h">
       <Filter>Header Files\Exporters</Filter>
     </ClInclude>
-    <ClInclude Include="include\Exporters\NifSkyrimExportingfixture.h">
+    <ClInclude Include="include\Exporters\NifSkyrimExportingFixture.h">
       <Filter>Header Files\Exporters</Filter>
     </ClInclude>
   </ItemGroup>

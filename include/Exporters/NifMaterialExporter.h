@@ -101,7 +101,7 @@ public:
 	//--Iterate through all the textures and materials and create nif properties from them
 	virtual void ExportMaterials();
 
-	void GetColor( MFnDependencyNode& fn, MString name, MColor & color, MObject & texture ); 
+	void GetColor( MObject& o, MString name, MColor & color, MObject & texture ); 
 
 	virtual string asString( bool verbose = false ) const;
 
