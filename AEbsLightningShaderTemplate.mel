@@ -1,0 +1,611 @@
+global string $nifShaderFlags1Attr;
+global string $nifShaderFlags2Attr;
+
+global string $startingDirectory;
+
+global string $txtTextureSlot2;
+global string $txtTextureSlot2Attr;
+
+global string $txtTextureSlot3;
+global string $txtTextureSlot3Attr;
+
+global string $txtTextureSlot4;
+global string $txtTextureSlot4Attr;
+
+global string $txtTextureSlot5;
+global string $txtTextureSlot5Attr;
+
+global string $txtTextureSlot6;
+global string $txtTextureSlot6Attr;
+
+global string $txtTextureSlot7;
+global string $txtTextureSlot7Attr;
+
+global string $txtTextureSlot8;
+global string $txtTextureSlot8Attr;
+
+
+global proc AEbsLightningShaderTemplate(string $nodeName) {
+	global string $startingDirectory;
+
+	editorTemplate -suppress "input";
+	editorTemplate -suppress "caching";
+	editorTemplate -suppress "nodeState";
+	editorTemplate -suppress "message";
+	editorTemplate -suppress "shaderType";
+	editorTemplate -suppress "shaderFlags1";
+	editorTemplate -suppress "shaderFlags2";
+	editorTemplate -suppress "cubeMapTexture";
+	editorTemplate -suppress "evironmentMaskTexture";
+	editorTemplate -suppress "glowMapTexture";
+
+	editorTemplate -beginScrollLayout;
+		editorTemplate -addControl "targetShader";
+		editorTemplate -addControl "targetShape";
+
+		editorTemplate -beginLayout "Additional Textures";
+		    editorTemplate -callCustom  "TextureSlot2New" "TextureSlot2Replace" "textureSlot2";
+		    editorTemplate -callCustom  "TextureSlot3New" "TextureSlot3Replace" "textureSlot3";
+		    editorTemplate -callCustom  "TextureSlot4New" "TextureSlot4Replace" "textureSlot4";
+		    editorTemplate -callCustom  "TextureSlot5New" "TextureSlot5Replace" "textureSlot5";
+		    editorTemplate -callCustom  "TextureSlot6New" "TextureSlot6Replace" "textureSlot6";
+		    editorTemplate -callCustom  "TextureSlot7New" "TextureSlot7Replace" "textureSlot7";
+		    editorTemplate -callCustom  "TextureSlot8New" "TextureSlot8Replace" "textureSlot8";
+		editorTemplate -endLayout;
+		
+		editorTemplate -beginLayout "Shader Flags1";
+			editorTemplate -callCustom "shaderFlags1New" "shaderFlags1Replace"
+						   "shaderFlags1";			   	
+		editorTemplate -endLayout;
+
+		editorTemplate -beginLayout "Shader Flags2";
+			editorTemplate -callCustom "nifShaderFlags2New" "nifShaderFlags2Replace"
+						   "shaderFlags2";	
+		editorTemplate -endLayout;
+
+		editorTemplate -addExtraControls;
+	editorTemplate -endScrollLayout;
+
+	$startingDirectory = "";
+}
+
+global proc TextureSlot2New(string $attributeName) {
+	global string $txtTextureSlot2;
+	global string $txtTextureSlot2Attr;
+
+	$txtTextureSlot2Attr = $attributeName;
+
+	rowLayout -numberOfColumns 3 -adjustableColumn 2;
+			  text -label "Texture Slot2";
+			  $txtTextureSlot2 = `textField  -editable false`;
+			  button -label "Open" -command "TextureSlot2NewOpen";
+
+	string $textureFile = `getAttr $attributeName`;
+	textField -edit -text $textureFile $txtTextureSlot2;
+}
+
+global proc TextureSlot2NewOpen(){
+	global string $txtTextureSlot2;
+	global string $txtTextureSlot2Attr;
+
+	string $basicFilter = "*.dds";
+	string $result[] = `fileDialog2 -fileFilter $basicFilter -dialogStyle 2 -fileMode 1`;
+
+	
+	if (size($result) > 0) {
+		setAttr -type "string" $txtTextureSlot2Attr $result[0];
+		textField -edit -text $result[0] $txtTextureSlot2;
+	}
+}
+
+global proc TextureSlot2Replace(string $attributeName) {
+	global string $txtTextureSlot2;
+	global string $txtTextureSlot2Attr;
+
+	$txtTextureSlot2Attr = $attributeName;
+
+	string $textureFile = `getAttr $attributeName`;
+	textField -edit -text $textureFile $txtTextureSlot2;
+}
+
+
+
+
+global proc TextureSlot3New(string $attributeName) {
+	global string $txtTextureSlot3;
+	global string $txtTextureSlot3ttr;
+
+	$txtTextureSlot3Attr = $attributeName;
+
+	rowLayout -numberOfColumns 3 -adjustableColumn 2;
+			  text -label "Texture Slot3";
+			  $txtTextureSlot3 = `textField  -editable false`;
+			  button -label "Open" -command "TextureSlot3NewOpen";
+
+    string $textureFile = `getAttr $attributeName`;
+	textField -edit -text $textureFile $txtTextureSlot3;
+}
+
+global proc TextureSlot3NewOpen(){
+	global string $txtTextureSlot3;
+	global string $txtTextureSlot3Attr;
+
+	string $basicFilter = "*.dds";
+	string $result[] = `fileDialog2 -fileFilter $basicFilter -dialogStyle 2 -fileMode 1`;
+
+	
+	if (size($result) > 0) {
+		setAttr -type "string" $txtTextureSlot3Attr $result[0];
+		textField -edit -text $result[0] $txtTextureSlot3;
+	}
+}
+
+global proc TextureSlot3Replace(string $attributeName) {
+	global string $txtTextureSlot3;
+	global string $txtTextureSlot3Attr;
+
+	$txtTextureSlot3Attr = $attributeName;
+
+	string $textureFile = `getAttr $attributeName`;
+	textField -edit -text $textureFile $txtTextureSlot3;
+}
+
+
+
+
+
+global proc TextureSlot4New(string $attributeName) {
+	global string $txtTextureSlot4;
+	global string $txtTextureSlot4Attr;
+
+	$txtTextureSlot4Attr = $attributeName;
+
+	rowLayout -numberOfColumns 3 -adjustableColumn 2;
+			  text -label "Texture Slot4";
+			  $txtTextureSlot4 = `textField  -editable false`;
+			  button -label "Open" -command "TextureSlot4NewOpen";
+
+	string $textureFile = `getAttr $attributeName`;
+	textField -edit -text $textureFile $txtTextureSlot4;
+}
+
+global proc TextureSlot4NewOpen(){
+	global string $txtTextureSlot4;
+	global string $txtTextureSlot4Attr;
+
+	string $basicFilter = "*.dds";
+	string $result[] = `fileDialog2 -fileFilter $basicFilter -dialogStyle 2 -fileMode 1`;
+
+	
+	if (size($result) > 0) {
+		setAttr -type "string" $txtTextureSlot4Attr $result[0];
+		textField -edit -text $result[0] $txtTextureSlot4;
+	}
+}
+
+global proc TextureSlot4Replace(string $attributeName) {
+	global string $txtTextureSlot4;
+	global string $txtTextureSlot4Attr;
+
+	$txtTextureSlot4Attr = $attributeName;
+
+	string $textureFile = `getAttr $attributeName`;
+	textField -edit -text $textureFile $txtTextureSlot4;
+}
+
+
+
+
+
+global proc TextureSlot5New(string $attributeName) {
+	global string $txtTextureSlot5;
+	global string $txtTextureSlot5Attr;
+
+	$txtTextureSlot5Attr = $attributeName;
+
+	rowLayout -numberOfColumns 3 -adjustableColumn 2;
+			  text -label "Texture Slot5";
+			  $txtTextureSlot5 = `textField  -editable false`;
+			  button -label "Open" -command "TextureSlot5NewOpen";
+
+	string $textureFile = `getAttr $attributeName`;
+	textField -edit -text $textureFile $txtTextureSlot5;
+}
+
+global proc TextureSlot5NewOpen(){
+	global string $txtTextureSlot5;
+	global string $txtTextureSlot5Attr;
+
+	string $basicFilter = "*.dds";
+	string $result[] = `fileDialog2 -fileFilter $basicFilter -dialogStyle 2 -fileMode 1`;
+
+	
+	if (size($result) > 0) {
+		setAttr -type "string" $txtTextureSlot5Attr $result[0];
+		textField -edit -text $result[0] $txtTextureSlot5;
+	}
+}
+
+global proc TextureSlot5Replace(string $attributeName) {
+	global string $txtTextureSlot5;
+	global string $txtTextureSlot5Attr;
+
+	$txtTextureSlot5Attr = $attributeName;
+
+	string $textureFile = `getAttr $attributeName`;
+	textField -edit -text $textureFile $txtTextureSlot5;
+}
+
+
+
+
+
+
+
+
+global proc TextureSlot6New(string $attributeName) {
+	global string $txtTextureSlot6;
+	global string $txtTextureSlot6Attr;
+
+	$txtTextureSlot6Attr = $attributeName;
+
+	rowLayout -numberOfColumns 3 -adjustableColumn 2;
+			  text -label "Texture Slot6";
+			  $txtTextureSlot6 = `textField  -editable false`;
+			  button -label "Open" -command "TextureSlot6NewOpen";
+
+	string $textureFile = `getAttr $attributeName`;
+	textField -edit -text $textureFile $txtTextureSlot6;
+}
+
+global proc TextureSlot6NewOpen(){
+	global string $txtTextureSlot6;
+	global string $txtTextureSlot6Attr;
+
+	string $basicFilter = "*.dds";
+	string $result[] = `fileDialog2 -fileFilter $basicFilter -dialogStyle 2 -fileMode 1`;
+
+	
+	if (size($result) > 0) {
+		setAttr -type "string" $txtTextureSlot6Attr $result[0];
+		textField -edit -text $result[0] $txtTextureSlot6;
+	}
+}
+
+global proc TextureSlot6Replace(string $attributeName) {
+	global string $txtTextureSlot6;
+	global string $txtTextureSlot6Attr;
+
+	$txtTextureSlot6Attr = $attributeName;
+
+	string $textureFile = `getAttr $attributeName`;
+	textField -edit -text $textureFile $txtTextureSlot6;
+}
+
+
+
+
+
+global proc TextureSlot7New(string $attributeName) {
+	global string $txtTextureSlot7;
+	global string $txtTextureSlot7Attr;
+
+	$txtTextureSlot7Attr = $attributeName;
+
+	rowLayout -numberOfColumns 3 -adjustableColumn 2;
+			  text -label "Texture Slot7";
+			  $txtTextureSlot7 = `textField  -editable false`;
+			  button -label "Open" -command "TextureSlot7NewOpen";
+
+	string $textureFile = `getAttr $attributeName`;
+	textField -edit -text $textureFile $txtTextureSlot7;
+}
+
+global proc TextureSlot7NewOpen(){
+	global string $txtTextureSlot7;
+	global string $txtTextureSlot7Attr;
+
+	string $basicFilter = "*.dds";
+	string $result[] = `fileDialog2 -fileFilter $basicFilter -dialogStyle 2 -fileMode 1`;
+
+	
+	if (size($result) > 0) {
+		setAttr -type "string" $txtTextureSlot7Attr $result[0];
+		textField -edit -text $result[0] $txtTextureSlot7;
+	}
+}
+
+global proc TextureSlot7Replace(string $attributeName) {
+	global string $txtTextureSlot7;
+	global string $txtTextureSlot7Attr;
+
+	$txtTextureSlot7Attr = $attributeName;
+
+	string $textureFile = `getAttr $attributeName`;
+	textField -edit -text $textureFile $txtTextureSlot7;
+}
+
+
+
+
+
+
+global proc TextureSlot8New(string $attributeName) {
+	global string $txtTextureSlot8;
+	global string $txtTextureSlot8Attr;
+
+	$txtTextureSlot8Attr = $attributeName;
+
+	rowLayout -numberOfColumns 3 -adjustableColumn 2;
+			  text -label "Texture Slot8";
+			  $txtTextureSlot8 = `textField  -editable false`;
+			  button -label "Open" -command "TextureSlot8NewOpen";
+
+	string $textureFile = `getAttr $attributeName`;
+	textField -edit -text $textureFile $txtTextureSlot8;
+}
+
+global proc TextureSlot8NewOpen(){
+	global string $txtTextureSlot8;
+	global string $txtTextureSlot8Attr;
+
+	string $basicFilter = "*.dds";
+	string $result[] = `fileDialog2 -fileFilter $basicFilter -dialogStyle 2 -fileMode 1`;
+
+	
+	if (size($result) > 0) {
+		setAttr -type "string" $txtTextureSlot8Attr $result[0];
+		textField -edit -text $result[0] $txtTextureSlot8;
+	}
+}
+
+global proc TextureSlot8Replace(string $attributeName) {
+	global string $txtTextureSlot8;
+	global string $txtTextureSlot8Attr;
+
+	$txtTextureSlot8Attr = $attributeName;
+
+	string $textureFile = `getAttr $attributeName`;
+	textField -edit -text $textureFile $txtTextureSlot8;
+}
+
+
+
+
+
+
+
+
+
+
+global proc shaderFlags1New(string $attributeName) {
+	global string $nifShaderFlags1Attr;
+
+	$nifShaderFlags1Attr = $attributeName;
+	string $flags[] = `getAttr $attributeName`;
+
+	textScrollList -height 100
+	               -width 300
+				   nifShaderFlags1TxLs;
+	for($i = 0; $i < size($flags); $i++) {
+		textScrollList -edit -append $flags[$i] nifShaderFlags1TxLs;
+	}
+
+	rowLayout -numberOfColumns 3
+			  -columnWidth3 220 90 90
+			  -columnAttach3 "both" "both" "both";
+			  optionMenu -label "Shader Flag:"
+			             nifShaderFlags1OpMen;
+						 menuItem -label "SLSF1_Specular";
+						 menuItem -label "SLSF1_Skinned";
+						 menuItem -label "SLSF1_Temp_Refraction";
+						 menuItem -label "SLSF1_Vertex_Alpha";
+						 menuItem -label "SLSF1_Greyscale_To_PaletteColor";
+						 menuItem -label "SLSF1_Greyscale_To_PaletteAlpha";
+						 menuItem -label "SLSF1_Use_Falloff";
+						 menuItem -label "SLSF1_Environment_Mapping";
+						 menuItem -label "SLSF1_Recieve_Shadows";
+						 menuItem -label "SLSF1_Cast_Shadows";
+						 menuItem -label "SLSF1_Facegen_Detail_Map";
+						 menuItem -label "SLSF1_Parallax";
+						 menuItem -label "SLSF1_Model_Space_Normals";
+						 menuItem -label "SLSF1_Non-Projective_Shadows";
+						 menuItem -label "SLSF1_Landscape";
+						 menuItem -label "SLSF1_Refraction";
+						 menuItem -label "SLSF1_Fire_Refraction";
+						 menuItem -label "SLSF1_Eye_Environment_Mapping";
+						 menuItem -label "SLSF1_Hair_Soft_Lighting";
+						 menuItem -label "SLSF1_Screendoor_Alpha_Fade";
+						 menuItem -label "SLSF1_Localmap_Hide_Secret";
+						 menuItem -label "SLSF1_FaceGen_RGB_Tint";
+						 menuItem -label "SLSF1_Own_Emit";
+						 menuItem -label "SLSF1_Projected_UV";
+						 menuItem -label "SLSF1_Multiple_Textures";
+						 menuItem -label "SLSF1_Remappable_Textures";
+						 menuItem -label "SLSF1_Decal";
+						 menuItem -label "SLSF1_Dynamic_Decal";
+						 menuItem -label "SLSF1_Parallax_Occlusion";
+						 menuItem -label "SLSF1_External_Emittance";
+						 menuItem -label "SLSF1_Soft_Effect";
+						 menuItem -label "SLSF1_ZBuffer_Test";
+						 
+			  button -label "Add flag" -command "nifAddShaderFlag1" addShaderFlag1Bt;
+			  button -label "Delete flag" -command "nifDeleteShaderFlag1" deleteShaderFlag1Bt;
+}
+
+global proc shaderFlags1Replace(string $attributeName) {
+	global string $nifShaderFlags1Attr;
+
+	$nifShaderFlags1Attr = $attributeName;
+	textScrollList -edit -removeAll nifShaderFlags1TxLs;
+
+	string $flags[] = `getAttr $attributeName`;
+	for($i = 0; $i < size($flags); $i++) {
+		textScrollList -edit -append $flags[$i] nifShaderFlags1TxLs;
+	}
+
+}
+
+global proc nifShaderFlags2New(string $attributeName) {
+	global string $nifShaderFlags2Attr;
+
+	$nifShaderFlags2Attr = $attributeName;
+	string $flags[] = `getAttr $attributeName`;
+
+	textScrollList -height 50
+	               -width 300
+				   nifShaderFlags2TxLs;
+
+	for($i = 0; $i < size($flags); $i++) {
+		textScrollList -edit -append $flags[$i] nifShaderFlags2TxLs;
+	}
+
+	rowLayout -numberOfColumns 3
+			  -columnWidth3 220 90 90
+			  -columnAttach3 "both" "both" "both";
+			  optionMenu -label "Shader Flag:"
+			             nifShaderFlags2OpMen;
+						 menuItem -label "SLSF2_ZBuffer_Write";
+						 menuItem -label "SLSF2_LOD_Landscape";
+						 menuItem -label "SLSF2_LOD_Objects";
+						 menuItem -label "SLSF2_No_Fade";
+						 menuItem -label "SLSF2_Double_Sided";
+						 menuItem -label "SLSF2_Vertex_Colors";
+						 menuItem -label "SLSF2_Glow_Map";
+						 menuItem -label "SLSF2_Assume_Shadowmask";
+						 menuItem -label "SLSF2_Packed_Tangent";
+						 menuItem -label "SLSF2_Multi_Index_Snow";
+						 menuItem -label "SLSF2_Vertex_Lighting";
+						 menuItem -label "SLSF2_Uniform_Scale";
+						 menuItem -label "SLSF2_Fit_Slope";
+						 menuItem -label "SLSF2_Billboard";
+						 menuItem -label "SLSF2_No_LOD_Land_Blend";
+						 menuItem -label "SLSF2_EnvMap_Light_Fade";
+						 menuItem -label "SLSF2_Wireframe";
+						 menuItem -label "SLSF2_Weapon_Blood";
+						 menuItem -label "SLSF2_Hide_On_Local_Map";
+						 menuItem -label "SLSF2_Premult_Alpha";
+						 menuItem -label "SLSF2_Cloud_LOD";
+						 menuItem -label "SLSF2_Anisotropic_Lighting";
+						 menuItem -label "SLSF2_No_Transparency_Multisampling";
+						 menuItem -label "SLSF2_Unused01";
+						 menuItem -label "SLSF2_Multi_Layer_Parallax";
+						 menuItem -label "SLSF2_Soft_Lighting";
+						 menuItem -label "SLSF2_Rim_Lighting";
+						 menuItem -label "SLSF2_Back_Lighting";
+						 menuItem -label "SLSF2_Unused02";
+						 menuItem -label "SLSF2_Tree_Anim";
+						 menuItem -label "SLSF2_Effect_Lighting";
+						 menuItem -label "SLSF2_HD_LOD_Objects";
+			  button -label "Add flag" -command "nifAddShaderFlag2" addShaderFlag2Bt;
+			  button -label "Delete flag" -command "nifDeleteShaderFlag2" deleteShaderFlag2Bt;
+}
+
+global proc nifShaderFlags2Replace(string $attributeName) {
+	global string $nifShaderFlags2Attr;
+
+	$nifShaderFlags2Attr = $attributeName;
+	textScrollList -edit -removeAll nifShaderFlags2TxLs;
+
+	string $flags[] = `getAttr $attributeName`;
+	for($i = 0; $i < size($flags); $i++) {
+		textScrollList -edit -append $flags[$i] nifShaderFlags2TxLs;
+	}
+}
+
+global proc nifAddShaderFlag1() {
+	global string $nifShaderFlags1Attr;
+
+	string $flag = `optionMenu -query -value nifShaderFlags1OpMen`;
+	textScrollList -edit -append $flag nifShaderFlags1TxLs;
+
+	string $flags[] = `getAttr $nifShaderFlags1Attr`;
+	$flags[size($flags)] = $flag;
+	int $size = size($flags);
+
+	string $flags_command_string = "setAttr \"" + $nifShaderFlags1Attr + "\" -type \"stringArray\" " + $size;
+	for($i = 0; $i < size($flags); $i++) {
+		$flags_command_string = $flags_command_string + " \"" + $flags[$i] + "\"";
+	}
+	eval($flags_command_string);
+}
+
+global proc nifDeleteShaderFlag1() {
+	global string $nifShaderFlags1Attr;
+
+	int $indexes[] = `textScrollList -query -selectIndexedItem nifShaderFlags1TxLs`;
+
+	if(size($indexes) != 0) {
+		int $index = $indexes[0];
+		textScrollList -edit -removeIndexedItem $index nifShaderFlags1TxLs;
+
+		string $flags[] = `getAttr $nifShaderFlags1Attr`;
+		string $new_flags[];
+
+		$index = $index - 1;
+		for($i = 0; $i < $index; $i++) {
+			$new_flags[$i] = $flags[$i];
+		}
+		for($i = $index + 1; $i < size($flags); $i++) {
+			$new_flags[$i - 1] = $flags[$i];
+		}
+
+		int $size = size($new_flags);
+		string $flags_command_string = "setAttr \"" + $nifShaderFlags1Attr + "\" -type \"stringArray\" " + $size;
+		for($i = 0; $i < size($new_flags); $i++) {
+			$flags_command_string = $flags_command_string + " \"" + $new_flags[$i] + "\"";
+		}
+		eval($flags_command_string);
+	}
+}
+
+global proc nifAddShaderFlag2() {
+	global string $nifShaderFlags2Attr;
+
+	string $flag = `optionMenu -query -value nifShaderFlags2OpMen`;
+	textScrollList -edit -append $flag nifShaderFlags2TxLs;
+
+	string $flags[] = `getAttr $nifShaderFlags2Attr`;
+
+	$flags[size($flags)] = $flag;
+	int $size = size($flags);
+
+	string $flags_command_string = "setAttr \"" + $nifShaderFlags2Attr + "\" -type \"stringArray\" " + $size;
+	for($i = 0; $i < size($flags); $i++) {
+		$flags_command_string = $flags_command_string + " \"" + $flags[$i] + "\"";
+	}
+	eval($flags_command_string);
+}
+
+global proc nifDeleteShaderFlag2() {
+	global string $nifShaderFlags2Attr;
+
+	int $indexes[] = `textScrollList -query -selectIndexedItem nifShaderFlags2TxLs`;
+
+	if (size($indexes) > 0) {
+		int $index = $indexes[0];
+		textScrollList -edit -removeIndexedItem $index nifShaderFlags2TxLs;
+
+		string $flags[] = `getAttr $nifShaderFlags2Attr`;
+		string $new_flags[];
+
+		$index = $index - 1;
+		for($i = 0; $i < $index; $i++) {
+			$new_flags[$i] = $flags[$i];
+		}
+		for($i = $index + 1; $i < size($flags); $i++) {
+			$new_flags[$i - 1] = $flags[$i];
+		}
+
+		int $size = size($new_flags);
+		string $flags_command_string = "setAttr \"" + $nifShaderFlags2Attr + "\" -type \"stringArray\" " + $size;
+		for($i = 0; $i < size($new_flags); $i++) {
+			$flags_command_string = $flags_command_string + " \"" + $new_flags[$i] + "\"";
+		}
+		eval($flags_command_string);
+	}
+	
+}
+
+
+
