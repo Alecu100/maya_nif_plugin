@@ -52,6 +52,13 @@ MStatus initializePlugin( MObject obj ) {
 		return status;
 	}
 
+
+	status = plugin.registerNode("bsLightningShader", BSLightningShader::id, BSLightningShader::creator, BSLightningShader::initialize, MPxNode::kDependNode);
+	if (!status) {
+		status.perror("registerBSLightningShader");
+		return status;
+	}
+
 	//Execute the command to create the NifTools Menu
 	MGlobal::executeCommand("nifTranslatorMenuCreate");
 
@@ -101,7 +108,7 @@ MStatus NifTranslator::reader	 (const MFileObject& file, const MString& optionsS
 	NifImportingFixtureRef importer;
 
 	ImportType import_type = ImportType::Default;
-	Header file_header = ReadHeader(file.name().asChar());
+	Header file_header = ReadHeader(file.fullName().asChar());
 
 	vector<string> block_types = file_header.getBlockTypes();
 	vector<unsigned short> block_types_index = file_header.getBlockTypeIndex();
