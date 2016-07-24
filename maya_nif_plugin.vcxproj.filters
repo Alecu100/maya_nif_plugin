@@ -51,7 +51,6 @@
     <None Include="AEnifDismemberPartitionTemplate.mel">
       <Filter>Miscellaneous Files</Filter>
     </None>
-    <None Include="ClassDiagram1.cd" />
     <None Include="AEbsLightningShaderTemplate.mel">
       <Filter>Miscellaneous Files</Filter>
     </None>
@@ -153,6 +152,12 @@
     <ClInclude Include="include\Custom Nodes\BSLightningShader.h">
       <Filter>Header Files\Custom Nodes</Filter>
     </ClInclude>
+    <ClInclude Include="include\Custom Nodes\BSSegment.h">
+      <Filter>Header Files\Custom Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Custom Nodes\BSSubSegment.h">
+      <Filter>Header Files\Custom Nodes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Exporters\NifAnimationExporter.cpp">
@@ -249,6 +254,12 @@
       <Filter>Source Files\Exporters</Filter>
     </ClCompile>
     <ClCompile Include="src\Custom Nodes\BSLightningShader.cpp">
+      <Filter>Source Files\Custom Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Custom Nodes\BSSegment.cpp">
+      <Filter>Source Files\Custom Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Custom Nodes\BSSubSegment.cpp">
       <Filter>Source Files\Custom Nodes</Filter>
     </ClCompile>
   </ItemGroup>

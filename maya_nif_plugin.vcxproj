@@ -110,6 +110,7 @@
     <ProjectName>maya_nif_plugin</ProjectName>
     <ProjectGuid>{DE2F121F-8326-4144-A766-444451895AFA}</ProjectGuid>
     <RootNamespace>Maya NIF Plugin</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release - 2009|Win32'" Label="Configuration">
@@ -135,7 +136,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release - 2016|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release - 8.0|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -195,7 +196,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug - 2016|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug - 2015 x64|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -379,7 +380,7 @@
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug - Maya 2012 x64|Win32'">D:\Autodesk\NifExporter\niflib\include;D:\Autodesk\Maya2012\include;$(IncludePath)</IncludePath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug - 8.5|x64'">D:\Autodesk\NifExporter\niflib\include;D:\Autodesk\Maya2012\include;$(IncludePath)</IncludePath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug - 2012|x64'">D:\maya\maya_nif_plugin\niflib\include;D:\maya\maya_nif_plugin\include;D:\maya\Maya2012\include;$(IncludePath)</IncludePath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug - 2016|x64'">$(SolutionDir)\niflib\include;$(SolutionDir)\include;$(SolutionDir)\..\Maya2016\include;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug - 2016|x64'">$(SolutionDir)include;$(SolutionDir)niflib\include;$(SolutionDir)..\Maya2016\include;$(IncludePath)</IncludePath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug - 2015 x64|x64'">D:\maya\maya_nif_plugin\niflib\include;D:\maya\maya_nif_plugin\include;D:\maya\Maya2015\include;$(IncludePath)</IncludePath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug - 2016 x64|x64'">$(SolutionDir)\niflib\include;$(SolutionDir)\include;$(SolutionDir)\..\Maya2016\include;$(IncludePath)</IncludePath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug - Maya 2012 x64|x64'">D:\maya\Maya2012\include\maya;D:\maya\maya_nif_plugin\niflib;D:\maya\maya_nif_plugin\niflib\include;$(IncludePath)</IncludePath>
@@ -391,7 +392,7 @@
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug - Maya 2012 x64|Win32'">D:\Autodesk\NifExporter\niflib\lib;D:\Autodesk\Maya2012\lib;$(LibraryPath)</LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug - 8.5|x64'">D:\Autodesk\NifExporter\niflib\lib;D:\Autodesk\NifExporter\niflib\x64\Debug - Static;D:\Autodesk\Maya2012\lib;$(LibraryPath)</LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug - 2012|x64'">D:\maya\maya_nif_plugin\niflib\lib;D:\maya\Maya2012\lib;$(LibraryPath)</LibraryPath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug - 2016|x64'">$(SolutionDir)\niflib\lib;$(SolutionDir)\..\Maya2016\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug - 2016|x64'">$(SolutionDir)niflib\lib;$(SolutionDir)..\Maya2016\lib;$(LibraryPath)</LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug - 2015 x64|x64'">D:\maya\maya_nif_plugin\niflib\lib;D:\maya\Maya2015\lib;$(LibraryPath)</LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug - 2016 x64|x64'">$(SolutionDir)\niflib\lib;$(SolutionDir)\..\Maya2016\lib;$(LibraryPath)</LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug - Maya 2012 x64|x64'">D:\maya\maya_nif_plugin\niflib\lib;D:\maya\Maya2012\lib;$(LibraryPath)</LibraryPath>
@@ -608,24 +609,28 @@ copy /Y "$(ProjectDir)\nifTranslatorMenuRemove.mel" "$(USERPROFILE)\Documents\ma
     <ClCompile>
       <AdditionalOptions>/Gm /Zi /I "."  /D "_DEBUG" /c %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\Maya2016\include;niflib;niflib\bin;niflib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;_AFXDLL;_MBCS;NT_PLUGIN;REQUIRE_IOSTREAM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeaderOutputFile>
       </PrecompiledHeaderOutputFile>
       <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile />
     </ClCompile>
     <Link>
       <AdditionalOptions>/subsystem:windows /dll /incremental:yes /debug /export:initializePlugin /export:uninitializePlugin %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>niflib_dll_debug.lib;Foundation.lib;OpenMaya.lib;OpenMayaAnim.lib;OpenMayaUI.lib;OpenMayaFX.lib;OpenMayaRender.lib;Image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>niflib_dll_debug_x64.lib;Foundation.lib;OpenMaya.lib;OpenMayaAnim.lib;OpenMayaUI.lib;OpenMayaFX.lib;OpenMayaRender.lib;Image.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(SolutionDir)\..\Maya2016\bin\plug-ins\nifTranslator_debug.mll</OutputFile>
       <AdditionalLibraryDirectories>$(SolutionDir)\..\Maya2016\lib;niflib\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ProgramDatabaseFile>D:\Autodesk\Maya2012\bin\plug-ins\maya_nif_plugin.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(SolutionDir)..\Maya2016\bin\plug-ins\nifTranslator_debug.pdb</ProgramDatabaseFile>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <ImportLibrary>Debug/NIF Import/Export.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
       <Command>copy /Y "$(ProjectDir)\nifTranslatorOpts.mel" "$(USERPROFILE)\Documents\maya\2016\scripts"
@@ -1075,6 +1080,7 @@ copy /Y "$(ProjectDir)\nifTranslatorMenuRemove.mel" "$(USERPROFILE)\Documents\ma
       </PrecompiledHeaderOutputFile>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <PrecompiledHeaderFile />
     </ClCompile>
     <Link>
       <AdditionalOptions>/subsystem:windows /incremental:no /export:initializePlugin /export:uninitializePlugin </AdditionalOptions>
@@ -1100,7 +1106,6 @@ copy /Y "$(ProjectDir)\AEnifDismemberPartitionTemplate.mel" "$(USERPROFILE)\Docu
   <ItemGroup>
     <None Include="AEbsLightningShaderTemplate.mel" />
     <None Include="AEnifDismemberPartitionTemplate.mel" />
-    <None Include="ClassDiagram1.cd" />
     <None Include="nifTranslatorMenuCreate.mel" />
     <None Include="nifTranslatorMenuRemove.mel" />
     <None Include="nifTranslatorOpts.mel" />
@@ -1113,6 +1118,8 @@ copy /Y "$(ProjectDir)\AEnifDismemberPartitionTemplate.mel" "$(USERPROFILE)\Docu
     <ClInclude Include="include\Common\NifTranslatorRefObject.h" />
     <ClInclude Include="include\Common\NifTranslatorUtils.h" />
     <ClInclude Include="include\Custom Nodes\BSLightningShader.h" />
+    <ClInclude Include="include\Custom Nodes\BSSegment.h" />
+    <ClInclude Include="include\Custom Nodes\BSSubSegment.h" />
     <ClInclude Include="include\Custom Nodes\NifDismemberPartition.h" />
     <ClInclude Include="include\Exporters\NifAnimationExporter.h" />
     <ClInclude Include="include\Exporters\NifDefaultExportingFixture.h" />
@@ -1148,6 +1155,8 @@ copy /Y "$(ProjectDir)\AEnifDismemberPartitionTemplate.mel" "$(USERPROFILE)\Docu
     <ClCompile Include="src\Common\NifTranslatorRefObject.cpp" />
     <ClCompile Include="src\Common\NifTranslatorUtils.cpp" />
     <ClCompile Include="src\Custom Nodes\BSLightningShader.cpp" />
+    <ClCompile Include="src\Custom Nodes\BSSegment.cpp" />
+    <ClCompile Include="src\Custom Nodes\BSSubSegment.cpp" />
     <ClCompile Include="src\Custom Nodes\NifDismemberPartition.cpp" />
     <ClCompile Include="src\Exporters\NifAnimationExporter.cpp" />
     <ClCompile Include="src\Exporters\NifDefaultExportingFixture.cpp" />

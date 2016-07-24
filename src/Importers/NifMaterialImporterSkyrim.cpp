@@ -21,7 +21,7 @@ void NifMaterialImporterSkyrim::GatherMaterialsAndTextures( NiAVObjectRef & root
 		NiAlphaPropertyRef alpha_property = NULL;
 		BSLightingShaderPropertyRef shader_property = NULL;
 
-		array<2, Ref<NiProperty>> properties = geometry->GetBSProperties(); 
+		Niflib::array<2, Ref<NiProperty>> properties = geometry->GetBSProperties();
 
 		for(int i = 0; i < 2; i++) {
 			NiPropertyRef current_property = properties[i]; 

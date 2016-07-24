@@ -41,6 +41,7 @@
 #include <ComplexShape.h>
 #include <MatTexCollection.h>
 #include <niflib.h>
+#include "nif_basic_types.h"
 #include <obj/NiAlphaProperty.h>
 #include <obj/NiMaterialProperty.h>
 #include <obj/NiNode.h>
@@ -61,7 +62,6 @@
 #include <obj/NiKeyframeData.h>
 #include <obj/NiTextureProperty.h>
 #include <obj/NiImage.h>
-#include <Ref.h>
 
 using namespace Niflib;
 using namespace std;

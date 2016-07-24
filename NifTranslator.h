@@ -147,107 +147,109 @@ POSSIBILITY OF SUCH DAMAGE. */
 using namespace Niflib;
 using namespace std;
 
-enum ImportType {Default, SkyrimFallout, AnimationKF};
+enum ImportType
+{
+	Default,
+	SkyrimFallout,
+	AnimationKF
+};
 
 //--NifTranslator Class--//
 
 //This class implements the file translation functionality of the plug-in
-class NifTranslator : public MPxFileTranslator {
+class NifTranslator : public MPxFileTranslator
+{
 public:
 	//Constructor
-	NifTranslator() {}
+	NifTranslator()
+	{
+	}
 
 	//Destructor
-	virtual ~NifTranslator () {};
+	virtual ~NifTranslator()
+	{
+	};
 
 	//Factory function for Maya to use to create a NifTranslator
-	static void* creator() { return new NifTranslator(); }
+	static void* creator()
+	{
+		return new NifTranslator();
+	}
 
 	//This routine is called by Maya when it is necessary to load a file of a type supported by this translator.
 	//Responsible for reading the contents of the given file, and creating Maya objects via API or MEL calls to reflect the data in the file.
-	MStatus reader (const MFileObject& file, const MString& optionsString, MPxFileTranslator::FileAccessMode mode);
-	
+	MStatus reader(const MFileObject& file, const MString& optionsString, MPxFileTranslator::FileAccessMode mode);
+
 	//TODO:  Upgrade the write function for the new Niflib... not to mention make it work at all.
 	//This routine is called by Maya when it is necessary to save a file of a type supported by this translator.
 	//Responsible for traversing all objects in the current Maya scene, and writing a representation to the given file in the supported format.
-	MStatus writer (const MFileObject& file, const MString& optionsString, MPxFileTranslator::FileAccessMode mode);
-	
+	MStatus writer(const MFileObject& file, const MString& optionsString, MPxFileTranslator::FileAccessMode mode);
+
 	//Returns true if the class has a read method and false otherwise
-	bool haveReadMethod () const { return true; }
+	bool haveReadMethod() const
+	{
+		return true;
+	}
 
 	//Returns true if the class has a reference method and false otherwise
-	bool haveReferenceMethod () const { return false; }
+	bool haveReferenceMethod() const
+	{
+		return false;
+	}
 
 	//Returns true if the class has a write method and false otherwise
-	bool haveWriteMethod () const { return true; }
+	bool haveWriteMethod() const
+	{
+		return true;
+	}
 
 	//Returns true if the class can deal with namespaces and false otherwise
-	bool haveNamespaceSupport () const { return false; }
+	bool haveNamespaceSupport() const
+	{
+		return false;
+	}
 
-	MStatus doIt (const MArgList& rkArgs) { return MS::kSuccess; }
+	MStatus doIt(const MArgList& rkArgs)
+	{
+		return MS::kSuccess;
+	}
 
 	//Returns a string containing the default extension of the translator, excluding the period at the beginning
-	MString  defaultExtension () const { return MString("nif"); }
+	MString defaultExtension() const
+	{
+		return MString("nif");
+	}
 
 	//Returns a string which sets the filter in the open file dialog box
-	MString filter () const { return MString("*.nif;*.kf"); }
+	MString filter() const
+	{
+		return MString("*.nif;*.kf");
+	}
 
 	//Returns true if the class can open and import files
 	//Returns false if the class can only import files
-	bool canBeOpened() const { return true; }
+	bool canBeOpened() const
+	{
+		return true;
+	}
 
 	// This routine must use passed data to determine if the file is of a type supported by this translator
-	MFileKind identifyFile (const MFileObject& fileName, const char* buffer, short size) const;
+	MFileKind identifyFile(const MFileObject& fileName, const char* buffer, short size) const;
 
 private:
 	//Map to hold existing nodes that were found for connecting skins to
 	//skeletons on import
 	map<string, MDagPath> existingNodes;
 	//maps to hold information about what has already been imported
-	map< NiAVObjectRef, MDagPath > importedNodes;
-	map< unsigned int, MObject > importedMaterials;
+	map<NiAVObjectRef, MDagPath> importedNodes;
+	map<unsigned int, MObject> importedMaterials;
 	MatTexCollection mtCollection;
-	map< unsigned int, MObject > importedTextures;
-	vector< pair<NiAVObjectRef, MObject> > importedMeshes;
+	map<unsigned int, MObject> importedTextures;
+	vector<pair<NiAVObjectRef, MObject>> importedMeshes;
 	MFileObject importFile; //The file currently being imported
-
-	void AdjustSkeleton( NiAVObjectRef & root );
-	MObject ImportMaterial( MaterialWrapper & mw );
-	MObject GetExistingJoint( const string & name );
-	MObject MakeJoint( MObject & jointObj );
-	MString MakeMayaName( const string & nifName );
-	string MakeNifName( const MString & mayaName );
-	void ImportControllers( NiAVObjectRef niAVObj, MDagPath & path );
-	void ImportNodes( NiAVObjectRef niAVObj, map< NiAVObjectRef, MDagPath > & objs, MObject parent = MObject::kNullObj );
-	MDagPath ImportMesh( NiAVObjectRef root, MObject parent = MObject::kNullObj );
-	void ImportMaterialsAndTextures( NiAVObjectRef & root );
-	void ConnectShader( const vector<NiPropertyRef> & properties, MDagPath meshPath, MSelectionList sel_list );
-	MObject ImportTexture( TextureWrapper & tw );
-	void ExportDAGNodes();
-	//A map to hold associations between names and NIF objects
-	map<string, unsigned int> textures;
-	NiNodeRef sceneRoot;
-	void ExportFileTextures();
-	list< MObject > meshes;
-	//A map to hold associations between DAG paths and NIF object
-	map<string, NiNodeRef> nodes; 
-	void ExportAV( NiAVObjectRef avObj, MObject dagNode );
-	NiNodeRef GetDAGParent( MObject dagNode );
-	void ExportMesh( MObject dagNode );
-	//A mapping to hold assotiation between the name of a mesh objects and
-	//the skin cluster that deforms it.
-	map< string, vector<MObject> > meshClusters;
-	void EnumerateSkinClusters();
-	//A map to hold associations between NIF property lists and Shaders
-	map< string, vector<NiPropertyRef> > shaders;
-	void ExportShaders();
-	void GetColor( MFnDependencyNode& fn, MString name, MColor & color, MObject & texture );
-	void ParseOptionString( const MString & optionString );
-	bool isExportedShape(const MString& name);
-	bool isExportedJoint(const MString& name);
 };
 
-MMatrix MatrixN2M( const Matrix44 & n );
-Matrix44 MatrixM2N( const MMatrix & n );
+MMatrix MatrixN2M(const Matrix44& n);
+Matrix44 MatrixM2N(const MMatrix& n);
 
 #endif

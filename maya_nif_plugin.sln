@@ -1,13 +1,13 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "maya_nif_plugin", "maya_nif_plugin.vcxproj", "{DE2F121F-8326-4144-A766-444451895AFA}"
 	ProjectSection(ProjectDependencies) = postProject
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E} = {19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "niflib", "niflib\niflib.vcxproj", "{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Niflib", "niflib\niflib_VC2015.vcxproj", "{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,9 +95,10 @@ Global
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Debug - 2012|Win32.ActiveCfg = Debug - Static|x64
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Debug - 2012|x64.ActiveCfg = Debug - DLL|x64
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Debug - 2012|x64.Build.0 = Debug - DLL|x64
-		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Debug - 2016|Win32.ActiveCfg = Debug - 2016|x64
-		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Debug - 2016|x64.ActiveCfg = Debug - 2016|x64
-		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Debug - 2016|x64.Build.0 = Debug - 2016|x64
+		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Debug - 2016|Win32.ActiveCfg = Debug - Static|Win32
+		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Debug - 2016|Win32.Build.0 = Debug - Static|Win32
+		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Debug - 2016|x64.ActiveCfg = Debug - DLL|x64
+		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Debug - 2016|x64.Build.0 = Debug - DLL|x64
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Debug - 8.5|Win32.ActiveCfg = Debug - Static|x64
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Debug - 8.5|x64.ActiveCfg = Release - Static|x64
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Debug - 8.5|x64.Build.0 = Release - Static|x64
@@ -119,10 +120,10 @@ Global
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release - 2012 x64|Win32.ActiveCfg = Release - Static|x64
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release - 2012 x64|x64.ActiveCfg = Release - DLL|x64
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release - 2012 x64|x64.Build.0 = Release - DLL|x64
-		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release - 2016|Win32.ActiveCfg = Release - 2016|Win32
-		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release - 2016|Win32.Build.0 = Release - 2016|Win32
-		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release - 2016|x64.ActiveCfg = Release - 2016|x64
-		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release - 2016|x64.Build.0 = Release - 2016|x64
+		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release - 2016|Win32.ActiveCfg = Release - Static|Win32
+		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release - 2016|Win32.Build.0 = Release - Static|Win32
+		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release - 2016|x64.ActiveCfg = Release - DLL|x64
+		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release - 2016|x64.Build.0 = Release - DLL|x64
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release - 8.5|Win32.ActiveCfg = Release - Static|x64
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release - 8.5|x64.ActiveCfg = Release - Static|x64
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release - 8.5|x64.Build.0 = Release - Static|x64

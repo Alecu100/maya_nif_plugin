@@ -600,8 +600,8 @@ MDagPath NifMeshImporterSkyrim::ImportMesh( NiAVObjectRef root, MObject parent )
 			MString mel_command = "polyBlindData -id ";
 			mel_command += blind_data_id;
 			mel_command += " -associationType \"face\" -ldn \"dismemberValue\" -ind 1";
-			MGlobal::clearSelectionList();
-			MGlobal::setActiveSelectionList(selected_faces);
+			status = MGlobal::clearSelectionList();
+			status = MGlobal::setActiveSelectionList(selected_faces);
 			status = MGlobal::executeCommand(mel_command);
 
 			blind_data_mesh.updateSurface();

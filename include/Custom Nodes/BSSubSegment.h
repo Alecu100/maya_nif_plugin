@@ -1,6 +1,5 @@
-#ifndef _NIFTEXTURECONNECTOR_H
-#define _NIFTEXTURECONNECTOR_H
-
+#ifndef _BSSUBSEGMENT_H
+#define _BSSUBSEGMENT_H
 
 #include <maya/MDagPath.h>
 #include <maya/MDagPathArray.h>
@@ -48,44 +47,35 @@
 #include <maya/MAnimUtil.h>
 #include <maya/MItMeshPolygon.h>
 #include <maya/MItMeshVertex.h>
-#include <maya/MProgressWindow.h>
+#include <maya/MPxNode.h>
+#include <maya/MFnMessageAttribute.h>
+#include <maya/MFnTypedAttribute.h>
 
-#include <string> 
-#include <vector>
-#include <sstream>
-#include <cmath>
-#include <iomanip>
-#include <iostream>
+#include <gen/enums.h>
 
-#include <ComplexShape.h>
+using namespace Niflib;
 
-#include "include/Common/NifTranslatorRefObject.h"
+class BSSubSegment : public MPxNode
+{
+public:
 
-class NifTextureConnector;
+	BSSubSegment();
 
-typedef Ref<NifTextureConnector> NifTextureConnectorRef;
+	virtual ~BSSubSegment();
 
-class NifTextureConnector : public NifTranslatorRefObject {
-protected:
+	virtual MStatus compute(const MPlug& plug, MDataBlock& dataBlock);
 
-	MFnDependencyNode texturePlacement;
+	static void* creator();
 
-	int uvSet;
+	static MStatus initialize();
 
 public:
 
-	NifTextureConnector();
+	static MObject targetFaces;
 
-	NifTextureConnector(MObject texture_placement, int uv_set);
+	static MObject targetShape;
 
-	virtual void ConnectTexture(MDagPath mesh_path);
-
-	virtual string asString( bool verbose = false ) const;
-
-	virtual const Type& GetType() const;
-
-	const static Type TYPE;
+	static MTypeId id;
 };
 
 #endif
-

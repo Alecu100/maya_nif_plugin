@@ -130,6 +130,10 @@ global proc int nifTranslatorOpts ( string $parent,
 					      -value 1
 						  -annotation "Tries to bind newly imported skin files to an already imported skeleton.  Only works for identical skeletons."
 						  impSkelCombCk;
+				checkBox -label "Import all nodes as joints" 
+					      -value 0
+						  -annotation "This imports all the nodes in a file as joints. Used to import files with skeleton only."
+						  impAllNodesAsJointsCk;
 				rowLayout -numberOfColumns 3
 					  -columnWidth3 90 50 120
 					  -columnAttach3 "both" "both" "both";
@@ -289,6 +293,14 @@ global proc int nifTranslatorOpts ( string $parent,
 				radioButton -label "Generate fallout/skyrim specific tangent space data" nifTranslatorFalloutSkyrimTangentSpaceDataRd;
 			setParent exportColumnLayout;
 			
+			checkBox -label "Export Flatened Skeleton" 
+						-value 0
+						-annotation "This options flatens the entire hierarchy of the skeleton."
+						expFlatenedSkeletonCk;
+			checkBox -label "Export Scene Root as BSFadeNode" 
+						-value 0
+						-annotation "This options changes the root of the nif file to be a bs fade node."
+						expBsFadeNodeRootCk;
 			checkBox -label "Export White Ambient if Texture is Present" 
 					      -value 1
 						  -annotation "Allows you to keep your ambient colors looking nice in Maya and convert them to white on export."
@@ -525,6 +537,27 @@ global proc int nifTranslatorOpts ( string $parent,
 						checkBox -edit -value false useNameManglingCk;
 					}
 				}
+				if ($optionBreakDown[0] == "exportFlatenedSkeleton") {
+					if ($optionBreakDown[1] == "1") {
+						checkBox -edit -value true expFlatenedSkeletonCk;
+					} else {
+						checkBox -edit -value false expFlatenedSkeletonCk;
+					}
+				}
+				if ($optionBreakDown[0] == "exportBsFadeNodeRoot") {
+					if ($optionBreakDown[1] == "1") {
+						checkBox -edit -value true expBsFadeNodeRootCk;
+					} else {
+						checkBox -edit -value false expBsFadeNodeRootCk;
+					}
+				}
+				if ($optionBreakDown[0] == "importAllNodesAsJoints") {
+					if ($optionBreakDown[1] == "1") {
+						checkBox -edit -value true impAllNodesAsJointsCk;
+					} else {
+						checkBox -edit -value false impAllNodesAsJointsCk;
+					}
+				}
 			}
 		}
 		$bResult = 1;
@@ -689,9 +722,18 @@ global proc int nifTranslatorOpts ( string $parent,
 		
 		$ckVal = `checkBox -query -value expMorRenameCk`;
 		$currentOptions = $currentOptions + "exportMorRename=" + $ckVal + ";";
+
+		$ckVal = `checkBox -query -value expFlatenedSkeletonCk`;
+		$currentOptions = $currentOptions + "exportFlatenedSkeleton=" + $ckVal + ";";
+
+		$ckVal = `checkBox -query -value expBsFadeNodeRootCk`;
+		$currentOptions = $currentOptions + "exportBsFadeNodeRoot=" + $ckVal + ";";
 		
 		$ckVal = `checkBox -query -value impSkelCombCk`;
 		$currentOptions = $currentOptions + "importSkelComb=" + $ckVal + ";";
+
+		$ckVal = `checkBox -query -value impAllNodesAsJointsCk`;
+		$currentOptions = $currentOptions + "importAllNodesAsJoints=" + $ckVal + ";";
 		
 		string $partBones = `textField -query -text expPartBonesTx`;
 		$currentOptions = $currentOptions + "exportPartBones=" + $partBones + ";";
