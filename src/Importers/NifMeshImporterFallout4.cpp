@@ -40,7 +40,7 @@ MObject NifMeshImporterFallout4::connectSubSegment(MObject blind_data_object, in
 	MPlug type_id;
 	MFnDependencyNode node_out_mesh;
 
-	input_mesh.connectedTo(connections, true, false);
+	/*input_mesh.connectedTo(connections, true, false);
 	out_mesh = connections[0];
 	node_out_mesh.setObject(out_mesh.node());
 	type_id = node_out_mesh.findPlug("typeId");
@@ -68,7 +68,7 @@ MObject NifMeshImporterFallout4::connectSubSegment(MObject blind_data_object, in
 
 		return sub_segment_node.object();
 	}
-
+*/
 	return MObject();
 }
 

@@ -27,7 +27,7 @@ void NifNodeImporterFallout4::ImportNodes(NiAVObjectRef niAVObj, map<NiAVObjectR
 			nodesToTest = nnr->GetChildren();
 		}
 	}
-	else if (niAVObj->IsDerivedType(NiTriBasedGeom::TYPE))
+	else if (niAVObj->IsDerivedType(BSShape::TYPE))
 	{
 		//This is a shape, so test it.
 		nodesToTest.push_back(niAVObj);
@@ -35,8 +35,8 @@ void NifNodeImporterFallout4::ImportNodes(NiAVObjectRef niAVObj, map<NiAVObjectR
 
 	for (size_t i = 0; i < nodesToTest.size(); ++i)
 	{
-		NiTriBasedGeomRef niTriGeom = DynamicCast<NiTriBasedGeom>(nodesToTest[i]);
-		if (niTriGeom && niTriGeom->IsSkin())
+		BSShapeRef bs_shape = DynamicCast<BSShape>(nodesToTest[i]);
+		if (bs_shape && bs_shape->IsSkin())
 		{
 			is_skin = true;
 			break;
