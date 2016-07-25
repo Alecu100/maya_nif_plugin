@@ -139,9 +139,12 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include "include/Importers/NifKFImportingFixture.h"
 #include "include/Exporters/NifKFAnimationExporter.h"
 #include "include/Exporters/NifKFExportingFixture.h"
-#include "include/Importers/NifSkyrimImportingFixture.h"
+#include "include/Importers/NifImportingFixtureSkyrim.h"
+#include "include/Importers/NifImportingFixtureFallout4.h"
 #include "include/Custom Nodes/NifDismemberPartition.h"
 #include "include/Custom Nodes/BSLightningShader.h"
+#include "include/Custom Nodes/BSSegment.h"
+#include "include/Custom Nodes/BSSubSegment.h"
 #include "include/Exporters/NifSkyrimExportingFixture.h"
 
 using namespace Niflib;
@@ -151,7 +154,8 @@ enum ImportType
 {
 	Default,
 	SkyrimFallout,
-	AnimationKF
+	AnimationKF,
+	Fallout4
 };
 
 //--NifTranslator Class--//

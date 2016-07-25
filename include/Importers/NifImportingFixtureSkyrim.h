@@ -1,5 +1,5 @@
-#ifndef _NIFSKYRIMIMPORTINGFIXTURE_H
-#define _NIFSKYRIMIMPORTINGFIXTURE_H
+#ifndef _NIFIMPORTINGFIXTURESKYRIM_H
+#define _NIFIMPORTINGFIXTURESKYRIM_H
 
 #include <maya/MDagPath.h>
 #include <maya/MDagPathArray.h>
@@ -92,16 +92,16 @@
 #include "include/Importers/NifMaterialImporterSkyrim.h"
 #include "include/Importers/NifMeshImporterSkyrim.h"
 
-class NifSkyrimImportingFixture;
+class NifImportingFixtureSkyrim;
 
-typedef Ref<NifSkyrimImportingFixture> NifSkyrimImportingFixtureRef;
+typedef Ref<NifImportingFixtureSkyrim> NifImportingFixtureSkyrimRef;
 
-class NifSkyrimImportingFixture : public NifDefaultImportingFixture {
+class NifImportingFixtureSkyrim : public NifDefaultImportingFixture {
 public:
 
-	NifSkyrimImportingFixture();
+	NifImportingFixtureSkyrim();
 
-	NifSkyrimImportingFixture(NifTranslatorOptionsRef translatorOptions, NifTranslatorDataRef translatorData, NifTranslatorUtilsRef translatorUtils);
+	NifImportingFixtureSkyrim(NifTranslatorOptionsRef translatorOptions, NifTranslatorDataRef translatorData, NifTranslatorUtilsRef translatorUtils);
 
 	virtual string asString( bool verbose = false ) const;
 

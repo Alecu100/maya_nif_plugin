@@ -1,5 +1,5 @@
-#ifndef _NIFMESHIMPORTERSKYRIM_H
-#define _NIFMESHIMPORTERSKYRIM_H
+#ifndef _NIFIMPORTINGFIXTUREFALLOUT4_H
+#define _NIFIMPORTINGFIXTUREFALLOUT4_H
 
 #include <maya/MDagPath.h>
 #include <maya/MDagPathArray.h>
@@ -47,8 +47,7 @@
 #include <maya/MAnimUtil.h>
 #include <maya/MItMeshPolygon.h>
 #include <maya/MItMeshVertex.h>
-#include <maya/MFnStringArrayData.h>
-#include <maya/MFnArrayAttrsData.h>
+#include <maya/MProgressWindow.h>
 
 #include <string> 
 #include <vector>
@@ -57,7 +56,7 @@
 #include <iomanip>
 #include <iostream>
 
-#include <BSComplexShape.h>
+#include <ComplexShape.h>
 #include <MatTexCollection.h>
 #include <niflib.h>
 #include <obj/NiAlphaProperty.h>
@@ -80,41 +79,35 @@
 #include <obj/NiKeyframeData.h>
 #include <obj/NiTextureProperty.h>
 #include <obj/NiImage.h>
-#include <obj/BSShaderTextureSet.h>
 
-#include "include/Common/NifTranslatorRefObject.h"
-#include "include/Common/NifTranslatorOptions.h"
 #include "include/Common/NifTranslatorData.h"
+#include "include/Common/NifTranslatorOptions.h"
 #include "include/Common/NifTranslatorUtils.h"
-#include "include/Common/NifTranslatorFixtureItem.h"
+#include "include/Importers/NifNodeImporterFallout4.h"
+#include "include/Importers/NifImportingFixture.h"
+#include "include/Importers/NifAnimationImporter.h"
 #include "include/Importers/NifMeshImporter.h"
-#include "include/Custom Nodes/NifDismemberPartition.h"
+#include "include/Importers/NifMaterialImporter.h"
+#include "include/Importers/NifDefaultImportingFixture.h"
+#include "include/Importers/NifMaterialImporterSkyrim.h"
+#include "include/Importers/NifMeshImporterFallout4.h"
 
-using namespace Niflib;
-using namespace std;
+class NifImportingFixtureFallout4;
 
-class NifMeshImporterFallout4;
+typedef Ref<NifImportingFixtureFallout4> NifImportingFixtureFallout4Ref;
 
-typedef Ref<NifMeshImporterFallout4> NifMeshImporterFallout4f;
-
-class NifMeshImporterFallout4 : public NifMeshImporter {
+class NifImportingFixtureFallout4 : public NifDefaultImportingFixture {
 public:
 
-	NifMeshImporterFallout4();
+	NifImportingFixtureFallout4();
 
-	NifMeshImporterFallout4(NifTranslatorOptionsRef translatorOptions, NifTranslatorDataRef translatorData, NifTranslatorUtilsRef translatorUtils);
-
-	virtual MDagPath ImportMesh(NiAVObjectRef root, MObject parent);
+	NifImportingFixtureFallout4(NifTranslatorOptionsRef translatorOptions, NifTranslatorDataRef translatorData, NifTranslatorUtilsRef translatorUtils);
 
 	virtual string asString(bool verbose = false) const;
 
 	virtual const Type& GetType() const;
 
 	const static Type TYPE;
-
-private:
-
-	MObject connectSubSegment(MObject blind_data_mesh, int blind_data_id);
 };
 
 #endif

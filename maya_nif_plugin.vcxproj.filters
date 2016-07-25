@@ -134,9 +134,6 @@
     <ClInclude Include="include\Importers\NifMeshImporterSkyrim.h">
       <Filter>Header Files\Importers</Filter>
     </ClInclude>
-    <ClInclude Include="include\Importers\NifSkyrimImportingFixture.h">
-      <Filter>Header Files\Importers</Filter>
-    </ClInclude>
     <ClInclude Include="include\Custom Nodes\NifDismemberPartition.h">
       <Filter>Header Files\Custom Nodes</Filter>
     </ClInclude>
@@ -157,6 +154,18 @@
     </ClInclude>
     <ClInclude Include="include\Custom Nodes\BSSubSegment.h">
       <Filter>Header Files\Custom Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Importers\NifNodeImporterFallout4.h">
+      <Filter>Header Files\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Importers\NifMeshImporterFallout4.h">
+      <Filter>Header Files\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Importers\NifImportingFixtureSkyrim.h">
+      <Filter>Header Files\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Importers\NifImportingFixtureFallout4.h">
+      <Filter>Header Files\Importers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -238,9 +247,6 @@
     <ClCompile Include="src\Importers\NifTextureConnector.cpp">
       <Filter>Source Files\Importers</Filter>
     </ClCompile>
-    <ClCompile Include="src\Importers\NifSkyrimImportingFixture.cpp">
-      <Filter>Source Files\Importers</Filter>
-    </ClCompile>
     <ClCompile Include="src\Custom Nodes\NifDismemberPartition.cpp">
       <Filter>Source Files\Custom Nodes</Filter>
     </ClCompile>
@@ -261,6 +267,18 @@
     </ClCompile>
     <ClCompile Include="src\Custom Nodes\BSSubSegment.cpp">
       <Filter>Source Files\Custom Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Importers\NifNodeImporterFallout4.cpp">
+      <Filter>Source Files\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Importers\NifMeshImporterFallout4.cpp">
+      <Filter>Source Files\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Importers\NifImportingFixtureSkyrim.cpp">
+      <Filter>Source Files\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Importers\NifImportingFixtureFallout4.cpp">
+      <Filter>Source Files\Importers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

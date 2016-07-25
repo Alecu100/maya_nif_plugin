@@ -1,6 +1,5 @@
 #include "NifTranslator.h"
-#include "include/Custom Nodes/BSSegment.h"
-#include "include/Custom Nodes/BSSubSegment.h"
+
 
 //#define _DEBUG
 ofstream out;
@@ -144,10 +143,12 @@ MStatus NifTranslator::reader(const MFileObject& file, const MString& optionsStr
 	{
 		import_type = ImportType::AnimationKF;
 	}
-	else if (block_types[block_types_index[0]] == BSFadeNode::TYPE.GetTypeName() ||
-		file_header.getUserVersion() == 12 || (file_header.getUserVersion() == 11 && file_header.getUserVersion2() == 57))
+	else if (file_header.getUserVersion() == 12 && file_header.getUserVersion2() == 83)
 	{
 		import_type = ImportType::SkyrimFallout;
+	} else if (file_header.getUserVersion() == 12  && file_header.getUserVersion2() == 130)
+	{
+		import_type = ImportType::Fallout4;
 	}
 	else
 	{
@@ -166,12 +167,15 @@ MStatus NifTranslator::reader(const MFileObject& file, const MString& optionsStr
 	}
 	else if (import_type == ImportType::SkyrimFallout)
 	{
-		importer = new NifSkyrimImportingFixture(translator_options, translator_data, translator_utils);
+		importer = new NifImportingFixtureSkyrim(translator_options, translator_data, translator_utils);
+	} else if (import_type == ImportType::Fallout4)
+	{
+		importer = new NifImportingFixtureFallout4(translator_options, translator_data, translator_utils);
 	}
 	else if (import_type == ImportType::Default)
 	{
 		importer = new NifDefaultImportingFixture(translator_data, translator_options, translator_utils);
-	}
+	} 
 
 	return importer->ReadNodes(file);
 }
