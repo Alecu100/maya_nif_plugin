@@ -1,5 +1,5 @@
-#ifndef _NIFNODEIMPORTER_H
-#define _NIFNODEIMPORTER_H
+#ifndef _NIFMESHIMPORTERSKYRIM_H
+#define _NIFMESHIMPORTERSKYRIM_H
 
 #include <maya/MDagPath.h>
 #include <maya/MDagPathArray.h>
@@ -47,6 +47,8 @@
 #include <maya/MAnimUtil.h>
 #include <maya/MItMeshPolygon.h>
 #include <maya/MItMeshVertex.h>
+#include <maya/MFnStringArrayData.h>
+#include <maya/MFnArrayAttrsData.h>
 
 #include <string> 
 #include <vector>
@@ -55,7 +57,7 @@
 #include <iomanip>
 #include <iostream>
 
-#include <ComplexShape.h>
+#include <BSComplexShape.h>
 #include <MatTexCollection.h>
 #include <niflib.h>
 #include <obj/NiAlphaProperty.h>
@@ -78,39 +80,38 @@
 #include <obj/NiKeyframeData.h>
 #include <obj/NiTextureProperty.h>
 #include <obj/NiImage.h>
-#include <obj/NiAVObject.h>
-#include <obj/NiTriBasedGeom.h>
+#include <obj/BSShaderTextureSet.h>
 
 #include "include/Common/NifTranslatorRefObject.h"
 #include "include/Common/NifTranslatorOptions.h"
 #include "include/Common/NifTranslatorData.h"
 #include "include/Common/NifTranslatorUtils.h"
 #include "include/Common/NifTranslatorFixtureItem.h"
+#include "include/Importers/NifMeshImporter.h"
+#include "include/Custom Nodes/NifDismemberPartition.h"
 
 using namespace Niflib;
 using namespace std;
 
-class NifNodeImporter;
+class NifMeshImporterFallout4;
 
-typedef Ref<NifNodeImporter> NifNodeImporterRef;
+typedef Ref<NifMeshImporterFallout4> NifMeshImporterFallout4f;
 
-class NifNodeImporter : public NifTranslatorFixtureItem
-{
+class NifMeshImporterFallout4 : public NifMeshImporter {
 public:
 
-	virtual void ImportNodes(NiAVObjectRef niAVObj, map<NiAVObjectRef, MDagPath>& objs, MObject parent = MObject::kNullObj);
+	NifMeshImporterFallout4();
 
-	virtual ~NifNodeImporter();
+	NifMeshImporterFallout4(NifTranslatorOptionsRef translatorOptions, NifTranslatorDataRef translatorData, NifTranslatorUtilsRef translatorUtils);
 
-	NifNodeImporter();
-
-	NifNodeImporter(NifTranslatorOptionsRef translatorOptions, NifTranslatorDataRef translatorData, NifTranslatorUtilsRef translatorUtils);
+	virtual MDagPath ImportMesh(NiAVObjectRef root, MObject parent);
 
 	virtual string asString(bool verbose = false) const;
 
 	virtual const Type& GetType() const;
 
 	const static Type TYPE;
+
 };
 
 #endif

@@ -1140,8 +1140,10 @@ copy /Y "$(ProjectDir)\AEnifDismemberPartitionTemplate.mel" "$(USERPROFILE)\Docu
     <ClInclude Include="include\Importers\NifMaterialImporter.h" />
     <ClInclude Include="include\Importers\NifMaterialImporterSkyrim.h" />
     <ClInclude Include="include\Importers\NifMeshImporter.h" />
+    <ClInclude Include="include\Importers\NifMeshImporterFallout4.h" />
     <ClInclude Include="include\Importers\NifMeshImporterSkyrim.h" />
     <ClInclude Include="include\Importers\NifNodeImporter.h" />
+    <ClInclude Include="include\Importers\NifNodeImporterFallout4.h" />
     <ClInclude Include="include\Importers\NifSkyrimImportingFixture.h" />
     <ClInclude Include="include\Importers\NifTextureConnector.h" />
     <ClInclude Include="NifTranslator.h" />
@@ -1177,8 +1179,10 @@ copy /Y "$(ProjectDir)\AEnifDismemberPartitionTemplate.mel" "$(USERPROFILE)\Docu
     <ClCompile Include="src\Importers\NifMaterialImporter.cpp" />
     <ClCompile Include="src\Importers\NifMaterialImporterSkyrim.cpp" />
     <ClCompile Include="src\Importers\NifMeshImporter.cpp" />
+    <ClCompile Include="src\Importers\NifMeshImporterFallout4.cpp" />
     <ClCompile Include="src\Importers\NifMeshImporterSkyrim.cpp" />
     <ClCompile Include="src\Importers\NifNodeImporter.cpp" />
+    <ClCompile Include="src\Importers\NifNodeImporterFallout4.cpp" />
     <ClCompile Include="src\Importers\NifSkyrimImportingFixture.cpp" />
     <ClCompile Include="src\Importers\NifTextureConnector.cpp" />
   </ItemGroup>

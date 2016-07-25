@@ -1,5 +1,5 @@
-#ifndef _NIFNODEIMPORTER_H
-#define _NIFNODEIMPORTER_H
+#ifndef _NIFNODEIMPORTERFALLOUT4_H
+#define _NIFNODEIMPORTERFALLOUT4_H
 
 #include <maya/MDagPath.h>
 #include <maya/MDagPathArray.h>
@@ -86,25 +86,26 @@
 #include "include/Common/NifTranslatorData.h"
 #include "include/Common/NifTranslatorUtils.h"
 #include "include/Common/NifTranslatorFixtureItem.h"
+#include "include/Importers/NifNodeImporter.h"
 
 using namespace Niflib;
 using namespace std;
 
-class NifNodeImporter;
+class NifNodeImporterFallout4;
 
-typedef Ref<NifNodeImporter> NifNodeImporterRef;
+typedef Ref<NifNodeImporterFallout4> NifNodeImporterFallout4Ref;
 
-class NifNodeImporter : public NifTranslatorFixtureItem
+class NifNodeImporterFallout4 : public NifNodeImporter
 {
 public:
 
 	virtual void ImportNodes(NiAVObjectRef niAVObj, map<NiAVObjectRef, MDagPath>& objs, MObject parent = MObject::kNullObj);
 
-	virtual ~NifNodeImporter();
+	virtual ~NifNodeImporterFallout4();
 
-	NifNodeImporter();
+	NifNodeImporterFallout4();
 
-	NifNodeImporter(NifTranslatorOptionsRef translatorOptions, NifTranslatorDataRef translatorData, NifTranslatorUtilsRef translatorUtils);
+	NifNodeImporterFallout4(NifTranslatorOptionsRef translatorOptions, NifTranslatorDataRef translatorData, NifTranslatorUtilsRef translatorUtils);
 
 	virtual string asString(bool verbose = false) const;
 
