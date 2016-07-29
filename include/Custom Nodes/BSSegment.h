@@ -50,7 +50,6 @@
 #include <maya/MPxNode.h>
 #include <maya/MFnMessageAttribute.h>
 #include <maya/MFnTypedAttribute.h>
-#include <maya/MFnMessageAttribute.h>
 
 #include <gen/enums.h>
 

@@ -12,10 +12,10 @@ NifMaterialExporterSkyrim::NifMaterialExporterSkyrim( NifTranslatorOptionsRef tr
 
 void NifMaterialExporterSkyrim::ExportMaterials() {
 	MFnDependencyNode shader_node;
-	MItDependencyNodes it_nodes( MFn::kLambert);
+	MItDependencyNodes it_nodes(MFn::kLambert);
 
-	while(!it_nodes.isDone()) {
-		if(it_nodes.thisNode().hasFn(MFn::kLambert)) {
+	while (!it_nodes.isDone()) {
+		if (it_nodes.thisNode().hasFn(MFn::kLambert)) {
 			shader_node.setObject(it_nodes.thisNode());
 
 			NiAlphaPropertyRef alpha_property = NULL;
@@ -46,34 +46,17 @@ void NifMaterialExporterSkyrim::ExportMaterials() {
 			MPlugArray connections;
 			MObject current_texture;
 
-			for(int i = 0; i < 9; i++) {
+			for (int i = 0; i < 9; i++) {
 				shader_textures->SetTexture(i, "");
 			}
 
-			MPlug shader_flags_plug = shader_node.findPlug("skyrimShaderFlags1");
-			if(!shader_flags_plug.isNull()) {
-				shader_flags1 = this->stringToSkyrimShaderFlags1(shader_flags_plug.asString());
-			}
-			shader_flags_plug = shader_node.findPlug("skyrimShaderFlags2");
-			if(!shader_flags_plug.isNull()) {
-				shader_flags2 = this->stringToSkyrimShaderFlags2(shader_flags_plug.asString());
-			}
-			shader_flags_plug = shader_node.findPlug("skyrimShaderType");
-			if(!shader_flags_plug.isNull()) {
-				shader_type = this->stringToSkyrimShaderType(shader_flags_plug.asString());
-			}
-			MPlug transparency_plug = shader_node.findPlug("transparency");
-			if(!transparency_plug.isNull()) {
-				alpha = 1 - transparency_plug.asFloat();
-			}
-
 			this->GetColor(shader_node.object(), "color", color, current_texture);
-			if(!current_texture.isNull()) {
+			if (!current_texture.isNull()) {
 				string file_name = this->ExportTexture(current_texture);
 				shader_textures->SetTexture(0, file_name);
 				MFnDependencyNode texture_node(current_texture);
 				texture_node.findPlug("outAlpha").connectedTo(connections, false, true);
-				if(connections.length() > 0 && connections[0].node() == shader_node.object()) {
+				if (connections.length() > 0 && connections[0].node() == shader_node.object()) {
 					alpha_property = new NiAlphaProperty();
 					alpha_property->SetFlags(237);
 				}
@@ -82,13 +65,13 @@ void NifMaterialExporterSkyrim::ExportMaterials() {
 			connections.clear();
 			MPlug in_normal = shader_node.findPlug("normalCamera");
 			in_normal.connectedTo(connections, true, false);
-			if(connections.length() > 0) {
+			if (connections.length() > 0) {
 				MPlug bump_plug = connections[0];
 				MFnDependencyNode bump_node(bump_plug.node());
 				MPlug bump_value_plug = bump_node.findPlug("bumpValue");
 				connections.clear();
 				bump_value_plug.connectedTo(connections, true, false);
-				if(connections.length() > 0) {
+				if (connections.length() > 0) {
 					MPlug alpha_plug = connections[0];
 					current_texture = alpha_plug.node();
 					string file_name = this->ExportTexture(current_texture);
@@ -97,7 +80,7 @@ void NifMaterialExporterSkyrim::ExportMaterials() {
 			}
 
 
-			if(shader_node.object().hasFn(MFn::Type::kPhong)) {
+			if (shader_node.object().hasFn(MFn::Type::kPhong)) {
 				MFnPhongShader phong_node(shader_node.object());
 				glossiness = phong_node.findPlug("cosinePower").asFloat();
 
@@ -111,36 +94,117 @@ void NifMaterialExporterSkyrim::ExportMaterials() {
 				specular_color.g = specular_color_m.g;
 				specular_color.r = specular_color_m.r;
 
-				specular_strength = phong_node.reflectivity() * 1000;
+				specular_strength = phong_node.reflectivity();
 				emissive_saturation = phong_node.glowIntensity() * 1000;
-			} else {
+			}
+			else {
 				MGlobal::displayWarning("Warning! Shader types besides phong aren't supported too well");
 			}
 
-
-			MPlug additional_texture = shader_node.findPlug("cubeMapTexture");
-			string a_texture;
-			if(!additional_texture.isNull()) {
-				a_texture = this->ExportTexture(additional_texture.asString());
-				shader_textures->SetTexture(4, a_texture);
+			MPlug transparency_plug = shader_node.findPlug("transparency");
+			if (!transparency_plug.isNull()) {
+				alpha = 1 - transparency_plug.asFloat();
 			}
 
-			additional_texture = shader_node.findPlug("evironmentMaskTexture");
-			if(!additional_texture.isNull()) {
-				a_texture = this->ExportTexture(additional_texture.asString());
-				shader_textures->SetTexture(5, a_texture);
+			MPlug message_plug = shader_node.findPlug("message");
+			MPlugArray message_plug_connections;
+			MFnDependencyNode dependency_node;
+			message_plug.connectedTo(message_plug_connections, false, true);
+			bool has_bs_lightining = false;
+
+			for (int x = 0; x < message_plug_connections.length(); x++)
+			{
+				MPlug message_plug_connection = message_plug_connections[x];
+				dependency_node.setObject(message_plug_connection.node());
+
+				if (dependency_node.typeName() == "bsLightningShader")
+				{
+					has_bs_lightining = true;
+					break;
+				}
 			}
 
-			additional_texture = shader_node.findPlug("glowMapTexture");
-			if(!additional_texture.isNull()) {
-				a_texture = this->ExportTexture(additional_texture.asString());
-				shader_textures->SetTexture(2, a_texture);
-			}
+			if (has_bs_lightining)
+			{
+				MPlug shader_flags_plug = dependency_node.findPlug("shaderFlags1");
+				MFnStringArrayData string_data;
+				MObject string_Value;
+				shader_flags_plug.getValue(string_Value);
+				string_data.setObject(string_Value);
+				shader_flags1 = BSLightningShader::stringArrayToShaderFlags1(string_data.array());
 
-			additional_texture = shader_node.findPlug("skinTexture");
-			if(!additional_texture.isNull()) {
-				a_texture = this->ExportTexture(additional_texture.asString());
-				shader_textures->SetTexture(2, a_texture);
+				shader_flags_plug = dependency_node.findPlug("shaderFlags2");
+				shader_flags_plug.getValue(string_Value);
+				string_data.setObject(string_Value);
+				shader_flags2 = BSLightningShader::stringArrayToShaderFlags2(string_data.array());
+
+				MPlug texture_slot_plug;
+
+				for (int y = 2; y <= 8; y++)
+				{
+					MString textureSlot = "textureSlot";
+					textureSlot += y;
+					texture_slot_plug = dependency_node.findPlug(textureSlot);
+					shader_textures->SetTexture(y, this->ExportTexture(texture_slot_plug.asString()));
+				}
+
+				MPlug shader_type_plug = dependency_node.findPlug("shaderType");
+				shader_type = BSLightningShader::stringToSkyrimShaderType(shader_type_plug.asString().asChar());
+
+				MPlug others_plug = dependency_node.findPlug("lightingEffect1");
+				shader_property->SetLightingEffect1(others_plug.asFloat());
+
+				others_plug = dependency_node.findPlug("lightingEffect2");
+				shader_property->SetLightingEffect2(others_plug.asFloat());
+
+				others_plug = dependency_node.findPlug("environmentMapScale");
+				shader_property->SetEnvironmentMapScale(others_plug.asFloat());
+
+				others_plug = dependency_node.findPlug("skinTintColor");
+				shader_property->SetSkinTintColor(Color3(others_plug.child(0).asFloat(), others_plug.child(1).asFloat(), others_plug.child(2).asFloat()));
+
+				others_plug = dependency_node.findPlug("hairTintColor");
+				shader_property->SetHairTintColor(Color3(others_plug.child(0).asFloat(), others_plug.child(1).asFloat(), others_plug.child(2).asFloat()));
+			}
+			else
+			{
+				MPlug shader_flags_plug = shader_node.findPlug("skyrimShaderFlags1");
+				if (!shader_flags_plug.isNull()) {
+					shader_flags1 = this->stringToSkyrimShaderFlags1(shader_flags_plug.asString());
+				}
+				shader_flags_plug = shader_node.findPlug("skyrimShaderFlags2");
+				if (!shader_flags_plug.isNull()) {
+					shader_flags2 = this->stringToSkyrimShaderFlags2(shader_flags_plug.asString());
+				}
+				shader_flags_plug = shader_node.findPlug("skyrimShaderType");
+				if (!shader_flags_plug.isNull()) {
+					shader_type = this->stringToSkyrimShaderType(shader_flags_plug.asString());
+				}
+
+				MPlug additional_texture = shader_node.findPlug("cubeMapTexture");
+				string a_texture;
+				if (!additional_texture.isNull()) {
+					a_texture = this->ExportTexture(additional_texture.asString());
+					shader_textures->SetTexture(4, a_texture);
+				}
+
+				additional_texture = shader_node.findPlug("environmentMaskTexture");
+				if (!additional_texture.isNull()) {
+					a_texture = this->ExportTexture(additional_texture.asString());
+					shader_textures->SetTexture(5, a_texture);
+				}
+
+				additional_texture = shader_node.findPlug("glowMapTexture");
+				if (!additional_texture.isNull()) {
+					a_texture = this->ExportTexture(additional_texture.asString());
+					shader_textures->SetTexture(2, a_texture);
+				}
+
+				additional_texture = shader_node.findPlug("skinTexture");
+				if (!additional_texture.isNull()) {
+					a_texture = this->ExportTexture(additional_texture.asString());
+					shader_textures->SetTexture(2, a_texture);
+				}
 			}
 
 			shader_property->SetSkyrimShaderType((BSLightingShaderPropertyShaderType)shader_type);
@@ -148,21 +212,23 @@ void NifMaterialExporterSkyrim::ExportMaterials() {
 			shader_property->SetGlossiness(glossiness);
 			shader_property->SetEmissiveColor(emissive_color);
 			shader_property->SetSpecularColor(specular_color);
+			shader_property->SetSpecularStrength(specular_strength);
 			shader_property->SetUVOffset(texture_translation1);
 			shader_property->SetEmissiveMultiple(emissive_saturation);
 			shader_property->SetShaderFlags1((SkyrimShaderPropertyFlags1)shader_flags1);
 			shader_property->SetShaderFlags2((SkyrimShaderPropertyFlags2)shader_flags2);
-			//shader_property->SetUnknownInt7(3);
 			shader_property->SetAlpha(alpha);
+
 
 			vector<NiPropertyRef> properties;
 			properties.push_back(DynamicCast<NiProperty>(shader_property));
-			if(alpha_property != NULL) {
+			if (alpha_property != NULL) {
 				properties.push_back(DynamicCast<NiProperty>(alpha_property));
 			}
 
 			this->translatorData->shaders[shader_node.name().asChar()] = properties;
-		} else {
+		}
+		else {
 			MGlobal::displayWarning("Warning! Unsupported shader type found");
 		}
 

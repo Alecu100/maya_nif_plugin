@@ -34,7 +34,7 @@ MStatus BSLightningShader::initialize() {
 	MFnTypedAttribute texture_slot6_attribute;
 	MFnTypedAttribute texture_slot7_attribute;
 	MFnTypedAttribute texture_slot8_attribute;
-	
+
 	MFnMessageAttribute target_shader_attribute;
 	MFnMessageAttribute target_shape_attribute;
 
@@ -110,14 +110,16 @@ MStatus BSLightningShader::initialize() {
 
 	targetShader = target_shader_attribute.create("targetShader", "tS", &status);
 	targetShape = target_shape_attribute.create("targetShape", "tSP", &status);
-	shaderType = shader_type_attribute.create("shaderType", "sT", MFnData::kString, &status);
+	MFnStringData fnStringData;
+	MObject defaultType = fnStringData.create("LSPST_DEFAULT");
+	shaderType = shader_type_attribute.create("shaderType", "sT", MFnData::kString, defaultType, &status);
 	shaderFlags1 = shader_flags1_attribute.create("shaderFlags1", "sF1", MFnData::kStringArray, &status);
 	shaderFlags2 = shader_flags2_attribute.create("shaderFlags2", "sF2", MFnData::kStringArray, &status);
 	lightingEffect1 = lighting_effect1_attribute.create("lightingEffect1", "lE1", MFnNumericData::kFloat, 1, &status);
 	lightingEffect2 = lighting_effect2_attribute.create("lightingEffect2", "lE2", MFnNumericData::kFloat, 1, &status);
 	environmentMapScale = environment_map_scale_attribute.create("environmentMapScale", "eMS", MFnNumericData::kFloat, 1, &status);
 	skinTintColor = skin_tint_color_attribute.createColor("skinTintColor", "sTC", &status);
-	hairTintColor = hair_tint_color_attribute.createColor("hairTintColor", "hTC",  &status);
+	hairTintColor = hair_tint_color_attribute.createColor("hairTintColor", "hTC", &status);
 	textureSlot2 = texture_slot2_attribute.create("textureSlot2", "tS2", MFnData::kString, &status);
 	textureSlot3 = texture_slot2_attribute.create("textureSlot3", "tS3", MFnData::kString, &status);
 	textureSlot4 = texture_slot2_attribute.create("textureSlot4", "tS4", MFnData::kString, &status);
@@ -147,276 +149,277 @@ MStatus BSLightningShader::initialize() {
 	return MStatus::kSuccess;
 }
 
+
 SkyrimShaderPropertyFlags1 BSLightningShader::stringArrayToShaderFlags1(const MStringArray& string_array) {
 	unsigned int shader_flags = 0;
 
 	for (int i = 0; i < string_array.length(); i++) {
 		MString flag = string_array[i];
-		if (flag == "SLSF1_Specular") {
+		if (flag == "SLSF1_SPECULAR") {
 			shader_flags = (shader_flags | 1);
 		}
-		else if (flag == "SLSF1_Skinned") {
+		else if (flag == "SLSF1_SKINNED") {
 			shader_flags = (shader_flags | 2);
 		}
-		else if (flag == "SLSF1_Temp_Refraction") {
+		else if (flag == "SLSF1_TEMP_REFRACTION") {
 			shader_flags = (shader_flags | 4);
 		}
-		else if (flag == "SLSF1_Vertex_Alpha") {
+		else if (flag == "SLSF1_VERTEX_ALPHA") {
 			shader_flags = (shader_flags | 8);
 		}
-		else if (flag == "SLSF1_Greyscale_To_PaletteColor") {
+		else if (flag == "SLSF1_GREYSCALE_TO_PALETTECOLOR") {
 			shader_flags = (shader_flags | 16);
 		}
-		else if (flag == "SLSF1_Greyscale_To_PaletteAlpha") {
+		else if (flag == "SLSF1_GREYSCALE_TO_PALETTEALPHA") {
 			shader_flags = (shader_flags | 32);
 		}
-		else if (flag == "SLSF1_Use_Falloff") {
+		else if (flag == "SLSF1_USE_FALLOFF") {
 			shader_flags = (shader_flags | 64);
 		}
-		else if (flag == "SLSF1_Environment_Mapping") {
+		else if (flag == "SLSF1_ENVIRONMENT_MAPPING") {
 			shader_flags = (shader_flags | 128);
 		}
-		else if (flag == "SLSF1_Recieve_Shadows") {
+		else if (flag == "SLSF1_RECIEVE_SHADOWS") {
 			shader_flags = (shader_flags | 256);
 		}
-		else if (flag == "SLSF1_Cast_Shadows") {
+		else if (flag == "SLSF1_CAST_SHADOWS") {
 			shader_flags = (shader_flags | 512);
 		}
-		else if (flag == "SLSF1_Facegen_Detail_Map") {
+		else if (flag == "SLSF1_FACEGEN_DETAIL_MAP") {
 			shader_flags = (shader_flags | 1024);
 		}
-		else if (flag == "SLSF1_Parallax") {
+		else if (flag == "SLSF1_PARALLAX") {
 			shader_flags = (shader_flags | 2048);
 		}
-		else if (flag == "SLSF1_Model_Space_Normals") {
+		else if (flag == "SLSF1_MODEL_SPACE_NORMALS") {
 			shader_flags = (shader_flags | 4096);
 		}
-		else if (flag == "SLSF1_Non-Projective_Shadows") {
+		else if (flag == "SLSF1_NON_PROJECTIVE_SHADOWS") {
 			shader_flags = (shader_flags | 8192);
 		}
-		else if (flag == "SLSF1_Landscape") {
+		else if (flag == "SLSF1_LANDSCAPE") {
 			shader_flags = (shader_flags | 16384);
 		}
-		else if (flag == "SLSF1_Refraction") {
+		else if (flag == "SLSF1_REFRACTION") {
 			shader_flags = (shader_flags | 32768);
 		}
-		else if (flag == "SLSF1_Fire_Refraction") {
+		else if (flag == "SLSF1_FIRE_REFRACTION") {
 			shader_flags = (shader_flags | 65536);
 		}
-		else if (flag == "SLSF1_Eye_Environment_Mapping") {
+		else if (flag == "SLSF1_EYE_ENVIRONMENT_MAPPING") {
 			shader_flags = (shader_flags | 131072);
 		}
-		else if (flag == "SLSF1_Hair_Soft_Lighting") {
+		else if (flag == "SLSF1_HAIR_SOFT_LIGHTING") {
 			shader_flags = (shader_flags | 262144);
 		}
-		else if (flag == "SLSF1_Screendoor_Alpha_Fade") {
+		else if (flag == "SLSF1_SCREENDOOR_ALPHA_FADE") {
 			shader_flags = (shader_flags | 524288);
 		}
-		else if (flag == "SLSF1_Localmap_Hide_Secret") {
+		else if (flag == "SLSF1_LOCALMAP_HIDE_SECRET") {
 			shader_flags = (shader_flags | 1048576);
 		}
-		else if (flag == "SLSF1_FaceGen_RGB_Tint") {
+		else if (flag == "SLSF1_FACEGEN_RGB_TINT") {
 			shader_flags = (shader_flags | 2097152);
 		}
-		else if (flag == "SLSF1_Own_Emit") {
+		else if (flag == "SLSF1_OWN_EMIT") {
 			shader_flags = (shader_flags | 4194304);
 		}
-		else if (flag == "SLSF1_Projected_UV") {
+		else if (flag == "SLSF1_PROJECTED_UV") {
 			shader_flags = (shader_flags | 8388608);
 		}
-		else if (flag == "SLSF1_Multiple_Textures") {
+		else if (flag == "SLSF1_MULTIPLE_TEXTURES") {
 			shader_flags = (shader_flags | 16777216);
 		}
-		else if (flag == "SLSF1_Remappable_Textures") {
+		else if (flag == "SLSF1_REMAPPABLE_TEXTURES") {
 			shader_flags = (shader_flags | 33554432);
 		}
-		else if (flag == "SLSF1_Decal") {
+		else if (flag == "SLSF1_DECAL") {
 			shader_flags = (shader_flags | 67108864);
 		}
-		else if (flag == "SLSF1_Dynamic_Decal") {
+		else if (flag == "SLSF1_DYNAMIC_DECAL") {
 			shader_flags = (shader_flags | 134217728);
 		}
-		else if (flag == "SLSF1_Parallax_Occlusion") {
+		else if (flag == "SLSF1_PARALLAX_OCCLUSION") {
 			shader_flags = (shader_flags | 268435456);
 		}
-		else if (flag == "SLSF1_External_Emittance") {
+		else if (flag == "SLSF1_EXTERNAL_EMITTANCE") {
 			shader_flags = (shader_flags | 536870912);
 		}
-		else if (flag == "SLSF1_Soft_Effect") {
+		else if (flag == "SLSF1_SOFT_EFFECT") {
 			shader_flags = (shader_flags | 1073741824);
 		}
-		else if (flag == "SLSF1_ZBuffer_Test") {
+		else if (flag == "SLSF1_ZBUFFER_TEST") {
 			shader_flags = (shader_flags | 2147483648);
 		}
 	}
 
-	return (SkyrimShaderPropertyFlags1) shader_flags;
+	return (SkyrimShaderPropertyFlags1)shader_flags;
 }
 
 MStringArray BSLightningShader::shaderFlags1ToStringArray(SkyrimShaderPropertyFlags1 shader_flags1) {
 	MStringArray ret;
 	bool has_flags = true;
-	unsigned int shader_flags = (unsigned int) shader_flags1;
+	unsigned int shader_flags = (unsigned int)shader_flags1;
 
 	while (has_flags == true) {
 		has_flags = false;
 
 		if ((1 & shader_flags) == 1) {
-			ret.append("SLSF1_Specular");
+			ret.append("SLSF1_SPECULAR");
 			shader_flags = (shader_flags & ~1);
 			has_flags = true;
 		}
 		else if ((2 & shader_flags) == 2) {
-			ret.append("SLSF1_Skinned");
+			ret.append("SLSF1_SKINNED");
 			shader_flags = (shader_flags & ~2);
 			has_flags = true;
 		}
 		else if ((4 & shader_flags) == 4) {
-			ret.append("SLSF1_Temp_Refraction");
+			ret.append("SLSF1_TEMP_REFRACTION");
 			shader_flags = (shader_flags & ~4);
 			has_flags = true;
 		}
 		else if ((8 & shader_flags) == 8) {
-			ret.append("SLSF1_Vertex_Alpha");
+			ret.append("SLSF1_VERTEX_ALPHA");
 			shader_flags = (shader_flags & ~8);
 			has_flags = true;
 		}
 		else if ((16 & shader_flags) == 16) {
-			ret.append("SLSF1_Greyscale_To_PaletteColor");
+			ret.append("SLSF1_GREYSCALE_TO_PALETTECOLOR");
 			shader_flags = (shader_flags & ~16);
 			has_flags = true;
 		}
 		else if ((32 & shader_flags) == 32) {
-			ret.append("SLSF1_Greyscale_To_PaletteAlpha");
+			ret.append("SLSF1_GREYSCALE_TO_PALETTEALPHA");
 			shader_flags = (shader_flags & ~32);
 			has_flags = true;
 		}
 		else if ((64 & shader_flags) == 64) {
-			ret.append("SLSF1_Use_Falloff");
+			ret.append("SLSF1_USE_FALLOFF");
 			shader_flags = (shader_flags & ~64);
 			has_flags = true;
 		}
 		else if ((128 & shader_flags) == 128) {
-			ret.append("SLSF1_Environment_Mapping");
+			ret.append("SLSF1_ENVIRONMENT_MAPPING");
 			shader_flags = (shader_flags & ~128);
 			has_flags = true;
 		}
 		else if ((256 & shader_flags) == 256) {
-			ret.append("SLSF1_Recieve_Shadows");
+			ret.append("SLSF1_RECIEVE_SHADOWS");
 			shader_flags = (shader_flags & ~256);
 			has_flags = true;
 		}
 		else if ((512 & shader_flags) == 512) {
-			ret.append("SLSF1_Cast_Shadows");
+			ret.append("SLSF1_CAST_SHADOWS");
 			shader_flags = (shader_flags & ~512);
 			has_flags = true;
 		}
 		else if ((1024 & shader_flags) == 1024) {
-			ret.append("SLSF1_Facegen_Detail_Map");
+			ret.append("SLSF1_FACEGEN_DETAIL_MAP");
 			shader_flags = (shader_flags & ~1024);
 			has_flags = true;
 		}
 		else if ((2048 & shader_flags) == 2048) {
-			ret.append("SLSF1_Parallax");
+			ret.append("SLSF1_PARALLAX");
 			shader_flags = (shader_flags & ~2048);
 			has_flags = true;
 		}
 		else if ((4096 & shader_flags) == 4096) {
-			ret.append("SLSF1_Model_Space_Normals");
+			ret.append("SLSF1_MODEL_SPACE_NORMALS");
 			shader_flags = (shader_flags & ~4096);
 			has_flags = true;
 		}
 		else if ((8192 & shader_flags) == 8192) {
-			ret.append("SLSF1_Non-Projective_Shadows");
+			ret.append("SLSF1_NON_PROJECTIVE_SHADOWS");
 			shader_flags = (shader_flags & ~8192);
 			has_flags = true;
 		}
 		else if ((16384 & shader_flags) == 16384) {
-			ret.append("SLSF1_Landscape");
+			ret.append("SLSF1_LANDSCAPE");
 			shader_flags = (shader_flags & ~16384);
 			has_flags = true;
 		}
 		else if ((32768 & shader_flags) == 32768) {
-			ret.append("SLSF1_Refraction");
+			ret.append("SLSF1_REFRACTION");
 			shader_flags = (shader_flags & ~32768);
 			has_flags = true;
 		}
 		else if ((65536 & shader_flags) == 65536) {
-			ret.append("SLSF1_Fire_Refraction");
+			ret.append("SLSF1_FIRE_REFRACTION");
 			shader_flags = (shader_flags & ~65536);
 			has_flags = true;
 		}
 		else if ((131072 & shader_flags) == 131072) {
-			ret.append("SLSF1_Eye_Environment_Mapping");
+			ret.append("SLSF1_EYE_ENVIRONMENT_MAPPING");
 			shader_flags = (shader_flags & ~131072);
 			has_flags = true;
 		}
 		else if ((262144 & shader_flags) == 262144) {
-			ret.append("SLSF1_Hair_Soft_Lighting");
+			ret.append("SLSF1_HAIR_SOFT_LIGHTING");
 			shader_flags = (shader_flags & ~262144);
 			has_flags = true;
 		}
 		else if ((524288 & shader_flags) == 524288) {
-			ret.append("SLSF1_Screendoor_Alpha_Fade");
+			ret.append("SLSF1_SCREENDOOR_ALPHA_FADE");
 			shader_flags = (shader_flags & ~524288);
 			has_flags = true;
 		}
 		else if ((1048576 & shader_flags) == 1048576) {
-			ret.append("SLSF1_Localmap_Hide_Secret");
+			ret.append("SLSF1_LOCALMAP_HIDE_SECRET");
 			shader_flags = (shader_flags & ~1048576);
 			has_flags = true;
 		}
 		else if ((2097152 & shader_flags) == 2097152) {
-			ret.append("SLSF1_FaceGen_RGB_Tint");
+			ret.append("SLSF1_FACEGEN_RGB_TINT");
 			shader_flags = (shader_flags & ~2097152);
 			has_flags = true;
 		}
 		else if ((4194304 & shader_flags) == 4194304) {
-			ret.append("SLSF1_Own_Emit");
+			ret.append("SLSF1_OWN_EMIT");
 			shader_flags = (shader_flags & ~4194304);
 			has_flags = true;
 		}
 		else if ((8388608 & shader_flags) == 8388608) {
-			ret.append("SLSF1_Projected_UV");
+			ret.append("SLSF1_PROJECTED_UV");
 			shader_flags = (shader_flags & ~8388608);
 			has_flags = true;
 		}
 		else if ((16777216 & shader_flags) == 16777216) {
-			ret.append("SLSF1_Multiple_Textures");
+			ret.append("SLSF1_MULTIPLE_TEXTURES");
 			shader_flags = (shader_flags & ~16777216);
 			has_flags = true;
 		}
 		else if ((33554432 & shader_flags) == 33554432) {
-			ret.append("SLSF1_Remappable_Textures");
+			ret.append("SLSF1_REMAPPABLE_TEXTURES");
 			shader_flags = (shader_flags & ~33554432);
 			has_flags = true;
 		}
 		else if ((67108864 & shader_flags) == 67108864) {
-			ret.append("SLSF1_Decal");
+			ret.append("SLSF1_DECAL");
 			shader_flags = (shader_flags & ~67108864);
 			has_flags = true;
 		}
 		else if ((134217728 & shader_flags) == 134217728) {
-			ret.append("SLSF1_Dynamic_Decal");
+			ret.append("SLSF1_DYNAMIC_DECAL");
 			shader_flags = (shader_flags & ~134217728);
 			has_flags = true;
 		}
 		else if ((268435456 & shader_flags) == 268435456) {
-			ret.append("SLSF1_Parallax_Occlusion");
+			ret.append("SLSF1_PARALLAX_OCCLUSION");
 			shader_flags = (shader_flags & ~268435456);
 			has_flags = true;
 		}
 		else if ((536870912 & shader_flags) == 536870912) {
-			ret.append("SLSF1_External_Emittance");
+			ret.append("SLSF1_EXTERNAL_EMITTANCE");
 			shader_flags = (shader_flags & ~536870912);
 			has_flags = true;
 		}
 		else if ((1073741824 & shader_flags) == 1073741824) {
-			ret.append("SLSF1_Soft_Effect");
+			ret.append("SLSF1_SOFT_EFFECT");
 			shader_flags = (shader_flags & ~1073741824);
 		}
 		else if ((2147483648 & shader_flags) == 2147483648) {
-			ret.append("SLSF1_ZBuffer_Test");
+			ret.append("SLSF1_ZBUFFER_TEST");
 			shader_flags = (shader_flags & ~2147483648);
 			has_flags = true;
 		}
@@ -427,19 +430,19 @@ MStringArray BSLightningShader::shaderFlags1ToStringArray(SkyrimShaderPropertyFl
 
 MStringArray BSLightningShader::shaderFlags2ToStringArray(SkyrimShaderPropertyFlags2 shader_flags2) {
 	MStringArray ret;
-	unsigned int shader_flags = (unsigned int) shader_flags2;
+	unsigned int shader_flags = (unsigned int)shader_flags2;
 
 	bool has_flags = true;
 	while (has_flags == true) {
 		has_flags = false;
 
 		if ((1 & shader_flags) == 1) {
-			ret.append("SLSF2_ZBuffer_Write");
+			ret.append("SLSF2_ZBUFFER_WRITE");
 			shader_flags = (shader_flags & ~1);
 			has_flags = true;
 		}
 		else if ((2 & shader_flags) == 2) {
-			ret.append("SLSF2_LOD_Landscape");
+			ret.append("SLSF2_LOD_LANDSCAPE");
 			shader_flags = (shader_flags & ~2);
 			has_flags = true;
 		}
@@ -449,146 +452,146 @@ MStringArray BSLightningShader::shaderFlags2ToStringArray(SkyrimShaderPropertyFl
 			has_flags = true;
 		}
 		else if ((8 & shader_flags) == 8) {
-			ret.append("SLSF2_No_Fade");
+			ret.append("SLSF2_NO_FADE");
 			shader_flags = (shader_flags & ~8);
 			has_flags = true;
 		}
 		else if ((16 & shader_flags) == 16) {
-			ret.append("SLSF2_Double_Sided");
+			ret.append("SLSF2_DOUBLE_SIDED");
 			shader_flags = (shader_flags & ~16);
 			has_flags = true;
 		}
 		else if ((32 & shader_flags) == 32) {
-			ret.append("SLSF2_Vertex_Colors");
+			ret.append("SLSF2_VERTEX_COLORS");
 			shader_flags = (shader_flags & ~32);
 			has_flags = true;
 		}
 		else if ((64 & shader_flags) == 64) {
-			ret.append("SLSF2_Glow_Map");
+			ret.append("SLSF2_GLOW_MAP");
 			shader_flags = (shader_flags & ~64);
 			has_flags = true;
 		}
 		else if ((128 & shader_flags) == 128) {
-			ret.append("SLSF2_Assume_Shadowmask");
+			ret.append("SLSF2_ASSUME_SHADOWMASK");
 			shader_flags = (shader_flags & ~128);
 			has_flags = true;
 		}
 		else if ((256 & shader_flags) == 256) {
-			ret.append("SLSF2_Packed_Tangent");
+			ret.append("SLSF2_PACKED_TANGENT");
 			shader_flags = (shader_flags & ~256);
 			has_flags = true;
 		}
 		else if ((512 & shader_flags) == 512) {
-			ret.append("SLSF2_Multi_Index_Snow");
+			ret.append("SLSF2_MULTI_INDEX_SNOW");
 			shader_flags = (shader_flags & ~512);
 			has_flags = true;
 		}
 		else if ((1024 & shader_flags) == 1024) {
-			ret.append("SLSF2_Vertex_Lighting");
+			ret.append("SLSF2_VERTEX_LIGHTING");
 			shader_flags = (shader_flags & ~1024);
 			has_flags = true;
 		}
 		else if ((2048 & shader_flags) == 2048) {
-			ret.append("SLSF2_Uniform_Scale");
+			ret.append("SLSF2_UNIFORM_SCALE");
 			shader_flags = (shader_flags & ~2048);
 			has_flags = true;
 		}
 		else if ((4096 & shader_flags) == 4096) {
-			ret.append("SLSF2_Fit_Slope");
+			ret.append("SLSF2_FIT_SLOPE");
 			shader_flags = (shader_flags & ~4096);
 			has_flags = true;
 		}
 		else if ((8192 & shader_flags) == 8192) {
-			ret.append("SLSF2_Billboard");
+			ret.append("SLSF2_BILLBOARD");
 			shader_flags = (shader_flags & ~8192);
 			has_flags = true;
 		}
 		else if ((16384 & shader_flags) == 16384) {
-			ret.append("SLSF2_No_LOD_Land_Blend");
+			ret.append("SLSF2_NO_LOD_LAND_BLEND");
 			shader_flags = (shader_flags & ~16384);
 			has_flags = true;
 		}
 		else if ((32768 & shader_flags) == 32768) {
-			ret.append("SLSF2_EnvMap_Light_Fade");
+			ret.append("SLSF2_ENVMAP_LIGHT_FADE");
 			shader_flags = (shader_flags & ~32768);
 			has_flags = true;
 		}
 		else if ((65536 & shader_flags) == 65536) {
-			ret.append("SLSF2_Wireframe");
+			ret.append("SLSF2_WIREFRAME");
 			shader_flags = (shader_flags & ~65536);
 			has_flags = true;
 		}
 		else if ((131072 & shader_flags) == 131072) {
-			ret.append("SLSF2_Weapon_Blood");
+			ret.append("SLSF2_WEAPON_BLOOD");
 			shader_flags = (shader_flags & ~131072);
 			has_flags = true;
 		}
 		else if ((262144 & shader_flags) == 262144) {
-			ret.append("SLSF2_Hide_On_Local_Map");
+			ret.append("SLSF2_HIDE_ON_LOCAL_MAP");
 			shader_flags = (shader_flags & ~262144);
 			has_flags = true;
 		}
 		else if ((524288 & shader_flags) == 524288) {
-			ret.append("SLSF2_Premult_Alpha");
+			ret.append("SLSF2_PREMULT_ALPHA");
 			shader_flags = (shader_flags & ~524288);
 			has_flags = true;
 		}
 		else if ((1048576 & shader_flags) == 1048576) {
-			ret.append("SLSF2_Cloud_LOD");
+			ret.append("SLSF2_CLOUD_LOD");
 			shader_flags = (shader_flags & ~1048576);
 			has_flags = true;
 		}
 		else if ((2097152 & shader_flags) == 2097152) {
-			ret.append("SLSF2_Anisotropic_Lighting");
+			ret.append("SLSF2_ANISOTROPIC_LIGHTING");
 			shader_flags = (shader_flags & ~2097152);
 			has_flags = true;
 		}
 		else if ((4194304 & shader_flags) == 4194304) {
-			ret.append("SLSF2_No_Transparency_Multisampling");
+			ret.append("SLSF2_NO_TRANSPARENCY_MULTISAMPLING");
 			shader_flags = (shader_flags & ~4194304);
 			has_flags = true;
 		}
 		else if ((8388608 & shader_flags) == 8388608) {
-			ret.append("SLSF2_Unused01");
+			ret.append("SLSF2_UNUSED01");
 			shader_flags = (shader_flags & ~8388608);
 			has_flags = true;
 		}
 		else if ((16777216 & shader_flags) == 16777216) {
-			ret.append("SLSF2_Multi_Layer_Parallax");
+			ret.append("SLSF2_MULTI_LAYER_PARALLAX");
 			shader_flags = (shader_flags & ~16777216);
 			has_flags = true;
 		}
 		else if ((33554432 & shader_flags) == 33554432) {
-			ret.append("SLSF2_Soft_Lighting");
+			ret.append("SLSF2_SOFT_LIGHTING");
 			shader_flags = (shader_flags & ~33554432);
 			has_flags = true;
 		}
 		else if ((67108864 & shader_flags) == 67108864) {
-			ret.append("SLSF2_Rim_Lighting");
+			ret.append("SLSF2_RIM_LIGHTING");
 			shader_flags = (shader_flags & ~67108864);
 			has_flags = true;
 		}
 		else if ((134217728 & shader_flags) == 134217728) {
-			ret.append("SLSF2_Back_Lighting");
+			ret.append("SLSF2_BACK_LIGHTING");
 			shader_flags = (shader_flags & ~134217728);
 			has_flags = true;
 		}
 		else if ((268435456 & shader_flags) == 268435456) {
-			ret.append("SLSF2_Unused02");
+			ret.append("SLSF2_UNUSED02");
 			shader_flags = (shader_flags & ~268435456);
 			has_flags = true;
 		}
 		else if ((536870912 & shader_flags) == 536870912) {
-			ret.append("SLSF2_Tree_Anim");
+			ret.append("SLSF2_TREE_ANIM");
 			shader_flags = (shader_flags & ~536870912);
 			has_flags = true;
 		}
 		else if ((1073741824 & shader_flags) == 1073741824) {
-			ret.append("SLSF2_Effect_Lighting");
+			ret.append("SLSF2_EFFECT_LIGHTING");
 			shader_flags = (shader_flags & ~1073741824);
 		}
 		else if ((2147483648 & shader_flags) == 2147483648) {
-			ret.append("SLSF2_HD_LOD_Objects");
+			ret.append("SLSF2_HD_LOD_OBJECTS");
 			shader_flags = (shader_flags & ~2147483648);
 			has_flags = true;
 		}
@@ -602,133 +605,279 @@ SkyrimShaderPropertyFlags2 BSLightningShader::stringArrayToShaderFlags2(const MS
 
 	for (int i = 0; i < string_array.length(); i++) {
 		MString flag = string_array[i];
-		if (flag == "SLSF2_ZBuffer_Write") {
+		if (flag == "SLSF2_ZBUFFER_WRITE") {
 			shader_flags = (shader_flags | 1);
 		}
-		else if (flag == "SLSF2_LOD_Landscape") {
+		else if (flag == "SLSF2_LOD_LANDSCAPE") {
 			shader_flags = (shader_flags | 2);
 		}
-		else if (flag == "SLSF2_LOD_Objects") {
+		else if (flag == "SLSF2_LOD_OBJECTS") {
 			shader_flags = (shader_flags | 4);
 		}
-		else if (flag == "SLSF2_No_Fade") {
+		else if (flag == "SLSF2_NO_FADE") {
 			shader_flags = (shader_flags | 8);
 		}
-		else if (flag == "SLSF2_Double_Sided") {
+		else if (flag == "SLSF2_DOUBLE_SIDED") {
 			shader_flags = (shader_flags | 16);
 		}
-		else if (flag == "SLSF2_Vertex_Colors") {
+		else if (flag == "SLSF2_VERTEX_COLORS") {
 			shader_flags = (shader_flags | 32);
 		}
-		else if (flag == "SLSF2_Glow_Map") {
+		else if (flag == "SLSF2_GLOW_MAP") {
 			shader_flags = (shader_flags | 64);
 		}
-		else if (flag == "SLSF2_Assume_Shadowmask") {
+		else if (flag == "SLSF2_ASSUME_SHADOWMASK") {
 			shader_flags = (shader_flags | 128);
 		}
-		else if (flag == "SLSF2_Packed_Tangent") {
+		else if (flag == "SLSF2_PACKED_TANGENT") {
 			shader_flags = (shader_flags | 256);
 		}
-		else if (flag == "SLSF2_Multi_Index_Snow") {
+		else if (flag == "SLSF2_MULTI_INDEX_SNOW") {
 			shader_flags = (shader_flags | 512);
 		}
-		else if (flag == "SLSF2_Vertex_Lighting") {
+		else if (flag == "SLSF2_VERTEX_LIGHTING") {
 			shader_flags = (shader_flags | 1024);
 		}
-		else if (flag == "SLSF2_Uniform_Scale") {
+		else if (flag == "SLSF2_UNIFORM_SCALE") {
 			shader_flags = (shader_flags | 2048);
 		}
-		else if (flag == "SLSF2_Fit_Slope") {
+		else if (flag == "SLSF2_FIT_SLOPE") {
 			shader_flags = (shader_flags | 4096);
 		}
-		else if (flag == "SLSF2_Billboard") {
+		else if (flag == "SLSF2_BILLBOARD") {
 			shader_flags = (shader_flags | 8192);
 		}
-		else if (flag == "SLSF2_No_LOD_Land_Blend") {
+		else if (flag == "SLSF2_NO_LOD_LAND_BLEND") {
 			shader_flags = (shader_flags | 16384);
 		}
-		else if (flag == "SLSF2_EnvMap_Light_Fade") {
+		else if (flag == "SLSF2_ENVMAP_LIGHT_FADE") {
 			shader_flags = (shader_flags | 32768);
 		}
-		else if (flag == "SLSF2_Wireframe") {
+		else if (flag == "SLSF2_WIREFRAME") {
 			shader_flags = (shader_flags | 65536);
 		}
-		else if (flag == "SLSF2_Weapon_Blood") {
+		else if (flag == "SLSF2_WEAPON_BLOOD") {
 			shader_flags = (shader_flags | 131072);
 		}
-		else if (flag == "SLSF2_Hide_On_Local_Map") {
+		else if (flag == "SLSF2_HIDE_ON_LOCAL_MAP") {
 			shader_flags = (shader_flags | 262144);
 		}
-		else if (flag == "SLSF2_Premult_Alpha") {
+		else if (flag == "SLSF2_PREMULT_ALPHA") {
 			shader_flags = (shader_flags | 524288);
 		}
-		else if (flag == "SLSF2_Cloud_LOD") {
+		else if (flag == "SLSF2_CLOUD_LOD") {
 			shader_flags = (shader_flags | 1048576);
 		}
-		else if (flag == "SLSF2_Anisotropic_Lighting") {
+		else if (flag == "SLSF2_ANISOTROPIC_LIGHTING") {
 			shader_flags = (shader_flags | 2097152);
 		}
-		else if (flag == "SLSF2_No_Transparency_Multisampling") {
+		else if (flag == "SLSF2_NO_TRANSPARENCY_MULTISAMPLING") {
 			shader_flags = (shader_flags | 4194304);
 		}
-		else if (flag == "SLSF2_Unused01") {
+		else if (flag == "SLSF2_UNUSED01") {
 			shader_flags = (shader_flags | 8388608);
 		}
-		else if (flag == "SLSF2_Multi_Layer_Parallax") {
+		else if (flag == "SLSF2_MULTI_LAYER_PARALLAX") {
 			shader_flags = (shader_flags | 16777216);
 		}
-		else if (flag == "SLSF2_Soft_Lighting") {
+		else if (flag == "SLSF2_SOFT_LIGHTING") {
 			shader_flags = (shader_flags | 33554432);
 		}
-		else if (flag == "SLSF2_Rim_Lighting") {
+		else if (flag == "SLSF2_RIM_LIGHTING") {
 			shader_flags = (shader_flags | 67108864);
 		}
-		else if (flag == "SLSF2_Back_Lighting") {
+		else if (flag == "SLSF2_BACK_LIGHTING") {
 			shader_flags = (shader_flags | 134217728);
 		}
-		else if (flag == "SLSF2_Unused02") {
+		else if (flag == "SLSF2_UNUSED02") {
 			shader_flags = (shader_flags | 268435456);
 		}
-		else if (flag == "SLSF2_Tree_Anim") {
+		else if (flag == "SLSF2_TREE_ANIM") {
 			shader_flags = (shader_flags | 536870912);
 		}
-		else if (flag == "SLSF2_Effect_Lighting") {
+		else if (flag == "SLSF2_EFFECT_LIGHTING") {
 			shader_flags = (shader_flags | 1073741824);
 		}
-		else if (flag == "SLSF2_HD_LOD_Objects") {
+		else if (flag == "SLSF2_HD_LOD_OBJECTS") {
 			shader_flags = (shader_flags | 2147483648);
 		}
 	}
 
-	return (SkyrimShaderPropertyFlags2) shader_flags;
+	return (SkyrimShaderPropertyFlags2)shader_flags;
 }
 
 BSLightingShaderPropertyShaderType BSLightningShader::stringToSkyrimShaderType(MString shader_type) {
-	unsigned int ret = 0;
 
-	if (shader_type == "Default") {
-		ret = 0;
-	}
-	else if (shader_type == "EnvMap") {
-		ret = 1;
-	}
-	else if (shader_type == "Skin") {
-		ret = 5;
-	}
-	else if (shader_type == "Glow") {
-		ret = 2;
-	}
-	else if (shader_type == "Hair") {
-		ret = 6;
-	}
-	else if (shader_type == "Ice/Parallax") {
-		ret = 11;
-	}
-	else if (shader_type == "Eye") {
-		ret = 15;
+	if (shader_type == "LSPST_DEFAULT") {
+		return BSLightingShaderPropertyShaderType::LSPST_DEFAULT;
 	}
 
-	return(BSLightingShaderPropertyShaderType) ret;
+	if (shader_type == "LSPST_ENVIRONMENT_MAP") {
+		return BSLightingShaderPropertyShaderType::LSPST_ENVIRONMENT_MAP;
+	}
+
+	if (shader_type == "LSPST_GLOW_SHADER") {
+		return BSLightingShaderPropertyShaderType::LSPST_GLOW_SHADER;
+	}
+
+	if (shader_type == "LSPST_HEIGHTMAP") {
+		return BSLightingShaderPropertyShaderType::LSPST_HEIGHTMAP;
+	}
+
+	if (shader_type == "LSPST_FACE_TINT") {
+		return BSLightingShaderPropertyShaderType::LSPST_FACE_TINT;
+	}
+
+	if (shader_type == "LSPST_SKIN_TINT") {
+		return BSLightingShaderPropertyShaderType::LSPST_SKIN_TINT;
+	}
+
+	if (shader_type == "LSPST_HAIR_TINT") {
+		return BSLightingShaderPropertyShaderType::LSPST_HAIR_TINT;
+	}
+
+	if (shader_type == "LSPST_PARALLAX_OCC_MATERIAL") {
+		return BSLightingShaderPropertyShaderType::LSPST_PARALLAX_OCC_MATERIAL;
+	}
+
+	if (shader_type == "LSPST_WORLD_MULTITEXTURE") {
+		return BSLightingShaderPropertyShaderType::LSPST_WORLD_MULTITEXTURE;
+	}
+
+	if (shader_type == "LSPST_WORLDMAP1") {
+		return BSLightingShaderPropertyShaderType::LSPST_WORLDMAP1;
+	}
+
+	if (shader_type == "LSPST_UNKNOWN_10") {
+		return BSLightingShaderPropertyShaderType::LSPST_UNKNOWN_10;
+	}
+
+	if (shader_type == "LSPST_MULTILAYER_PARALLAX") {
+		return BSLightingShaderPropertyShaderType::LSPST_MULTILAYER_PARALLAX;
+	}
+
+	if (shader_type == "LSPST_UNKNOWN_12") {
+		return BSLightingShaderPropertyShaderType::LSPST_UNKNOWN_12;
+	}
+
+	if (shader_type == "LSPST_WORLDMAP2") {
+		return BSLightingShaderPropertyShaderType::LSPST_WORLDMAP2;
+	}
+
+	if (shader_type == "LSPST_SPARKLE_SNOW") {
+		return BSLightingShaderPropertyShaderType::LSPST_SPARKLE_SNOW;
+	}
+
+	if (shader_type == "LSPST_WORLDMAP3") {
+		return BSLightingShaderPropertyShaderType::LSPST_WORLDMAP3;
+	}
+
+	if (shader_type == "LSPST_EYE_ENVMAP") {
+		return BSLightingShaderPropertyShaderType::LSPST_EYE_ENVMAP;
+	}
+
+	if (shader_type == "LSPST_UNKNOWN_17") {
+		return BSLightingShaderPropertyShaderType::LSPST_UNKNOWN_17;
+	}
+
+	if (shader_type == "LSPST_WORLDMAP4") {
+		return BSLightingShaderPropertyShaderType::LSPST_WORLDMAP4;
+	}
+
+	if (shader_type == "LSPST_WORLD_LOD_MULTITEXTURE") {
+		return BSLightingShaderPropertyShaderType::LSPST_WORLD_LOD_MULTITEXTURE;
+	}
+
+	return BSLightingShaderPropertyShaderType::LSPST_DEFAULT;
+}
+
+MString BSLightningShader::skyrimShaderTypeToString(BSLightingShaderPropertyShaderType shader_type) {
+
+	if (shader_type == BSLightingShaderPropertyShaderType::LSPST_DEFAULT) {
+		return "LSPST_DEFAULT";
+	}
+
+	if (shader_type == BSLightingShaderPropertyShaderType::LSPST_ENVIRONMENT_MAP) {
+		return "LSPST_ENVIRONMENT_MAP";
+	}
+
+	if (shader_type == BSLightingShaderPropertyShaderType::LSPST_GLOW_SHADER) {
+		return "LSPST_GLOW_SHADER";
+	}
+
+	if (shader_type == BSLightingShaderPropertyShaderType::LSPST_FACE_TINT) {
+		return "LSPST_FACE_TINT";
+	}
+
+	if (shader_type == BSLightingShaderPropertyShaderType::LSPST_GLOW_SHADER) {
+		return "LSPST_GLOW_SHADER";
+	}
+
+	if (shader_type == BSLightingShaderPropertyShaderType::LSPST_HAIR_TINT) {
+		return "LSPST_HAIR_TINT";
+	}
+
+	if (shader_type == BSLightingShaderPropertyShaderType::LSPST_HEIGHTMAP) {
+		return "LSPST_HEIGHTMAP";
+	}
+
+	if (shader_type == BSLightingShaderPropertyShaderType::LSPST_MULTILAYER_PARALLAX) {
+		return "LSPST_MULTILAYER_PARALLAX";
+	}
+
+	if (shader_type == BSLightingShaderPropertyShaderType::LSPST_PARALLAX_OCC_MATERIAL) {
+		return "LSPST_PARALLAX_OCC_MATERIAL";
+	}
+
+	if (shader_type == BSLightingShaderPropertyShaderType::LSPST_SKIN_TINT) {
+		return "LSPST_SKIN_TINT";
+	}
+
+	if (shader_type == BSLightingShaderPropertyShaderType::LSPST_SPARKLE_SNOW) {
+		return "LSPST_SPARKLE_SNOW";
+	}
+
+	if (shader_type == BSLightingShaderPropertyShaderType::LSPST_UNKNOWN_10) {
+		return "LSPST_UNKNOWN_10";
+	}
+
+	if (shader_type == BSLightingShaderPropertyShaderType::LSPST_UNKNOWN_12) {
+		return "LSPST_UNKNOWN_12";
+	}
+
+	if (shader_type == BSLightingShaderPropertyShaderType::LSPST_UNKNOWN_17) {
+		return "LSPST_UNKNOWN_17";
+	}
+
+	if (shader_type == BSLightingShaderPropertyShaderType::LSPST_WORLDMAP1) {
+		return "LSPST_WORLDMAP1";
+	}
+
+	if (shader_type == BSLightingShaderPropertyShaderType::LSPST_WORLDMAP2) {
+		return "LSPST_WORLDMAP2";
+	}
+
+	if (shader_type == BSLightingShaderPropertyShaderType::LSPST_WORLDMAP3) {
+		return "LSPST_WORLDMAP3";
+	}
+
+	if (shader_type == BSLightingShaderPropertyShaderType::LSPST_WORLDMAP4) {
+		return "LSPST_WORLDMAP4";
+	}
+
+	if (shader_type == BSLightingShaderPropertyShaderType::LSPST_WORLD_LOD_MULTITEXTURE) {
+		return "LSPST_WORLD_LOD_MULTITEXTURE";
+	}
+
+	if (shader_type == BSLightingShaderPropertyShaderType::LSPST_WORLD_MULTITEXTURE) {
+		return "LSPST_WORLD_MULTITEXTURE";
+	}
+
+	if (shader_type == BSLightingShaderPropertyShaderType::LSPST_EYE_ENVMAP) {
+		return "LSPST_EYE_ENVMAP";
+	}
+
+	return "DEFAULT";
 }
 
 

@@ -1,5 +1,5 @@
-#ifndef _NIFIMPORTINGFIXTURESKYRIM_H
-#define _NIFIMPORTINGFIXTURESKYRIM_H
+#ifndef _NIFSKYRIMEXPORTINGFIXTURE_H
+#define _NIFSKYRIMEXPORTINGFIXTURE_H
 
 #include <maya/MDagPath.h>
 #include <maya/MDagPathArray.h>
@@ -47,7 +47,6 @@
 #include <maya/MAnimUtil.h>
 #include <maya/MItMeshPolygon.h>
 #include <maya/MItMeshVertex.h>
-#include <maya/MProgressWindow.h>
 
 #include <string> 
 #include <vector>
@@ -79,35 +78,35 @@
 #include <obj/NiKeyframeData.h>
 #include <obj/NiTextureProperty.h>
 #include <obj/NiImage.h>
+#include <Ref.h>
 
-#include "include/Common/NifTranslatorData.h"
-#include "include/Common/NifTranslatorOptions.h"
-#include "include/Common/NifTranslatorUtils.h"
-#include "include/Importers/NifNodeImporter.h"
-#include "include/Importers/NifImportingFixture.h"
-#include "include/Importers/NifAnimationImporter.h"
-#include "include/Importers/NifMeshImporter.h"
-#include "include/Importers/NifMaterialImporter.h"
-#include "include/Importers/NifDefaultImportingFixture.h"
-#include "include/Importers/NifMaterialImporterSkyrimFallout4.h"
-#include "include/Importers/NifMeshImporterSkyrim.h"
+#include "NifDefaultExportingFixture.h"
+#include "NifMeshExporterSkyrim.h"
+#include "NifNodeExporter.h"
+#include "NifMaterialExporterSkyrim.h"
+#include "NifAnimationExporter.h"
 
-class NifImportingFixtureSkyrim;
+using namespace Niflib;
+using namespace std;
 
-typedef Ref<NifImportingFixtureSkyrim> NifImportingFixtureSkyrimRef;
+class NifSkyrimExportingFixtureFixture;
 
-class NifImportingFixtureSkyrim : public NifDefaultImportingFixture {
+typedef Ref<NifSkyrimExportingFixtureFixture> NifExportingFixtureSkyrimRef;
+
+class NifExportingFixtureSkyrim : public NifDefaultExportingFixture {
+
 public:
 
-	NifImportingFixtureSkyrim();
+	NifExportingFixtureSkyrim();
 
-	NifImportingFixtureSkyrim(NifTranslatorOptionsRef translatorOptions, NifTranslatorDataRef translatorData, NifTranslatorUtilsRef translatorUtils);
+	NifExportingFixtureSkyrim(NifTranslatorDataRef translatorData, NifTranslatorOptionsRef translatorOptions, NifTranslatorUtilsRef translatorUtils);
 
-	virtual string asString( bool verbose = false ) const;
+	virtual string asString(bool verbose = false) const;
 
-	virtual const Type& GetType() const;
+	virtual const Type& getType() const;
 
 	const static Type TYPE;
+
 };
 
 #endif

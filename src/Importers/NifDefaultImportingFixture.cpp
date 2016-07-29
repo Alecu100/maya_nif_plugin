@@ -27,6 +27,8 @@ MStatus NifDefaultImportingFixture::ReadNodes( const MFileObject& file )
 		if ( root_node != NULL ) {
 			//Root is a NiNode and may have children
 
+			this->translatorData->importedSceneRoot = root_node;
+
 			//Check if the user wants us to try to find the bind pose
 			if ( this->translatorOptions->importBindPose ) {
 				SendNifTreeToBindPos( root_node );
@@ -171,6 +173,8 @@ MStatus NifDefaultImportingFixture::ReadNodes( const MFileObject& file )
 		MGlobal::displayError( "Error:  Unknown Exception." );
 		return MStatus::kFailure;
 	}
+
+	return MStatus::kSuccess;
 }
 
 string NifDefaultImportingFixture::asString( bool verbose /*= false */ ) const {

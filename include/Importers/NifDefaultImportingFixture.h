@@ -49,6 +49,7 @@
 #include <maya/MItMeshVertex.h>
 #include <maya/MProgressWindow.h>
 
+
 #include <string> 
 #include <vector>
 #include <sstream>
@@ -93,7 +94,8 @@ class NifDefaultImportingFixture;
 
 typedef Ref<NifDefaultImportingFixture> NifDefaultImportingFixtureRef;
 
-class NifDefaultImportingFixture : public NifImportingFixture {
+class NifDefaultImportingFixture : public NifImportingFixture
+{
 public:
 
 	NifNodeImporterRef nodeImporter;
@@ -110,12 +112,11 @@ public:
 
 	virtual MStatus ReadNodes(const MFileObject& file);
 
-	virtual string asString( bool verbose = false ) const;
+	virtual string asString(bool verbose = false) const;
 
 	virtual const Type& GetType() const;
 
 	const static Type TYPE;
-
 };
 
 #endif

@@ -114,6 +114,12 @@ public:
 	TexPathMode texturePathMode;  //Determines the way textures paths are exported
 	string texturePathPrefix; //Optional prefix to add to texture paths.
 
+	bool importAllNodesAsJoints; //Determines if should import all the nodes in the file as joints in maya
+
+	bool exportFlatenedSkeleton; //Determines if the skeleton hierarchy should be flattened
+
+	bool exportBsFadeNodeRoot; //Determines if the root will be a bs fade node
+
 	
 	string exportType; //this tells the exporter what to export from the scene: geometry or animation
 

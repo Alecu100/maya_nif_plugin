@@ -1,5 +1,5 @@
-#ifndef _NIFSKYRIMEXPORTINGFIXTURE_H
-#define _NIFSKYRIMEXPORTINGFIXTURE_H
+#ifndef _NIFMATERIALIMPORTERSKYRIM_H
+#define _NIFMATERIALIMPORTERSKYRIM_H
 
 #include <maya/MDagPath.h>
 #include <maya/MDagPathArray.h>
@@ -47,6 +47,7 @@
 #include <maya/MAnimUtil.h>
 #include <maya/MItMeshPolygon.h>
 #include <maya/MItMeshVertex.h>
+#include <maya/MProgressWindow.h>
 
 #include <string> 
 #include <vector>
@@ -78,35 +79,48 @@
 #include <obj/NiKeyframeData.h>
 #include <obj/NiTextureProperty.h>
 #include <obj/NiImage.h>
-#include <Ref.h>
+#include <obj/NiAVObject.h>
+#include <obj/NiTriBasedGeom.h>
+#include <obj/BSLightingShaderProperty.h>
+#include <obj/BSShaderTextureSet.h>
 
-#include "NifDefaultExportingFixture.h"
-#include "NifMeshExporterSkyrim.h"
-#include "NifNodeExporter.h"
-#include "NifMaterialExporterSkyrim.h"
-#include "NifAnimationExporter.h"
+#include "include/Common/NifTranslatorRefObject.h"
+#include "include/Common/NifTranslatorOptions.h"
+#include "include/Common/NifTranslatorData.h"
+#include "include/Common/NifTranslatorUtils.h"
+#include "include/Common/NifTranslatorFixtureItem.h"
+#include "include/Importers/NifMaterialImporter.h"
+#include "include/Custom Nodes/BSLightningShader.h"
 
-using namespace Niflib;
-using namespace std;
+class NifMaterialImporterSkyrimFallout4;
 
-class NifSkyrimExportingFixtureFixture;
+typedef Ref<NifMaterialImporterSkyrimFallout4> NifMaterialImporterSkyrimFallout4Ref;
 
-typedef Ref<NifSkyrimExportingFixtureFixture> NifNifSkyrimExportingFixtureRef;
+class NifMaterialImporterSkyrimFallout4 : public NifMaterialImporter {
+private:
 
-class NifSkyrimExportingFixture : public NifDefaultExportingFixture {
+	//these 2 vectors are actually interconnected meaning that
+	//an MOject in the imported materials corresponds to a set of properties in the property_groups
+	//at the exact same index. A maya material is created for a set of properties
+	vector<vector<NiPropertyRef>> property_groups;
+
+	vector<MObject> imported_materials;
 
 public:
 
-	NifSkyrimExportingFixture();
+	NifMaterialImporterSkyrimFallout4();
 
-	NifSkyrimExportingFixture(NifTranslatorDataRef translatorData, NifTranslatorOptionsRef translatorOptions, NifTranslatorUtilsRef translatorUtils);
+	NifMaterialImporterSkyrimFallout4(NifTranslatorOptionsRef translatorOptions, NifTranslatorDataRef translatorData, NifTranslatorUtilsRef translatorUtils);
 
-	virtual string asString(bool verbose = false) const;
+	virtual void ImportMaterialsAndTextures( NiAVObjectRef & root );
 
-	virtual const Type& getType() const;
+	void GatherMaterialsAndTextures( NiAVObjectRef & root);
+
+	virtual string asString( bool verbose = false ) const;
+
+	virtual const Type& GetType() const;
 
 	const static Type TYPE;
-
 };
 
 #endif

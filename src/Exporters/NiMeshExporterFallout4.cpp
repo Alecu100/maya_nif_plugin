@@ -1,26 +1,26 @@
-#include "include/Exporters/NifMeshExporterSkyrim.h"
+#include "include/Exporters/NifMeshExporterFallout4.h"
 
-NifMeshExporterSkyrim::NifMeshExporterSkyrim() {
+NifMeshExporterFallout4::NifMeshExporterFallout4() {
 
 }
 
-NifMeshExporterSkyrim::NifMeshExporterSkyrim( NifNodeExporterRef node_exporter, NifTranslatorOptionsRef translator_options, NifTranslatorDataRef translator_data, NifTranslatorUtilsRef translator_utils ) {
+NifMeshExporterFallout4::NifMeshExporterFallout4(NifNodeExporterRef node_exporter, NifTranslatorOptionsRef translator_options, NifTranslatorDataRef translator_data, NifTranslatorUtilsRef translator_utils) {
 	this->translatorOptions = translator_options;
 	this->translatorData = translator_data;
 	this->translatorUtils = translator_utils;
 	this->nodeExporter = node_exporter;
 }
 
-void NifMeshExporterSkyrim::ExportMesh( MObject dagNode ) {
+void NifMeshExporterFallout4::ExportMesh(MObject dagNode) {
 	//out << "NifTranslator::ExportMesh {";
-	ComplexShape cs;
+	BSComplexShape bs_complex_shape;
 	MStatus stat;
 	MObject mesh;
 
 	//Find Mesh child of given transform object
 	MFnDagNode nodeFn(dagNode);
 
-	cs.SetName(this->translatorUtils->MakeNifName(nodeFn.name()));
+	bs_complex_shape.SetName(this->translatorUtils->MakeNifName(nodeFn.name()));
 
 
 	for (int i = 0; i != nodeFn.childCount(); ++i) {
@@ -89,7 +89,7 @@ void NifMeshExporterSkyrim::ExportMesh( MObject dagNode ) {
 	for (unsigned int i = 0; i < myColors.length(); ++i) {
 		niColors[i] = Color4(myColors[i].r, myColors[i].g, myColors[i].b, myColors[i].a);
 	}
-	cs.SetColors(niColors);
+	bs_complex_shape.SetColors(niColors);
 
 
 	// this will hold the returned vertex positions
@@ -110,7 +110,7 @@ void NifMeshExporterSkyrim::ExportMesh( MObject dagNode ) {
 		nif_nmls[i].y = float(nmls[i].y);
 		nif_nmls[i].z = float(nmls[i].z);
 	}
-	cs.SetNormals(nif_nmls);
+	bs_complex_shape.SetNormals(nif_nmls);
 
 	//out << "Use the function set to get the UV set names" << endl;
 	MStringArray uvSetNames;
@@ -123,85 +123,38 @@ void NifMeshExporterSkyrim::ExportMesh( MObject dagNode ) {
 	meshFn.getUVSetNames(uvSetNames);
 
 	vector<TexCoordSet> nif_uvs;
+	
+	if (uvSetNames.length() > 0)
+	{
+		//Get the UVs
+		meshFn.getUVs(myUCoords, myVCoords, &uvSetNames[0]);
 
-	//Record assotiation between name and uv set index for later
-	map<string, int> uvSetNums;
-
-	int set_num = 0;
-	for (unsigned int i = 0; i < uvSetNames.length(); ++i) {
-		if (meshFn.numUVs(uvSetNames[i]) > 0) {
-			TexType tt;
-			string set_name = uvSetNames[i].asChar();
-			if (set_name == "base" || set_name == "map1") {
-				tt = BASE_MAP;
-			}
-			else if (set_name == "dark") {
-				tt = DARK_MAP;
-			}
-			else if (set_name == "detail") {
-				tt = DETAIL_MAP;
-			}
-			else if (set_name == "gloss") {
-				tt = GLOSS_MAP;
-			}
-			else if (set_name == "glow") {
-				tt = GLOW_MAP;
-			}
-			else if (set_name == "bump") {
-				tt = BUMP_MAP;
-			}
-			else if (set_name == "decal0") {
-				tt = DECAL_0_MAP;
-			}
-			else if (set_name == "decal1") {
-				tt = DECAL_1_MAP;
-			}
-			else {
-				tt = BASE_MAP;
-			}
-
-			//Record the assotiation
-			uvSetNums[set_name] = set_num;
-
-			//Get the UVs
-			meshFn.getUVs(myUCoords, myVCoords, &uvSetNames[i]);
-
-			//Make sure this set actually has some UVs in it.  Maya sometimes returns empty UV sets.
-			if (myUCoords.length() == 0) {
-				continue;
-			}
-
-			//Store the data
-			TexCoordSet tcs;
-			tcs.texType = tt;
-			tcs.texCoords.resize(myUCoords.length());
-			for (unsigned int j = 0; j < myUCoords.length(); ++j) {
-				tcs.texCoords[j].u = myUCoords[j];
-				//Flip the V coords
-				tcs.texCoords[j].v = 1.0f - myVCoords[j];
-			}
-			nif_uvs.push_back(tcs);
-
-			baseUVSet = uvSetNames[i];
-			has_uvs = true;
-
-			set_num++;
+		//Store the data
+		vector<TexCoord> tex_coords;
+		tex_coords.resize(myUCoords.length());
+		for (unsigned int j = 0; j < myUCoords.length(); ++j) {
+			tex_coords[j].u = myUCoords[j];
+			//Flip the V coords
+			tex_coords[j].v = 1.0f - myVCoords[j];
 		}
+
+		baseUVSet = uvSetNames[0];
+
+		bs_complex_shape.SetTexCoordSet(tex_coords);
 	}
 
-	cs.SetTexCoordSets(nif_uvs);
 
 	// this will hold references to the shaders used on the meshes
-	MObjectArray Shaders;
+	MObjectArray shaders;
 
 	// this is used to hold indices to the materials returned in the object array
-	MIntArray    FaceIndices;
+	MIntArray    face_indices;
 
 	//out << "Get the connected shaders" << endl;
 	// get the shaders used by the i'th mesh instance
 	// Assume this is not instanced for now
 	// TODO support instancing properly
-	stat = visibleMeshFn.getConnectedShaders(0, Shaders, FaceIndices);
+	stat = visibleMeshFn.getConnectedShaders(0, shaders, face_indices);
 
 	if (stat != MS::kSuccess) {
 		//out << stat.errorString().asChar() << endl;
@@ -211,15 +164,14 @@ void NifMeshExporterSkyrim::ExportMesh( MObject dagNode ) {
 
 	vector<ComplexFace> nif_faces;
 
-
 	//Add shaders to propGroup array
 	vector< vector<NiPropertyRef> > propGroups;
-	for (unsigned int shader_num = 0; shader_num < Shaders.length(); ++shader_num) {
+	for (unsigned int shader_num = 0; shader_num < shaders.length(); ++shader_num) {
 
 		//Maya sometimes lists shaders that are not actually attached to any face.  Disregard them.
 		bool shader_is_used = false;
-		for (size_t f = 0; f < FaceIndices.length(); ++f) {
-			if (FaceIndices[f] == shader_num) {
+		for (size_t f = 0; f < face_indices.length(); ++f) {
+			if (face_indices[f] == shader_num) {
 				shader_is_used = true;
 				break;
 			}
@@ -233,7 +185,7 @@ void NifMeshExporterSkyrim::ExportMesh( MObject dagNode ) {
 		//out << "Found attached shader:  ";
 		//Attach all properties previously associated with this shader to
 		//this NiTriShape
-		MFnDependencyNode fnDep(Shaders[shader_num]);
+		MFnDependencyNode fnDep(shaders[shader_num]);
 
 		//Find the shader that this shading group connects to
 		MPlug p = fnDep.findPlug("surfaceShader");
@@ -251,7 +203,7 @@ void NifMeshExporterSkyrim::ExportMesh( MObject dagNode ) {
 
 		propGroups.push_back(niProps);
 	}
-	cs.SetPropGroups(propGroups);
+	bs_complex_shape.SetPropGroups(propGroups);
 
 	//out << "Export vertex and normal data" << endl;
 	// attach an iterator to the mesh
@@ -298,7 +250,7 @@ void NifMeshExporterSkyrim::ExportMesh( MObject dagNode ) {
 			itPoly.getUVSetNames(vertUvSetNames);
 			for (unsigned int j = 0; j < vertUvSetNames.length(); ++j) {
 				TexCoordIndex tci;
-				tci.texCoordSetIndex = uvSetNums[vertUvSetNames[j].asChar()];
+				tci.texCoordSetIndex = 0;
 				int uv_index;
 				itPoly.getUVIndex(i, uv_index, &vertUvSetNames[j]);
 				tci.texCoordIndex = uv_index;
@@ -310,14 +262,14 @@ void NifMeshExporterSkyrim::ExportMesh( MObject dagNode ) {
 	}
 
 	//Set shader/face association
-	if (nif_faces.size() != FaceIndices.length()) {
+	if (nif_faces.size() != face_indices.length()) {
 		throw runtime_error("Num faces found do not match num faces reported.");
 	}
 	for (unsigned int face_index = 0; face_index < nif_faces.size(); ++face_index) {
-		nif_faces[face_index].propGroupIndex = FaceIndices[face_index];
+		nif_faces[face_index].propGroupIndex = face_indices[face_index];
 	}
 
-	cs.SetFaces(nif_faces);
+	bs_complex_shape.SetFaces(nif_faces);
 
 	//--Skin Processing--//
 
@@ -378,7 +330,7 @@ void NifMeshExporterSkyrim::ExportMesh( MObject dagNode ) {
 
 			//out << "Setting skin influence list in ComplexShape" << endl;
 			//Set skin information in ComplexShape
-			cs.SetSkinInfluences(niBones);
+			bs_complex_shape.SetSkinInfluences(niBones);
 
 			//out << "Adding weights to ComplexShape vertices" << endl;
 			//out << "Number of weights:  " << myWeights.length() << endl;
@@ -407,7 +359,7 @@ void NifMeshExporterSkyrim::ExportMesh( MObject dagNode ) {
 		meshFn.findPlug("message").connectedTo(connected_dismember_plugs, false, true);
 
 		bool has_valid_dismemember_partitions = true;
-		int faces_count = cs.GetFaces().size();
+		int faces_count = bs_complex_shape.GetFaces().size();
 		int current_face_index;
 		vector<BodyPartList> body_parts_list;
 		vector<uint> dismember_faces(faces_count, 0);
@@ -521,20 +473,20 @@ void NifMeshExporterSkyrim::ExportMesh( MObject dagNode ) {
 			body_parts_list.push_back(body_part);
 		}
 
-		cs.SetDismemberPartitionsBodyParts(body_parts_list);
-		cs.SetDismemberPartitionsFaces(dismember_faces);
+		bs_complex_shape.SetDismemberPartitionsBodyParts(body_parts_list);
+		bs_complex_shape.SetDismemberPartitionsFaces(dismember_faces);
 	}
 
 	//out << "Setting vertex info" << endl;
 	//Set vertex info now that any skins have been processed
-	cs.SetVertices(nif_vts);
+	bs_complex_shape.SetVertices(nif_vts);
 
 	//ComplexShape is now complete, so split it
 
 	//Get parent
 	NiNodeRef parNode = this->translatorUtils->GetDAGParent(dagNode);
 	Matrix44 transform = Matrix44::IDENTITY;
-	vector<NiNodeRef> influences = cs.GetSkinInfluences();
+	vector<NiNodeRef> influences = bs_complex_shape.GetSkinInfluences();
 	if (influences.size() > 0) {
 		//This is a skin, so we use the common ancestor of all influences
 		//as the parent
@@ -559,11 +511,11 @@ void NifMeshExporterSkyrim::ExportMesh( MObject dagNode ) {
 	NiAVObjectRef avObj;
 	if (this->translatorOptions->exportTangentSpace == "falloutskyrimtangentspace") {
 		//out << "Split ComplexShape from " << meshFn.name().asChar() << endl;
-		avObj = cs.Split(parNode, tempAV->GetLocalTransform() * transform, this->translatorOptions->exportBonesPerSkinPartition,
+		avObj = bs_complex_shape.Split(parNode, tempAV->GetLocalTransform() * transform, this->translatorOptions->exportBonesPerSkinPartition,
 			this->translatorOptions->exportAsTriStrips, true, this->translatorOptions->exportMinimumVertexWeight, 16);
 	}
 	else {
-		avObj = cs.Split(parNode, tempAV->GetLocalTransform() * transform, this->translatorOptions->exportBonesPerSkinPartition,
+		avObj = bs_complex_shape.Split(parNode, tempAV->GetLocalTransform() * transform, this->translatorOptions->exportBonesPerSkinPartition,
 			this->translatorOptions->exportAsTriStrips, false, this->translatorOptions->exportMinimumVertexWeight);
 	}
 
@@ -603,17 +555,17 @@ void NifMeshExporterSkyrim::ExportMesh( MObject dagNode ) {
 
 }
 
-string NifMeshExporterSkyrim::asString( bool verbose /*= false */ ) const {
+string NifMeshExporterFallout4::asString(bool verbose /*= false */) const {
 	stringstream out;
 
-	out<<NifMeshExporter::asString(verbose)<<endl;
-	out<<"NifMeshExporterSkyrim"<<endl;
+	out << NifMeshExporter::asString(verbose) << endl;
+	out << "NifMeshExporterFallout4" << endl;
 
 	return out.str();
 }
 
-const Type& NifMeshExporterSkyrim::GetType() const {
+const Type& NifMeshExporterFallout4::GetType() const {
 	return TYPE;
 }
 
-const Type NifMeshExporterSkyrim::TYPE("NifMeshExporterSkyrim", &NifMeshExporter::TYPE);
+const Type NifMeshExporterFallout4::TYPE("NifMeshExporterFallout4", &NifMeshExporter::TYPE);

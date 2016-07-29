@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "maya_nif_plugin", "maya_nif_plugin.vcxproj", "{DE2F121F-8326-4144-A766-444451895AFA}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -17,6 +17,8 @@ Global
 		Debug - 2012|x64 = Debug - 2012|x64
 		Debug - 2016|Win32 = Debug - 2016|Win32
 		Debug - 2016|x64 = Debug - 2016|x64
+		Debug - 2017|Win32 = Debug - 2017|Win32
+		Debug - 2017|x64 = Debug - 2017|x64
 		Debug - 8.5|Win32 = Debug - 8.5|Win32
 		Debug - 8.5|x64 = Debug - 8.5|x64
 		Debug - DLL|Win32 = Debug - DLL|Win32
@@ -31,6 +33,8 @@ Global
 		Release - 2012 x64|x64 = Release - 2012 x64|x64
 		Release - 2016|Win32 = Release - 2016|Win32
 		Release - 2016|x64 = Release - 2016|x64
+		Release - 2017|Win32 = Release - 2017|Win32
+		Release - 2017|x64 = Release - 2017|x64
 		Release - 8.5|Win32 = Release - 8.5|Win32
 		Release - 8.5|x64 = Release - 8.5|x64
 		Release - DLL|Win32 = Release - DLL|Win32
@@ -49,6 +53,10 @@ Global
 		{DE2F121F-8326-4144-A766-444451895AFA}.Debug - 2016|Win32.ActiveCfg = Debug - 2016|x64
 		{DE2F121F-8326-4144-A766-444451895AFA}.Debug - 2016|x64.ActiveCfg = Debug - 2016|x64
 		{DE2F121F-8326-4144-A766-444451895AFA}.Debug - 2016|x64.Build.0 = Debug - 2016|x64
+		{DE2F121F-8326-4144-A766-444451895AFA}.Debug - 2017|Win32.ActiveCfg = Debug - 2017|Win32
+		{DE2F121F-8326-4144-A766-444451895AFA}.Debug - 2017|Win32.Build.0 = Debug - 2017|Win32
+		{DE2F121F-8326-4144-A766-444451895AFA}.Debug - 2017|x64.ActiveCfg = Debug - 2017|x64
+		{DE2F121F-8326-4144-A766-444451895AFA}.Debug - 2017|x64.Build.0 = Debug - 2017|x64
 		{DE2F121F-8326-4144-A766-444451895AFA}.Debug - 8.5|Win32.ActiveCfg = Debug - 8.5|Win32
 		{DE2F121F-8326-4144-A766-444451895AFA}.Debug - 8.5|Win32.Build.0 = Debug - 8.5|Win32
 		{DE2F121F-8326-4144-A766-444451895AFA}.Debug - 8.5|x64.ActiveCfg = Release - 2009|x64
@@ -77,6 +85,10 @@ Global
 		{DE2F121F-8326-4144-A766-444451895AFA}.Release - 2016|Win32.Build.0 = Release - 2016|Win32
 		{DE2F121F-8326-4144-A766-444451895AFA}.Release - 2016|x64.ActiveCfg = Release - 2016|x64
 		{DE2F121F-8326-4144-A766-444451895AFA}.Release - 2016|x64.Build.0 = Release - 2016|x64
+		{DE2F121F-8326-4144-A766-444451895AFA}.Release - 2017|Win32.ActiveCfg = Release - 2017|Win32
+		{DE2F121F-8326-4144-A766-444451895AFA}.Release - 2017|Win32.Build.0 = Release - 2017|Win32
+		{DE2F121F-8326-4144-A766-444451895AFA}.Release - 2017|x64.ActiveCfg = Release - 2017|x64
+		{DE2F121F-8326-4144-A766-444451895AFA}.Release - 2017|x64.Build.0 = Release - 2017|x64
 		{DE2F121F-8326-4144-A766-444451895AFA}.Release - 8.5|Win32.ActiveCfg = Release - 8.5|Win32
 		{DE2F121F-8326-4144-A766-444451895AFA}.Release - 8.5|Win32.Build.0 = Release - 8.5|Win32
 		{DE2F121F-8326-4144-A766-444451895AFA}.Release - 8.5|x64.ActiveCfg = Release - 8.5|x64
@@ -99,6 +111,10 @@ Global
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Debug - 2016|Win32.Build.0 = Debug - Static|Win32
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Debug - 2016|x64.ActiveCfg = Debug - DLL|x64
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Debug - 2016|x64.Build.0 = Debug - DLL|x64
+		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Debug - 2017|Win32.ActiveCfg = Debug - 2017|Win32
+		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Debug - 2017|Win32.Build.0 = Debug - 2017|Win32
+		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Debug - 2017|x64.ActiveCfg = Debug - 2017|x64
+		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Debug - 2017|x64.Build.0 = Debug - 2017|x64
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Debug - 8.5|Win32.ActiveCfg = Debug - Static|x64
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Debug - 8.5|x64.ActiveCfg = Release - Static|x64
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Debug - 8.5|x64.Build.0 = Release - Static|x64
@@ -124,6 +140,10 @@ Global
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release - 2016|Win32.Build.0 = Release - Static|Win32
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release - 2016|x64.ActiveCfg = Release - DLL|x64
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release - 2016|x64.Build.0 = Release - DLL|x64
+		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release - 2017|Win32.ActiveCfg = Release - 2017|Win32
+		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release - 2017|Win32.Build.0 = Release - 2017|Win32
+		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release - 2017|x64.ActiveCfg = Release - 2017|x64
+		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release - 2017|x64.Build.0 = Release - 2017|x64
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release - 8.5|Win32.ActiveCfg = Release - Static|x64
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release - 8.5|x64.ActiveCfg = Release - Static|x64
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release - 8.5|x64.Build.0 = Release - Static|x64

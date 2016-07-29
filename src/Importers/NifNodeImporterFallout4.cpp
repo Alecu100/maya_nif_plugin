@@ -1,5 +1,75 @@
 #include "include/Importers/NifNodeImporterFallout4.h"
-#include <obj/BSShape.h>
+#include <queue>
+#include <obj/BSSubIndexTriShape.h>
+#include <obj/BSSkin__Instance.h>
+
+bool NifNodeImporterFallout4::isUsedInBoneData(NiNodeRef target_node)
+{
+	if (this->translatorData->importedSceneRoot != NULL)
+	{
+		queue<NiAVObjectRef> nodes_to_scan;
+		NiAVObjectRef initial_root = DynamicCast<NiAVObject>(this->translatorData->importedSceneRoot);
+		nodes_to_scan.push(initial_root);
+
+		while (!nodes_to_scan.empty())
+		{
+			NiAVObjectRef av_object = nodes_to_scan.front();
+			nodes_to_scan.pop();
+
+			BSShapeRef bs_shape = DynamicCast<BSShape>(av_object);
+
+			if (bs_shape != NULL)
+			{
+				if (bs_shape->IsSkin())
+				{
+					if (bs_shape->IsSameType(BSSubIndexTriShape::TYPE))
+					{
+						BSSubIndexTriShapeRef bs_sub_index_tri_shape = DynamicCast<BSSubIndexTriShape>(bs_shape);
+						BSSkin__InstanceRef skinInst = DynamicCast<BSSkin__Instance>(bs_sub_index_tri_shape->GetSkin());
+						vector<Ref<NiNode>> bones = skinInst->GetBones();
+
+						for (int bone_index = 0; bone_index < bones.size(); bone_index++)
+						{
+							if (bones[bone_index] == target_node)
+							{
+								return true;
+							}
+						}
+					}
+
+					if (bs_shape->IsSameType(BSTriShape::TYPE))
+					{
+						BSTriShapeRef bs_tri_shape = DynamicCast<BSTriShape>(bs_shape);
+						BSSkin__InstanceRef skinInst = DynamicCast<BSSkin__Instance>(bs_tri_shape->GetSkin());
+						vector<Ref<NiNode>> bones = skinInst->GetBones();
+
+						for (int bone_index = 0; bone_index < bones.size(); bone_index++)
+						{
+							if (bones[bone_index] == target_node)
+							{
+								return true;
+							}
+						}
+					}
+				}
+			}
+
+			NiNodeRef node = DynamicCast<NiNode>(av_object);
+
+			if (node != NULL)
+			{
+				vector<Ref<NiAVObject>> ni_av_objects = node->GetChildren();
+
+				for (int child_index = 0; child_index < ni_av_objects.size(); child_index++)
+				{
+					nodes_to_scan.push(ni_av_objects[child_index]);
+				}
+			}
+		}
+	}
+
+	return false;
+}
 
 void NifNodeImporterFallout4::ImportNodes(NiAVObjectRef niAVObj, map<NiAVObjectRef, MDagPath>& objs, MObject parent)
 {
@@ -66,8 +136,12 @@ void NifNodeImporterFallout4::ImportNodes(NiAVObjectRef niAVObj, map<NiAVObjectR
 		{
 			is_joint = true;
 		}
-		else if (niNode->IsSkinInfluence() == true)
+		else if (this->isUsedInBoneData(niNode))
 		{
+			is_joint = true;
+		}
+
+		if (this->translatorOptions->importAllNodesAsJoints == true) {
 			is_joint = true;
 		}
 	}

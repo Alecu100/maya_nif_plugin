@@ -209,7 +209,7 @@ MStatus NifTranslator::writer(const MFileObject& file, const MString& optionsStr
 		}
 		if (translator_options->exportMaterialType == "skyrimmaterial")
 		{
-			exporting_fixture = new NifSkyrimExportingFixture(translator_data, translator_options, translator_utils);
+			exporting_fixture = new NifExportingFixtureSkyrim(translator_data, translator_options, translator_utils);
 		}
 	}
 

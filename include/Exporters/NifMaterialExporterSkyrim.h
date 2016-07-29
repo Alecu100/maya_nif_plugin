@@ -48,6 +48,7 @@
 #include <maya/MItMeshPolygon.h>
 #include <maya/MItMeshVertex.h>
 #include <maya/MProgressWindow.h>
+#include <maya/MFnStringArrayData.h>
 
 #include <string> 
 #include <vector>
@@ -90,6 +91,7 @@
 #include "include/Common/NifTranslatorUtils.h"
 #include "include/Common/NifTranslatorFixtureItem.h"
 #include "include/Exporters/NifMaterialExporter.h"
+#include <Custom Nodes/BSLightningShader.h>
 
 class NifMaterialExporterSkyrim;
 

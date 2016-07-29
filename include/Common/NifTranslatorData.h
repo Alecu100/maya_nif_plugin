@@ -118,6 +118,8 @@ public:
 
 	NiNodeRef exportedSceneRoot;
 
+	NiNodeRef importedSceneRoot;
+
 	list< MObject > meshes;
 	//A map to hold associations between DAG paths and NIF object
 	map<string, NiNodeRef> nodes; 

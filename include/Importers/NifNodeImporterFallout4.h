@@ -80,6 +80,7 @@
 #include <obj/NiImage.h>
 #include <obj/NiAVObject.h>
 #include <obj/NiTriBasedGeom.h>
+#include <obj/BSShape.h>
 
 #include "include/Common/NifTranslatorRefObject.h"
 #include "include/Common/NifTranslatorOptions.h"
@@ -98,6 +99,8 @@ typedef Ref<NifNodeImporterFallout4> NifNodeImporterFallout4Ref;
 class NifNodeImporterFallout4 : public NifNodeImporter
 {
 public:
+
+	bool isUsedInBoneData(NiNodeRef target_node);
 
 	virtual void ImportNodes(NiAVObjectRef niAVObj, map<NiAVObjectRef, MDagPath>& objs, MObject parent = MObject::kNullObj);
 

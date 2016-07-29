@@ -1,10 +1,10 @@
-#include "include/Exporters/NifSkyrimExportingFixture.h"
+#include "include/Exporters/NifExportingFixtureSkyrim.h"
 
-NifSkyrimExportingFixture::NifSkyrimExportingFixture() {
+NifExportingFixtureSkyrim::NifExportingFixtureSkyrim() {
 
 }
 
-NifSkyrimExportingFixture::NifSkyrimExportingFixture(NifTranslatorDataRef translatorData, NifTranslatorOptionsRef translatorOptions, NifTranslatorUtilsRef translatorUtils) {
+NifExportingFixtureSkyrim::NifExportingFixtureSkyrim(NifTranslatorDataRef translatorData, NifTranslatorOptionsRef translatorOptions, NifTranslatorUtilsRef translatorUtils) {
 	this->translatorOptions = translatorOptions;
 	this->translatorData = translatorData;
 	this->translatorUtils = translatorUtils;
@@ -15,7 +15,7 @@ NifSkyrimExportingFixture::NifSkyrimExportingFixture(NifTranslatorDataRef transl
 }
 
 
-string NifSkyrimExportingFixture::asString(bool verbose /*= false */) const {
+string NifExportingFixtureSkyrim::asString(bool verbose /*= false */) const {
 	stringstream out;
 
 	out << NifDefaultExportingFixture::asString(verbose) << endl;
@@ -26,9 +26,9 @@ string NifSkyrimExportingFixture::asString(bool verbose /*= false */) const {
 	return out.str();
 }
 
-const Type& NifSkyrimExportingFixture::getType() const {
+const Type& NifExportingFixtureSkyrim::getType() const {
 	return TYPE;
 }
 
 
-const Type NifSkyrimExportingFixture::TYPE("NifSkyrimExportingFixture", &NifDefaultExportingFixture::TYPE);
+const Type NifExportingFixtureSkyrim::TYPE("NifExportingFixtureSkyrim", &NifDefaultExportingFixture::TYPE);

@@ -67,6 +67,10 @@ void NifNodeImporter::ImportNodes( NiAVObjectRef niAVObj, map< NiAVObjectRef, MD
 		} else if ( niNode->IsSkinInfluence() == true ) {
 			is_joint = true;
 		}
+
+		if (this->translatorOptions->importAllNodesAsJoints == true) {
+			is_joint = true;
+		}
 	}
 
 	//Check if the user wants us to try to combine new skins with an

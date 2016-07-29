@@ -145,7 +145,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include "include/Custom Nodes/BSLightningShader.h"
 #include "include/Custom Nodes/BSSegment.h"
 #include "include/Custom Nodes/BSSubSegment.h"
-#include "include/Exporters/NifSkyrimExportingFixture.h"
+#include "include/Exporters/NifExportingFixtureSkyrim.h"
 
 using namespace Niflib;
 using namespace std;

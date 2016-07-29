@@ -178,7 +178,10 @@ void NifTranslatorUtils::ConnectShader( MObject material_object, vector<NifTextu
 
 	//Set material to a phong function set
 	MFnPhongShader phongFn;
-	phongFn.setObject( material_object );
+	MFnMesh meshFn;
+	phongFn.setObject(material_object);
+	meshFn.setObject(mesh_path);
+
 
 	//Break the default connection that is created
 	MPlugArray plug_array;
@@ -195,6 +198,27 @@ void NifTranslatorUtils::ConnectShader( MObject material_object, vector<NifTextu
 
 	for(int i = 0; i < texture_connectors.size(); i++) {
 		texture_connectors[i]->ConnectTexture(mesh_path);
+	}
+
+	MPlugArray message_plug_connections;
+	MPlug message_plug = phongFn.findPlug("message");
+	message_plug.connectedTo(message_plug_connections, false, true);
+
+	for (int z = 0; z < message_plug_connections.length(); z++) {
+		MPlug bs_shader_plug = message_plug_connections[z];
+
+		MObject m_object = bs_shader_plug.node();
+
+		MFnDependencyNode bs_shader_node(m_object);
+
+		if (bs_shader_node.typeName() == "bsLightningShader")
+		{
+			MPlug message_plug = meshFn.findPlug("message");
+			MPlug target_shape_plug = bs_shader_node.findPlug("targetShape");
+
+			dgModifier.connect(message_plug, target_shape_plug);
+			dgModifier.doIt();
+		}
 	}
 }
 

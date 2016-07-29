@@ -25,16 +25,18 @@ MStatus BSSegment::initialize()
 
 	MStatus status;
 
+	targetShape = target_shape_attribute.create("targetShape", "tS", &status);
+	subSegments = subsegments_attribute.create("subSegments", "sS", &status);
+
+
 	target_shape_attribute.setWritable(true);
 	target_shape_attribute.setConnectable(true);
 	target_shape_attribute.setStorable(true);
-	subsegments_attribute.setWritable(true);
-	subsegments_attribute.setConnectable(true);
-	subsegments_attribute.setStorable(true);
 
-
-	targetShape = target_shape_attribute.create("targetShape", "tS", &status);
-	subSegments = subsegments_attribute.create("subSegments", "sS", &status);
+	status = subsegments_attribute.setArray(true);
+	status = subsegments_attribute.setReadable(true);
+	status = subsegments_attribute.setStorable(false);
+	status = subsegments_attribute.setUsesArrayDataBuilder(true);
 
 	status = MPxNode::addAttribute(targetShape);
 	status = MPxNode::addAttribute(subSegments);

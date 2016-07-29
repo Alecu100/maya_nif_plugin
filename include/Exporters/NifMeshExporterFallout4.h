@@ -1,5 +1,5 @@
-#ifndef _NIFMATERIALIMPORTERSKYRIM_H
-#define _NIFMATERIALIMPORTERSKYRIM_H
+#ifndef _NIFMESHEXPORTERFALLOUT4_H
+#define _NIFMESHEXPORTERFALLOUT4_H
 
 #include <maya/MDagPath.h>
 #include <maya/MDagPathArray.h>
@@ -56,7 +56,7 @@
 #include <iomanip>
 #include <iostream>
 
-#include <ComplexShape.h>
+#include <BSComplexShape.h>
 #include <MatTexCollection.h>
 #include <niflib.h>
 #include <obj/NiAlphaProperty.h>
@@ -89,39 +89,23 @@
 #include "include/Common/NifTranslatorData.h"
 #include "include/Common/NifTranslatorUtils.h"
 #include "include/Common/NifTranslatorFixtureItem.h"
-#include "include/Importers/NifMaterialImporter.h"
+#include "include/Exporters/NifMeshExporter.h"
+#include "include/Custom Nodes/NifDismemberPartition.h"
 
-class NifMaterialImporterSkyrim;
+class NifMeshExporterFallout4;
 
-typedef Ref<NifMaterialImporterSkyrim> NifMaterialImporterSkyrimRef;
+typedef Ref<NifMeshExporterFallout4> NifMeshExporterFallout4Ref;
 
-class NifMaterialImporterSkyrim : public NifMaterialImporter {
-private:
-
-	//these 2 vectors are actually interconnected meaning that
-	//an MOject in the imported materials corresponds to a set of properties in the property_groups
-	//at the exact same index. A maya material is created for a set of properties
-	vector<vector<NiPropertyRef>> property_groups;
-
-	vector<MObject> imported_materials;
-
+class NifMeshExporterFallout4 : public NifMeshExporter {
 public:
 
-	NifMaterialImporterSkyrim();
+	NifMeshExporterFallout4();
 
-	NifMaterialImporterSkyrim(NifTranslatorOptionsRef translatorOptions, NifTranslatorDataRef translatorData, NifTranslatorUtilsRef translatorUtils);
+	NifMeshExporterFallout4(NifNodeExporterRef node_exporter, NifTranslatorOptionsRef translator_options, NifTranslatorDataRef translator_data, NifTranslatorUtilsRef translator_utils);
 
-	virtual void ImportMaterialsAndTextures( NiAVObjectRef & root );
+	virtual void ExportMesh(MObject dagNode);
 
-	void GatherMaterialsAndTextures( NiAVObjectRef & root);
-
-	MString skyrimShaderFlags1ToString( unsigned int shader_flags);
-
-	MString skyrimShaderFlags2ToString( unsigned int shader_flags);
-
-	MString skyrimShaderTypeToString(unsigned int shader_type);
-
-	virtual string asString( bool verbose = false ) const;
+	virtual string asString(bool verbose = false) const;
 
 	virtual const Type& GetType() const;
 

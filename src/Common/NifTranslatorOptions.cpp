@@ -258,6 +258,42 @@ void NifTranslatorOptions::ParseOptionsString( const MString & optionsString )
 				}
 			}
 		}
+
+		if (tokens[0] == "exportFlatenedSkeleton")
+		{
+			if (tokens[1] == "1")
+			{
+				this->exportFlatenedSkeleton = true;
+			}
+			else
+			{
+				this->exportFlatenedSkeleton = false;
+			}
+		}
+
+		if (tokens[0] == "exportBsFadeNodeRoot")
+		{
+			if (tokens[1] == "1")
+			{
+				this->exportBsFadeNodeRoot = true;
+			}
+			else
+			{
+				this->exportBsFadeNodeRoot = false;
+			}
+		}
+
+		if (tokens[0] == "importAllNodesAsJoints")
+		{
+			if (tokens[1] == "1")
+			{
+				this->importAllNodesAsJoints = true;
+			}
+			else
+			{
+				this->importAllNodesAsJoints = false;
+			}
+		}
 	}
 }
 

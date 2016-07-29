@@ -89,7 +89,7 @@
 #include "include/Importers/NifMeshImporter.h"
 #include "include/Importers/NifMaterialImporter.h"
 #include "include/Importers/NifDefaultImportingFixture.h"
-#include "include/Importers/NifMaterialImporterSkyrim.h"
+#include "include/Importers/NifMaterialImporterSkyrimFallout4.h"
 #include "include/Importers/NifMeshImporterFallout4.h"
 
 class NifImportingFixtureFallout4;

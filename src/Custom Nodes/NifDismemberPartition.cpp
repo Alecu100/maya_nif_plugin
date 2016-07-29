@@ -25,15 +25,15 @@ MStatus NifDismemberPartition::initialize() {
 
 	MStatus status;
 
-	target_faces_attribute.setStorable(true);
-	target_faces_attribute.setConnectable(true);
-	target_faces_attribute.setWritable(true);
-	target_shape_attribute.setWritable(true);
-	target_shape_attribute.setConnectable(true);
-	target_shape_attribute.setStorable(true);
+	status = target_faces_attribute.setStorable(true);
+	status = target_faces_attribute.setConnectable(true);
+	status = target_faces_attribute.setWritable(true);
+	status = target_shape_attribute.setWritable(true);
+	status = target_shape_attribute.setConnectable(true);
+	status = target_shape_attribute.setStorable(true);
 
-	body_parts_flags_attribute.setStorable(true);
-	parts_flags_attribute.setStorable(true);
+	status = body_parts_flags_attribute.setStorable(true);
+	status = parts_flags_attribute.setStorable(true);
 
 	targetFaces = target_faces_attribute.create("targetFaces", "tF", &status);
 	targetShape = target_shape_attribute.create("targetShape", "tS", &status);

@@ -40,7 +40,7 @@ MObject NifMeshImporterFallout4::connectSubSegment(MObject blind_data_object, in
 	MPlug type_id;
 	MFnDependencyNode node_out_mesh;
 
-	/*input_mesh.connectedTo(connections, true, false);
+	input_mesh.connectedTo(connections, true, false);
 	out_mesh = connections[0];
 	node_out_mesh.setObject(out_mesh.node());
 	type_id = node_out_mesh.findPlug("typeId");
@@ -68,7 +68,7 @@ MObject NifMeshImporterFallout4::connectSubSegment(MObject blind_data_object, in
 
 		return sub_segment_node.object();
 	}
-*/
+
 	return MObject();
 }
 
@@ -130,6 +130,7 @@ MDagPath NifMeshImporterFallout4::ImportMesh(NiAVObjectRef root, MObject parent)
 	MIntArray maya_poly_counts;
 	MIntArray maya_connects;
 	vector<ComplexFace> niFaces;
+	map<int, bool> removedFacesIndexes;
 
 	//float max_dif = 0;
 	//int count_dif = 0;
@@ -152,6 +153,7 @@ MDagPath NifMeshImporterFallout4::ImportMesh(NiAVObjectRef root, MObject parent)
 		if (p0 == p1 || p0 == p2 || p1 == p2)
 		{
 			//Invalid triangle
+			removedFacesIndexes[i] = true;
 			continue;
 		}
 
@@ -646,38 +648,49 @@ MDagPath NifMeshImporterFallout4::ImportMesh(NiAVObjectRef root, MObject parent)
 
 		int blind_data_id = 0;
 
-		for (int x = 0; x < segments.size(); x++)
-		{
-			MSelectionList selected_faces;
-			vector<SubSegment> subSegments = segments[x].subSegments;
-			vector<MObject> created_sub_segments;
 
-			selected_faces.add(meshPath);
+		for (int segment_index = 0; segment_index < segments.size(); segment_index++)
+		{
+			vector<SubSegment> subSegments = segments[segment_index].subSegments;
+			vector<MObject> created_sub_segments;
 
 			if (subSegments.size() > 0)
 			{
-				for (int y = 0; y < subSegments.size(); y++)
+				for (int sub_segment_index = 0; sub_segment_index < subSegments.size(); sub_segment_index++)
 				{
 					int face_index = 0;
 					MItMeshPolygon polygon_it(blind_data_mesh.object());
 
-					while (face_index < subSegments[y].polygonOffset)
+					MSelectionList selected_faces;
+					selected_faces.add(meshPath);
+
+					while (face_index < subSegments[sub_segment_index].polygonOffset)
 					{
-						polygon_it.next();
+						if (removedFacesIndexes.find(face_index) == removedFacesIndexes.end())
+						{
+							polygon_it.next();
+						}
+
 						face_index++;
 					}
 
-					for (int z = 0; z < subSegments[y].polygonCount; z++)
+					for (int z = 0; z < subSegments[sub_segment_index].polygonCount; z++)
 					{
-						selected_faces.add(meshPath, polygon_it.currentItem());
-						polygon_it.next();
+						if (removedFacesIndexes.find(face_index) == removedFacesIndexes.end())
+						{
+							selected_faces.add(meshPath, polygon_it.currentItem());
+							polygon_it.next();
+						}
+
+						face_index++;
 					}
 
 					do
 					{
 						blind_data_id++;
 						status = blind_data_mesh.createBlindDataType(blind_data_id, long_name, short_name, format_name);
-					} while (status == MStatus::kFailure);
+					}
+					while (status == MStatus::kFailure);
 
 					status = MGlobal::clearSelectionList();
 					status = MGlobal::setActiveSelectionList(selected_faces);
@@ -695,16 +708,29 @@ MDagPath NifMeshImporterFallout4::ImportMesh(NiAVObjectRef root, MObject parent)
 				int face_index = 0;
 				MItMeshPolygon polygon_it(blind_data_mesh.object());
 
-				while (face_index < segments[x].polygonOffset)
+				MSelectionList selected_faces;
+				selected_faces.add(meshPath);
+
+				while (face_index < segments[segment_index].polygonOffset)
 				{
-					polygon_it.next();
+					if (removedFacesIndexes.find(face_index) == removedFacesIndexes.end())
+					{
+						polygon_it.next();
+					}
+
 					face_index++;
 				}
 
-				for (int y = 0; y < segments[x].polygonCount; y++)
+				for (int z = 0; z < segments[segment_index].polygonCount; z++)
 				{
-					selected_faces.add(meshPath, polygon_it.currentItem());
-					polygon_it.next();
+
+					if (removedFacesIndexes.find(face_index) == removedFacesIndexes.end())
+					{
+						selected_faces.add(meshPath, polygon_it.currentItem());
+						polygon_it.next();
+					}
+
+					face_index++;
 				}
 
 				do
@@ -740,9 +766,9 @@ MDagPath NifMeshImporterFallout4::ImportMesh(NiAVObjectRef root, MObject parent)
 				MFnDependencyNode sub_segment_node(created_sub_segments[w]);
 				MPlug sub_segment_out_message = sub_segment_node.findPlug("message");
 
-				MPlug sub_segment_in_message =  input_message_sub_segments.elementByLogicalIndex(w);
+				MPlug sub_segment_in_message = input_message_sub_segments.elementByLogicalIndex(w);
 
-				dg_modifier.connect(sub_segment_out_message, sub_segment_in_message);
+				status = dg_modifier.connect(sub_segment_out_message, sub_segment_in_message);
 			}
 		}
 	}

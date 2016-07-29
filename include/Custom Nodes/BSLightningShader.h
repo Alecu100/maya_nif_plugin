@@ -50,6 +50,7 @@
 #include <maya/MPxNode.h>
 #include <maya/MFnMessageAttribute.h>
 #include <maya/MFnTypedAttribute.h>
+#include <maya/MFnStringData.h> 
 
 #include <gen/enums.h>
 
@@ -79,6 +80,8 @@ public:
 	static SkyrimShaderPropertyFlags2 stringArrayToShaderFlags2(const MStringArray& string_array);
 
 	static BSLightingShaderPropertyShaderType BSLightningShader::stringToSkyrimShaderType(MString shader_type);
+
+	static MString skyrimShaderTypeToString(BSLightingShaderPropertyShaderType shader_type);
 
 	static MObject targetShader;
 
