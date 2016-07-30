@@ -203,11 +203,15 @@ MStatus NifTranslator::writer(const MFileObject& file, const MString& optionsStr
 
 	if (export_type == "geometry")
 	{
-		if (translator_options->exportMaterialType == "standardmaterial")
+		if (translator_options->exportUserVersion == 12 && translator_options->exportUserVersion2 == 130)
+		{
+			exporting_fixture = new NifExportingFixtureFallout4(translator_data, translator_options, translator_utils);
+		} 
+		else if (translator_options->exportMaterialType == "standardmaterial")
 		{
 			exporting_fixture = new NifDefaultExportingFixture(translator_data, translator_options, translator_utils);
-		}
-		if (translator_options->exportMaterialType == "skyrimmaterial")
+		} 
+		else if (translator_options->exportMaterialType == "skyrimmaterial")
 		{
 			exporting_fixture = new NifExportingFixtureSkyrim(translator_data, translator_options, translator_utils);
 		}
@@ -225,26 +229,3 @@ MStatus NifTranslator::writer(const MFileObject& file, const MString& optionsStr
 
 	return MStatus::kFailure;
 }
-
-//MMatrix MatrixN2M( const Matrix44 & n ) {
-//	//Copy Niflib matrix to Maya matrix
-//
-//	float myMat[4][4] = { 
-//		n[0][0], n[0][1], n[0][2], n[0][3],
-//		n[1][0], n[1][1], n[1][2], n[1][3],
-//		n[2][0], n[2][1], n[2][2], n[2][3],
-//		n[3][0], n[3][1], n[3][2], n[3][3]
-//	};
-//
-//	return MMatrix(myMat);
-//}
-//
-//Matrix44 MatrixM2N( const MMatrix & n ) {
-//	//Copy Maya matrix to Niflib matrix
-//	return Matrix44( 
-//		(float)n[0][0], (float)n[0][1], (float)n[0][2], (float)n[0][3],
-//		(float)n[1][0], (float)n[1][1], (float)n[1][2], (float)n[1][3],
-//		(float)n[2][0], (float)n[2][1], (float)n[2][2], (float)n[2][3],
-//		(float)n[3][0], (float)n[3][1], (float)n[3][2], (float)n[3][3]
-//	);
-//}

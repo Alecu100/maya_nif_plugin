@@ -1310,11 +1310,13 @@ copy /Y "$(ProjectDir)\AEnifDismemberPartitionTemplate.mel" "$(USERPROFILE)\Docu
     <ClInclude Include="include\Exporters\NifAnimationExporter.h" />
     <ClInclude Include="include\Exporters\NifDefaultExportingFixture.h" />
     <ClInclude Include="include\Exporters\NifExportingFixture.h" />
+    <ClInclude Include="include\Exporters\NifExportingFixtureFallout4.h" />
     <ClInclude Include="include\Exporters\NifKFAnimationExporter.h" />
     <ClInclude Include="include\Exporters\NifKFExportingFixture.h" />
     <ClInclude Include="include\Exporters\NifMaterialExporter.h" />
     <ClInclude Include="include\Exporters\NifMaterialExporterSkyrim.h" />
     <ClInclude Include="include\Exporters\NifMeshExporter.h" />
+    <ClInclude Include="include\Exporters\NifMeshExporterFallout4.h" />
     <ClInclude Include="include\Exporters\NifMeshExporterSkyrim.h" />
     <ClInclude Include="include\Exporters\NifNodeExporter.h" />
     <ClInclude Include="include\Exporters\NifExportingFixtureSkyrim.h" />
@@ -1350,6 +1352,7 @@ copy /Y "$(ProjectDir)\AEnifDismemberPartitionTemplate.mel" "$(USERPROFILE)\Docu
     <ClCompile Include="src\Exporters\NifAnimationExporter.cpp" />
     <ClCompile Include="src\Exporters\NifDefaultExportingFixture.cpp" />
     <ClCompile Include="src\Exporters\NifExportingFixture.cpp" />
+    <ClCompile Include="src\Exporters\NifExportingFixtureFallout4.cpp" />
     <ClCompile Include="src\Exporters\NifKFAnimationExporter.cpp" />
     <ClCompile Include="src\Exporters\NifKFExportingFixture.cpp" />
     <ClCompile Include="src\Exporters\NifMaterialExporter.cpp" />
@@ -1358,6 +1361,7 @@ copy /Y "$(ProjectDir)\AEnifDismemberPartitionTemplate.mel" "$(USERPROFILE)\Docu
     <ClCompile Include="src\Exporters\NifMeshExporterSkyrim.cpp" />
     <ClCompile Include="src\Exporters\NifNodeExporter.cpp" />
     <ClCompile Include="src\Exporters\NifExportingFixtureSkyrim.cpp" />
+    <ClCompile Include="src\Exporters\NiMeshExporterFallout4.cpp" />
     <ClCompile Include="src\Importers\NifAnimationImporter.cpp" />
     <ClCompile Include="src\Importers\NifDefaultImportingFixture.cpp" />
     <ClCompile Include="src\Importers\NifImportingFixture.cpp" />

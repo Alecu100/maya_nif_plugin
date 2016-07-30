@@ -146,6 +146,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include "include/Custom Nodes/BSSegment.h"
 #include "include/Custom Nodes/BSSubSegment.h"
 #include "include/Exporters/NifExportingFixtureSkyrim.h"
+#include "include/Exporters/NifExportingFixtureFallout4.h"
 
 using namespace Niflib;
 using namespace std;

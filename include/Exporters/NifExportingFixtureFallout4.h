@@ -1,5 +1,5 @@
-#ifndef _NIFMESHEXPORTERFALLOUT4_H
-#define _NIFMESHEXPORTERFALLOUT4_H
+#ifndef _NIFEXPORTINGFIXTUREFALLOUT4_H
+#define _NIFEXPORTINGFIXTUREFALLOUT4_H
 
 #include <maya/MDagPath.h>
 #include <maya/MDagPathArray.h>
@@ -47,7 +47,6 @@
 #include <maya/MAnimUtil.h>
 #include <maya/MItMeshPolygon.h>
 #include <maya/MItMeshVertex.h>
-#include <maya/MProgressWindow.h>
 
 #include <string> 
 #include <vector>
@@ -56,7 +55,7 @@
 #include <iomanip>
 #include <iostream>
 
-#include <BSComplexShape.h>
+#include <ComplexShape.h>
 #include <MatTexCollection.h>
 #include <niflib.h>
 #include <obj/NiAlphaProperty.h>
@@ -79,38 +78,35 @@
 #include <obj/NiKeyframeData.h>
 #include <obj/NiTextureProperty.h>
 #include <obj/NiImage.h>
-#include <obj/NiAVObject.h>
-#include <obj/NiTriBasedGeom.h>
-#include <obj/BSLightingShaderProperty.h>
-#include <obj/BSShaderTextureSet.h>
-#include <gen/BSSITSSegment.h>
+#include <Ref.h>
 
-#include "include/Common/NifTranslatorRefObject.h"
-#include "include/Common/NifTranslatorOptions.h"
-#include "include/Common/NifTranslatorData.h"
-#include "include/Common/NifTranslatorUtils.h"
-#include "include/Common/NifTranslatorFixtureItem.h"
-#include "include/Exporters/NifMeshExporter.h"
-#include "include/Custom Nodes/NifDismemberPartition.h"
+#include "NifDefaultExportingFixture.h"
+#include "NifNodeExporter.h"
+#include "NifMaterialExporterSkyrim.h"
+#include "NifAnimationExporter.h"
+#include "NifMeshExporterFallout4.h"
 
-class NifMeshExporterFallout4;
+using namespace Niflib;
+using namespace std;
 
-typedef Ref<NifMeshExporterFallout4> NifMeshExporterFallout4Ref;
+class NifExportingFixtureFallout4;
 
-class NifMeshExporterFallout4 : public NifMeshExporter {
+typedef Ref<NifExportingFixtureFallout4> NifExportingFixtureFallout4Ref;
+
+class NifExportingFixtureFallout4 : public NifDefaultExportingFixture {
+
 public:
 
-	NifMeshExporterFallout4();
+	NifExportingFixtureFallout4();
 
-	NifMeshExporterFallout4(NifNodeExporterRef node_exporter, NifTranslatorOptionsRef translator_options, NifTranslatorDataRef translator_data, NifTranslatorUtilsRef translator_utils);
-	bool CreateComplexFace(MStatus& stat, MFnMesh meshFn, vector<Color4> niColors, MItMeshPolygon itPoly, ComplexFace& cf);
-	virtual void ExportMesh(MObject dagNode);
+	NifExportingFixtureFallout4(NifTranslatorDataRef translatorData, NifTranslatorOptionsRef translatorOptions, NifTranslatorUtilsRef translatorUtils);
 
 	virtual string asString(bool verbose = false) const;
 
-	virtual const Type& GetType() const;
+	virtual const Type& getType() const;
 
 	const static Type TYPE;
+
 };
 
 #endif
