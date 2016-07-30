@@ -167,10 +167,10 @@
     <ClInclude Include="include\Exporters\NifExportingFixtureSkyrim.h">
       <Filter>Header Files\Exporters</Filter>
     </ClInclude>
-    <ClInclude Include="include\Exporters\NifMeshExporterFallout4.h">
+    <ClInclude Include="include\Exporters\NifExportingFixtureFallout4.h">
       <Filter>Header Files\Exporters</Filter>
     </ClInclude>
-    <ClInclude Include="include\Exporters\NifExportingFixtureFallout4.h">
+    <ClInclude Include="include\Exporters\NifMeshExporterFallout4.h">
       <Filter>Header Files\Exporters</Filter>
     </ClInclude>
   </ItemGroup>
@@ -286,10 +286,10 @@
     <ClCompile Include="src\Exporters\NifExportingFixtureSkyrim.cpp">
       <Filter>Source Files\Exporters</Filter>
     </ClCompile>
-    <ClCompile Include="src\Exporters\NiMeshExporterFallout4.cpp">
+    <ClCompile Include="src\Exporters\NifExportingFixtureFallout4.cpp">
       <Filter>Source Files\Exporters</Filter>
     </ClCompile>
-    <ClCompile Include="src\Exporters\NifExportingFixtureFallout4.cpp">
+    <ClCompile Include="src\Exporters\NifMeshExporterFallout4.cpp">
       <Filter>Source Files\Exporters</Filter>
     </ClCompile>
   </ItemGroup>

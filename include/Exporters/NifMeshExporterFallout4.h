@@ -103,7 +103,7 @@ public:
 	NifMeshExporterFallout4();
 
 	NifMeshExporterFallout4(NifNodeExporterRef node_exporter, NifTranslatorOptionsRef translator_options, NifTranslatorDataRef translator_data, NifTranslatorUtilsRef translator_utils);
-	bool CreateComplexFace(MStatus& stat, MFnMesh meshFn, vector<Color4> niColors, MItMeshPolygon itPoly, ComplexFace& cf);
+	bool CreateComplexFace(MStatus& stat, MObject object, vector<Color4> niColors, MItMeshPolygon& itPoly, ComplexFace& cf);
 	virtual void ExportMesh(MObject dagNode);
 
 	virtual string asString(bool verbose = false) const;
