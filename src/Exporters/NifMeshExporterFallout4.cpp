@@ -405,7 +405,6 @@ void NifMeshExporterFallout4::ExportMesh(MObject dagNode)
 
 					if (blind_data_connections.length() > 0)
 					{
-
 						MFnDependencyNode blind_data_node(blind_data_connections[0].node());
 						MItMeshPolygon it_polygons(meshFn.object());
 
@@ -583,18 +582,8 @@ void NifMeshExporterFallout4::ExportMesh(MObject dagNode)
 	NiAVObjectRef tempAV = new NiAVObject;
 	this->nodeExporter->ExportAV(tempAV, dagNode);
 
-	NiAVObjectRef avObj;
-	if (this->translatorOptions->exportTangentSpace == "falloutskyrimtangentspace")
-	{
-		//out << "Split ComplexShape from " << meshFn.name().asChar() << endl;
-		avObj = bs_complex_shape.Split(parNode, tempAV->GetLocalTransform() * transform, this->translatorOptions->exportBonesPerSkinPartition,
-		                               this->translatorOptions->exportAsTriStrips, true, this->translatorOptions->exportMinimumVertexWeight, 16);
-	}
-	else
-	{
-		avObj = bs_complex_shape.Split(parNode, tempAV->GetLocalTransform() * transform, this->translatorOptions->exportBonesPerSkinPartition,
-		                               this->translatorOptions->exportAsTriStrips, false, this->translatorOptions->exportMinimumVertexWeight);
-	}
+	NiAVObjectRef avObj = bs_complex_shape.Split(parNode, tempAV->GetLocalTransform() * transform, this->translatorOptions->exportBonesPerSkinPartition,
+	                                             true, this->translatorOptions->exportMinimumVertexWeight);
 
 
 	//out << "Get the NiAVObject portion of the root of the split" <<endl;

@@ -749,8 +749,8 @@ copy /Y "$(ProjectDir)\nifTranslatorMenuRemove.mel" "$(USERPROFILE)\Documents\ma
     <Link>
       <AdditionalOptions>/subsystem:windows /dll /incremental:yes /debug /export:initializePlugin /export:uninitializePlugin %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>niflib_dll_debug_x64.lib;Foundation.lib;OpenMaya.lib;OpenMayaAnim.lib;OpenMayaUI.lib;OpenMayaFX.lib;OpenMayaRender.lib;Image.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(SolutionDir)\..\Maya2016\bin\plug-ins\nifTranslator_debug.mll</OutputFile>
-      <AdditionalLibraryDirectories>$(SolutionDir)\..\Maya2016\lib;niflib\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(SolutionDir)\..\Maya2017\bin\plug-ins\nifTranslator_debug.mll</OutputFile>
+      <AdditionalLibraryDirectories>$(SolutionDir)\..\Maya2017\lib;niflib\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ProgramDatabaseFile>$(SolutionDir)..\Maya2016\bin\plug-ins\nifTranslator_debug.pdb</ProgramDatabaseFile>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
@@ -760,11 +760,11 @@ copy /Y "$(ProjectDir)\nifTranslatorMenuRemove.mel" "$(USERPROFILE)\Documents\ma
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>copy /Y "$(ProjectDir)\nifTranslatorOpts.mel" "$(USERPROFILE)\Documents\maya\2016\scripts"
-copy /Y "$(ProjectDir)\nifTranslatorMenuCreate.mel" "$(USERPROFILE)\Documents\maya\2016\scripts"
-copy /Y "$(ProjectDir)\nifTranslatorMenuRemove.mel" "$(USERPROFILE)\Documents\maya\2016\scripts"
-copy /Y "$(ProjectDir)\AEbsLightningShaderTemplate.mel" "$(USERPROFILE)\Documents\maya\2016\scripts"
-copy /Y "$(ProjectDir)\AEnifDismemberPartitionTemplate.mel" "$(USERPROFILE)\Documents\maya\2016\scripts"</Command>
+      <Command>copy /Y "$(ProjectDir)\nifTranslatorOpts.mel" "$(USERPROFILE)\Documents\maya\2017\scripts"
+copy /Y "$(ProjectDir)\nifTranslatorMenuCreate.mel" "$(USERPROFILE)\Documents\maya\2017\scripts"
+copy /Y "$(ProjectDir)\nifTranslatorMenuRemove.mel" "$(USERPROFILE)\Documents\maya\2017\scripts"
+copy /Y "$(ProjectDir)\AEbsLightningShaderTemplate.mel" "$(USERPROFILE)\Documents\maya\2017\scripts"
+copy /Y "$(ProjectDir)\AEnifDismemberPartitionTemplate.mel" "$(USERPROFILE)\Documents\maya\2017\scripts"</Command>
     </PostBuildEvent>
     <CustomBuildStep>
       <Command>copy /Y "$(ProjectDir)\nifTranslatorOpts.mel" "$(USERPROFILE)\Documents\maya\2012-x64\scripts"
