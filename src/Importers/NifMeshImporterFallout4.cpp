@@ -600,7 +600,7 @@ MDagPath NifMeshImporterFallout4::ImportMesh(NiAVObjectRef root, MObject parent)
 	//some kind of weird bug in Maya 2012
 	//vertices may have their positions changed when creating a mesh so they have to be repositioned
 	//may be in other Maya versions
-#if MAYA_API_VERSION == 201200
+
 	MItMeshVertex vert_iter(parent);
 
 	int j = 0;
@@ -610,7 +610,7 @@ MDagPath NifMeshImporterFallout4::ImportMesh(NiAVObjectRef root, MObject parent)
 		vert_iter.next();
 		j++;
 	}
-#endif
+
 
 	vector<Segment> segments = bs_complex_shape.GetSegments();
 
