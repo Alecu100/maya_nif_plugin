@@ -41,4 +41,8 @@
     <LocalDebuggerCommand>$(SolutionDir)\..\Maya2017\bin\maya.exe</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release - 2017|x64'">
+    <LocalDebuggerCommand>$(SolutionDir)\..\Maya2017\bin\maya.exe</LocalDebuggerCommand>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
 </Project>

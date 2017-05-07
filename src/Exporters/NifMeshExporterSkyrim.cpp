@@ -560,7 +560,7 @@ void NifMeshExporterSkyrim::ExportMesh( MObject dagNode ) {
 	if (this->translatorOptions->exportTangentSpace == "falloutskyrimtangentspace") {
 		//out << "Split ComplexShape from " << meshFn.name().asChar() << endl;
 		avObj = cs.Split(parNode, tempAV->GetLocalTransform() * transform, this->translatorOptions->exportBonesPerSkinPartition,
-			this->translatorOptions->exportAsTriStrips, true, this->translatorOptions->exportMinimumVertexWeight, 16);
+			this->translatorOptions->exportAsTriStrips, true, this->translatorOptions->exportMinimumVertexWeight, 1);
 	}
 	else {
 		avObj = cs.Split(parNode, tempAV->GetLocalTransform() * transform, this->translatorOptions->exportBonesPerSkinPartition,

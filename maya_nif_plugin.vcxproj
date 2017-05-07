@@ -459,11 +459,11 @@
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release - 2009|x64'">D:\Autodesk\NifExporter\niflib\include;D:\Autodesk\Maya2012\include;$(IncludePath)</IncludePath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release - 2012 x64|x64'">D:\maya\maya_nif_plugin\niflib\include;D:\maya\maya_nif_plugin\include;D:\maya\Maya2012\include;$(IncludePath)</IncludePath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release - 2016|x64'">$(SolutionDir)\niflib\include;$(SolutionDir)\include;$(SolutionDir)\..\Maya2016\include;$(IncludePath)</IncludePath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release - 2017|x64'">$(SolutionDir)\niflib\include;$(SolutionDir)\include;$(SolutionDir)\..\Maya2016\include;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release - 2017|x64'">$(SolutionDir)\niflib\include;$(SolutionDir)\include;$(SolutionDir)\..\Maya2017\include;$(IncludePath)</IncludePath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release - 2009|x64'">D:\Autodesk\NifExporter\niflib\lib;D:\Autodesk\Maya2012\lib;$(LibraryPath)</LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release - 2012 x64|x64'">D:\maya\maya_nif_plugin\niflib\lib;D:\maya\Maya2012\lib;$(LibraryPath)</LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release - 2016|x64'">$(SolutionDir)\niflib\lib;$(SolutionDir)\..\Maya2016\lib;$(LibraryPath)</LibraryPath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release - 2017|x64'">$(SolutionDir)\niflib\lib;$(SolutionDir)\..\Maya2016\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release - 2017|x64'">$(SolutionDir)\niflib\lib;$(SolutionDir)\..\Maya2017\lib;$(LibraryPath)</LibraryPath>
     <CustomBuildBeforeTargets Condition="'$(Configuration)|$(Platform)'=='Debug - 2012|x64'">Run</CustomBuildBeforeTargets>
     <CustomBuildBeforeTargets Condition="'$(Configuration)|$(Platform)'=='Debug - 2016|x64'">Run</CustomBuildBeforeTargets>
     <CustomBuildBeforeTargets Condition="'$(Configuration)|$(Platform)'=='Debug - 2017|x64'">Run</CustomBuildBeforeTargets>
@@ -1271,8 +1271,8 @@ copy /Y "$(ProjectDir)\AEnifDismemberPartitionTemplate.mel" "$(USERPROFILE)\Docu
     <Link>
       <AdditionalOptions>/subsystem:windows /incremental:no /export:initializePlugin /export:uninitializePlugin </AdditionalOptions>
       <AdditionalDependencies>niflib_dll.lib;Foundation.lib;OpenMaya.lib;OpenMayaAnim.lib;OpenMayaUI.lib;OpenMayaFX.lib;OpenMayaRender.lib;Image.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(SolutionDir)\..\Maya2016\bin\plug-ins\nifTranslator.mll</OutputFile>
-      <AdditionalLibraryDirectories>$(SolutionDir)\..\Maya2016\lib;$(SolutionDir)\niflib\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(SolutionDir)\..\Maya2017\bin\plug-ins\nifTranslator.mll</OutputFile>
+      <AdditionalLibraryDirectories>$(SolutionDir)\..\Maya2017\lib;$(SolutionDir)\niflib\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ProgramDatabaseFile>Release/Export.pdb</ProgramDatabaseFile>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
@@ -1282,11 +1282,11 @@ copy /Y "$(ProjectDir)\AEnifDismemberPartitionTemplate.mel" "$(USERPROFILE)\Docu
       </Version>
     </Link>
     <PostBuildEvent>
-      <Command>copy /Y "$(ProjectDir)\nifTranslatorOpts.mel" "$(USERPROFILE)\Documents\maya\2016\scripts"
-copy /Y "$(ProjectDir)\nifTranslatorMenuCreate.mel" "$(USERPROFILE)\Documents\maya\2016\scripts"
-copy /Y "$(ProjectDir)\nifTranslatorMenuRemove.mel" "$(USERPROFILE)\Documents\maya\2016\scripts"
-copy /Y "$(ProjectDir)\AEbsLightningShaderTemplate.mel" "$(USERPROFILE)\Documents\maya\2016\scripts"
-copy /Y "$(ProjectDir)\AEnifDismemberPartitionTemplate.mel" "$(USERPROFILE)\Documents\maya\2016\scripts"</Command>
+      <Command>copy /Y "$(ProjectDir)\nifTranslatorOpts.mel" "$(USERPROFILE)\Documents\maya\2017\scripts"
+copy /Y "$(ProjectDir)\nifTranslatorMenuCreate.mel" "$(USERPROFILE)\Documents\maya\2017\scripts"
+copy /Y "$(ProjectDir)\nifTranslatorMenuRemove.mel" "$(USERPROFILE)\Documents\maya\2017\scripts"
+copy /Y "$(ProjectDir)\AEbsLightningShaderTemplate.mel" "$(USERPROFILE)\Documents\maya\2017\scripts"
+copy /Y "$(ProjectDir)\AEnifDismemberPartitionTemplate.mel" "$(USERPROFILE)\Documents\maya\2017\scripts"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
